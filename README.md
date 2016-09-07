@@ -78,7 +78,7 @@ Host github.com
 
 Checking your submissions
 
-Once you have submitted your homeworks we strongly recommend that your re-clone the submission to your machine to check that what we have received is in fact what you intented to submit.
+Once you have submitted your homework we strongly recommend that your re-clone the submission to your machine to check that what we have received is in fact what you intended to submit.
 
 The procedure for doing so would be the following:
 ```
