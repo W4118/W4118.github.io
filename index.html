@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+pre {
+  background-color: gainsboro;
+}
+</style>
+</head>
+<body>
+<h1>
+<a id="user-content-getting-started-with-git" class="anchor" href="#getting-started-with-git" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started with Git</h1>
+
+<h2>
+<a id="user-content-w4118-fall-2016" class="anchor" href="#w4118-fall-2016" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>W4118 Fall 2016</h2>
+
+<p>Git is a version control system that Linux hackers use. If you don't know git, you probably want to start by reading the <a href="https://git-scm.com/book/en/v2"><strong>Pro Git Book</strong></a>.</p>
+
+<p>Remember to config your git settings on your developing machine, either physical or virtual, properly. Create (or edit) the file ~/.gitconfig with the following content</p>
+
+<pre><code>[user]
+        name = YOUR_NAME_HERE
+        email = YOUR_EMAIL_HERE
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+[push]
+        default = matching
+</code></pre>
+
+<p>While there are a number of different Git-based systems, you will be using Github Classroom for this course. Make sure you have a registered Github account. If you are new to Github, please check out the <a href="https://help.github.com/articles/set-up-git/"><strong>getting started guide</strong></a>. There is also <a href="https://help.github.com/articles/generating-an-ssh-key/"><strong>ssh setup guide</strong></a> for you to enable ssh access to Github. Also please fill in the <a href="https://docs.google.com/a/columbia.edu/forms/d/1x_WFznM2y7ts_q6OpgXBOFbXd61Hnzv9NtwCgl6Pgjc"><strong>Google Form</strong></a> (<strong>Please Login to LionMail first</strong>) to declare your Github user name.</p>
+
+<p>Your source code will be stored at <strong><em>github.com/W4118/hmwkN-UserName</em></strong> as a private repository. Only you or your group members are allowed to push/pull from the repository. The sample code repository is at <strong><em>github.com/W4118/template-hmwkN</em></strong>. Your repository will be cloned from the sample repository initially, and you will be working on that repository afterwards. Be carefull not to overwrite those initial commits made by professors or TAs in your repository. Otherwise it would be much harder for TAs to grade your homework.</p>
+
+<p>Each assignment will be published as a Github Classroom invitation link. Click "Accept Assignment" to setup your own copy of the assignment. Please wait until Github finishes the initialization process. You may visit <a href="https://github.com/w4118"><strong>W4118 Organization</strong></a> to see all the sample codes and your repositories.</p>
+
+<p>Click on the link below for assignments</p>
+
+<h3>
+<a id="user-content-homework-1" class="anchor" href="#homework-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://classroom.github.com/assignment-invitations/4fc3c84ba63f479d9f39281364b97017"><strong>Homework 1</strong></a>
+</h3>
+
+<p>Then, you will need to clone your homework repository locally to start working on it: </p>
+
+<pre><code>$ git clone git@github.com:W4118/hmwkN-UserName.git
+Initialized empty Git repository in hmwkN-UserName/.git/
+Receiving objects: 100% (x/x), done.
+remote: Counting objects: x, done.
+remote: Total x (delta 0), reused 0 (delta 0)
+</code></pre>
+
+<p>Your typical workflow:</p>
+
+<pre><code>$ git diff # see what you've changed
+$ git add file1 file2
+$ git diff --cached # see what you are about to commit
+$ git commit # explain what you did on file1 file2
+</code></pre>
+
+<p>A few commits later</p>
+
+<pre><code>$ git push # upload your changes on the repository
+Counting objects: x, done.
+Delta compression using up to x threads.
+Compressing objects: 100% (x/x), done.
+Writing objects: 100% (x/x), x bytes, done.
+Total x (delta 0), reused 0 (delta 0)
+To git+ssh://xxx
+   xxxxxxx..xxxxxxx  master -&gt; master
+</code></pre>
+
+<p>If git asks you for a password whenever you try to do a clone/push/pull/fetch then you need to make sure that your ~/.ssh/ directory looks like this: </p>
+
+<pre><code>$ ls -lh ~/.ssh
+-rw------- 1 root root 672 Aug 17 2007 id_rsa
+-rw-r--r-- 1 root root 604 Aug 17 2007 id_rsa.pub
+</code></pre>
+
+<p>If you already use ssh keys for logging into other servers or git repositories, you can save the private/public keypair that was created for you as ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub and create the file ~/.ssh/config like this:</p>
+
+<pre><code>$ touch ~/.ssh/config
+$ chmod 600
+</code></pre>
+
+<p>Then open the file and input this data:</p>
+
+<pre><code>Host github.com
+    IdentityFile ~/.ssh/id_rsa
+    User git
+</code></pre>
+
+<p>Checking your submissions</p>
+
+<p>Once you have submitted your homework we strongly recommend that your re-clone the submission to your machine to check that what we have received is in fact what you intended to submit.</p>
+
+<p>The procedure for doing so would be the following:</p>
+
+<pre><code>$ pushd /tmp
+$ git clone git@github.com:W4118/hmwkN-UserName.git
+$ cd hmwkN-UserName
+# ... check contents of directory and test aginst your test cases
+$ cd ..
+$ rm -rf hmwkN-UserName
+$ popd
+</code></pre>
+</body>
+</html>
