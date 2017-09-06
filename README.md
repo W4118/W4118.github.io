@@ -78,9 +78,9 @@ Host github.com
 	User git
 ```
 
-Checking your submissions
+**Checking your submissions**
 
-Once you have submitted your homework we strongly recommend that your re-clone the submission to your machine to check that what we have received is in fact what you intended to submit.
+Once you have submitted your homework we strongly recommend that your re-clone the submission to your machine to check that what we have received is in fact what you intended to submit. Note that you will not be able to push edits to the git repository after the deadline
 
 The procedure for doing so would be the following:
 ```
