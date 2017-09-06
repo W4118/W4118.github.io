@@ -1,6 +1,6 @@
-#Getting started with Git
+# Getting started with Git
 
-##W4118 Fall 2017
+## W4118 Fall 2017
 
 Git is a version control system that Linux hackers use. If you don't know git, you probably want to start by reading the [**Pro Git Book**](https://git-scm.com/book/en/v2).
 
