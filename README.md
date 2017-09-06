@@ -1,4 +1,5 @@
 #Getting started with Git
+
 ##W4118 Fall 2017
 
 Git is a version control system that Linux hackers use. If you don't know git, you probably want to start by reading the [**Pro Git Book**](https://git-scm.com/book/en/v2).
@@ -18,7 +19,7 @@ Remember to config your git settings on your developing machine, either physical
 
 While there are a number of different Git-based systems, you will be using Github Classroom for this course. Make sure you have a registered Github account. If you are new to Github, please check out the [**getting started guide**](https://help.github.com/articles/set-up-git/). There is also [**ssh setup guide**](https://help.github.com/articles/generating-an-ssh-key/) for you to enable ssh access to Github.
 
-##Caution: If you use the VM image provided on [the homework page](http://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/), please remove the our testing ssh public/private key pair, and generate or copy your own to the VM. Please do NOT use the testing public key as your Github ssh key.
+**Caution**: If you use the VM image provided on [the homework page](http://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/), please remove the our testing ssh public/private key pair, and generate or copy your own to the VM. Please do NOT use the testing public key as your Github ssh key.
 
 Also please fill in the [**Google Form**](https://goo.gl/forms/SYgUQf43DarRoznB3) to declare your Github user name.
 
@@ -26,9 +27,9 @@ Your source code will be stored at **_github.com/W4118/f17-hmwkN-UserName_** as 
 
 Each assignment will be published as a Github Classroom invitation link. Click "Accept Assignment" to setup your own copy of the assignment. Please wait until Github finishes the initialization process. You may visit [**W4118 Organization**](https://github.com/w4118) to see all the sample codes and your repositories.
 
-Click on the link below for assignments
+Click on the link below to be invited to the first assignment:
 
-###[**Homework 1**](https://classroom.github.com/assignment-invitations/4fc3c84ba63f479d9f39281364b97017)
+[**Homework 1**](https://classroom.github.com/assignment-invitations/4fc3c84ba63f479d9f39281364b97017)
 
 Then, you will need to clone your homework repository locally to start working on it: 
 ```
