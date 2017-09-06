@@ -17,7 +17,9 @@ Remember to config your git settings on your developing machine, either physical
         default = matching
 ```
 
-While there are a number of different Git-based systems, you will be using Github Classroom for this course. Make sure you have a registered Github account. If you are new to Github, please check out the [**getting started guide**](https://help.github.com/articles/set-up-git/). There is also [**ssh setup guide**](https://help.github.com/articles/generating-an-ssh-key/) for you to enable ssh access to Github.
+While there are a number of different Git-based systems, you will be using Github Classroom for this course. Make
+sure you have a registered Github account. If you are new to Github, please check out the [**getting started
+guide**](https://help.github.com/articles/set-up-git/). There is also [**ssh setup guide**](https://help.github.com/articles/connecting-to-github-with-ssh/) for you to enable ssh access to Github.
 
 **Caution**: If you use the VM image provided on [the homework page](http://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/), please remove the our testing ssh public/private key pair, and generate or copy your own to the VM. Please do NOT use the testing public key as your Github ssh key.
 
