@@ -25,11 +25,11 @@ guide**](https://help.github.com/articles/set-up-git/). There is also [**ssh set
 
 Also please fill in the [**Google Form**](https://goo.gl/forms/veUUtrGq6I2vDnMJ3) to declare your Github user name and UNI.
 
-Your source code will be stored at **_github.com/W4118/f17-hmwkN-UserName_** as a private repository. Only you or your group members are allowed to push/pull from the repository. The sample code repository is at **_github.com/W4118/f17-template-hmwkN_**. Your repository will be cloned from the sample repository initially, and you will be working on that repository afterwards. Be carefull not to overwrite those initial commits made by professors or TAs in your repository. Otherwise it would be much harder for TAs to grade your homework.
+Your source code will be stored at **_github.com/W4118/f17-hmwkN-UserName_** as a private repository. Only you or your group members are allowed to push/pull from the repository. The sample code repository is at **_github.com/W4118/f17-template-hmwkN_**. Your repository will be cloned from the sample repository initially, and you will be working on that repository afterwards. Be careful not to overwrite those initial commits made by professors or TAs in your repository. Otherwise it would be much harder for TAs to grade your homework.
 
 Each assignment will be published as a Github Classroom invitation link. Click "Accept Assignment" to setup your own copy of the assignment. Please wait until Github finishes the initialization process. You may visit [**W4118 Organization**](https://github.com/w4118) to see all the sample codes and your repositories.
 
-Click on the link below to be invited to the first assignment:
+For example, click on the link below to be invited to the first assignment:
 
 [**Homework 1**]( https://classroom.github.com/a/ZTi4D-g2)
 
