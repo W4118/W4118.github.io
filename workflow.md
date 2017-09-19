@@ -109,7 +109,7 @@ Now all plugins can be installed inside `~/.vim/bundle` and they will be automat
 
 ### Remapping Leader
 
-Vim has the concept of a "leader" key, which is used to program personal keyboard shortcuts. By default, it is mapped to `\`, which is a little difficult to read. I suggest mapping it to either `<space>` or comma `,` (I prefer space). In your `~/.vimrc`, write either
+Vim has the concept of a "leader" key, which is used to program personal keyboard shortcuts. By default, it is mapped to `\`, which is a little difficult to reach. I suggest mapping it to either `<space>` or comma `,` (I prefer space). In your `~/.vimrc`, write either
 
 ```
 let mapleader ="\<Space>"
