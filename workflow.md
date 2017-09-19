@@ -293,13 +293,16 @@ git submodule update --init --recursive
 In the template for your homework assignments, we will include a file `kernel/.ycm_extra_conf.py` that enables YCM. If you want to see how this works, check out [YCM-Generator](https://github.com/rdnetto/YCM-Generator) and the original YCM github page.
 
 
-__Important Note__: for YCM in the kernel to work properly you need to be *inside* the kernel directory when you activate vim. e.g. `cd <path-to-homework-assignment>/kernel && vim`
+__Important Note__: for YCM in the kernel to work properly you need to be *inside* the kernel directory when you activate vim. e.g. 
+```
+cd <path-to-homework-assignment>/kernel && vim
+```
 
 ## Cscope
 
 This is the final step: Function GOTOs and efficiently browing code.
 
-[Cscope](http://cscope.sourceforge.net/) is a code browser that works in your terminal and within vim. It is far more powerful than a standard grepper (such as the one at http://elixir.free-electrons.com/linux/v3.10/). For example, Cscope can answer:
+[Cscope](http://cscope.sourceforge.net/) is a code browser that works in your terminal and within vim. It is far more powerful than a standard grepper (such as the one at [elixir](http://elixir.free-electrons.com/linux/v3.10/)). For example, Cscope can answer:
 
 - Where is this variable used?
 - What is the value of this preprocessor symbol?
