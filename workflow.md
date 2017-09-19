@@ -36,7 +36,7 @@ To optimize your git workflow, you can add shortcuts to the   `~/.gitconfig` fil
 
 ```
 [user]
-	  name = Andrew Aday
+    name = Andrew Aday
     email = aza2112@columbia.edu
 [color]
     diff = auto
