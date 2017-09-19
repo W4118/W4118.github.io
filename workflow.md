@@ -14,7 +14,9 @@ By the end of this guide, you will be able to:
 Most students are more comfortable working in their host machine than in the VM. We can enable this by configuring remote ssh.
 
 First, in your VM execute the following command to get its remote address:
-`/sbin/ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | cut -d ':' -f 2`
+```
+/sbin/ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | cut -d ':' -f 2
+```
 
 Copy the address and in the `~/.ssh/config` file on your __host machine__, add:
 
