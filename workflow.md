@@ -88,16 +88,90 @@ Here's an example of what this should look like. Note that I never open a new ta
 
 ## Install Pathogen
 
-[Pathogen](https://github.com/tpope/vim-pathogen) is a plugin manager for Vim. We'll be using pathogen to install the remaining plugins, so do this first!
+Now let's get to installing plugins.
 
-### Remapping <Leader>
+[Pathogen](https://github.com/tpope/vim-pathogen) is a plugin manager for Vim. We'll be using pathogen to install the remaining plugins, so do this first! Run this:
 
+```
+mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+```
 
+And add the following to your `~/.vimrc`:
 
+```
+execute pathogen#infect()
+```
+
+Now all plugins can be installed inside `~/.vim/bundle` and they will be automatically added to your vim `runtimepath`.
+
+### Remapping Leader
+
+Vim has the concept of a "leader" key, which is used to program personal keyboard shortcuts. By default, it is mapped to `\`, which is a little difficult to read. I suggest mapping it to either `<space>` or comma `,` (I prefer space). In your `~/.vimrc`, write either
+
+```
+let mapleader ="\<Space>"
+```
+
+or
+
+```
+let mapleader = ","
+```
+
+We will be using leader keys through the rest of the guide. When you see something like `nmap <leader>l :bnext<CR>`, it means we are mapping the keyboard shortcut `<leader>` + `l` to the action `:bnext<CR>`.
+
+## Bufferline Display:
+
+[Airline](https://github.com/vim-airline/vim-airline) is a package to display status information such as git branch and what buffer you are currently viewing. To install, run
+
+```
+git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
+```
+
+And in your `~/.vimrc` add
+
+```
+" Airline
+let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
+let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
+```
+
+When it's all done, you should have a header that looks like:
+
+![buffer](images/buffer)
+
+To easily maneuver around these buffers, add this to your `~/.vimrc`:
+
+```
+" -----------Buffer Management---------------
+set hidden " Allow buffers to be hidden if you've modified a buffer
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>q :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+```
+
+Now to navigate your window left/right between buffers, just press `<leader>` + `l` or `<leader>` + `r`. To close a buffer, press `<leader>` + `q`.
 
 ## Window navigation
-ctrl-w + c
-ctrl-w + h|j|k|l
+
+To open a new window, enter:
+
+- `:vsp` to open a vertically-split window
+- `:sp` to open a horizontally-split window
+
+To navigate between windows, use: `ctrl-w` + `h|j|k|l` to navigate left|down|up|right.
+Alternatively, add this to your `~/.vimrc` so that you can move between windows using arrow keys:
 
 ```
 " Use arrow keys to navigate window splits
@@ -107,45 +181,78 @@ noremap <silent> <Up> :wincmd k <CR>
 noremap <silent> <Down> :wincmd j <CR>
 ```
 
-## Bufferline Display:
-`git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline`
+To close a window, press `ctrl-w` + `c`
 
-## Buffergator
-` git clone https://github.com/jeetsukumaran/vim-buffergator ~/.vim/bundle/vim-buffergator`
-s/S vertical split
-i/I horizontal split
-<leader>[right|left|up|down]arrow to open a verticle or horizontal split window
+## ctrl-p and Nerdtree
 
-## ctrl-p
+The Linux kernel is a massive code base, so for easy navigation we'll want to add a filename grepper ([ctrl-p](https://github.com/kien/ctrlp.vim)) and file tree ([Nerdtree](https://github.com/scrooloose/nerdtree))
 
-`git clone https://github.com/ctrlpvim/ctrlp.vim ~/.vim/bundle/vim-ctrlp`
+```
+git clone https://github.com/ctrlpvim/ctrlp.vim ~/.vim/bundle/vim-ctrlp
+git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+```
 
+Now add the following to your `~/.vimrc`:
 
-## syntastic
+```
+" ctrl-p
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
 
-`git clone --depth=1 https://github.com/vim-syntastic/syntastic.git ~/.vim/bundle/vim-ctrlp`
+" Use the nearest .git|.svn|.hg|.bzr directory as the cwd
+let g:ctrlp_working_path_mode = 'r'
 
+nmap <leader>p :CtrlP<cr>  " enter file search mode
 
+" Nerdtree
+autocmd vimenter * NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+map <C-n> :NERDTreeToggle<CR>  " open and close file tree
+nmap <leader>n :NERDTreeFind<CR>  " open current buffer in file tree
+```
+
+Now if you want to search for and open a file, press `<leader>` + `p`. This is analogous to `cmd+r` in Sublime.
+
+Nerdtree will show a file tree in the window on the left of your screen. To collapse/expand it, press `ctrl` + `n`. To expose your current working file in the file tree, press `<leader>` + `n`.
+
+Altogether it looks like this:
+![File Navigation](images/file_nav.gif)
 
 ## YCM
-update vim!
-https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
+
+Next we are going to add semantic auto-complete through a plugin called [YouCompleteMe](https://valloric.github.io/YouCompleteMe/). This part is a little involved, so here's a demo first so you can decide if it's worth the setup:
+
+![YCM](images/ycm.gif)
+
+Before installing YCM, we need to rebuild vim from source to get a compatible version.
+
+First install some packages:
 ```
-sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
-    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+sudo apt-get update && apt-get install libncurses5-dev libgnome2-dev \
+    libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
     python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
 ```
+Install clang (make take a while)
+```
+sudo apt-get install clang
+```
 
+Uninstall your current vim:
 ```
 sudo apt-get remove vim vim-runtime gvim
 ```
 
-Install python2 to enable building vim with python support
+Install python2:
 ```
 sudo apt-get install python python-dev
 ```
 
+And build vim!
 ```
 cd ~
 git clone https://github.com/vim/vim.git
@@ -163,7 +270,8 @@ cd vim
 make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
 sudo make install
 ```
-Now set vim as default editor:
+
+Now set your updated vim as default editor:
 ```
 sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
 sudo update-alternatives --set editor /usr/local/bin/vim
@@ -171,7 +279,7 @@ sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
 sudo update-alternatives --set vi /usr/local/bin/vim
 ```
 
-Install YCM
+Finally, install YCM
 ```
 cd ~/.vim/bundle
 git clone https://github.com/Valloric/YouCompleteMe.git
@@ -180,28 +288,16 @@ git submodule update --init --recursive
 `./install.py --clang-completer`
 ```
 
-Now install clang
-`sudo apt-get update && sudo apt-get install clang`
-
-note: do we need to install libclang?
-
-Now install YCM_generator: https://github.com/rdnetto/YCM-Generator
-To get the appropriate ycm conf file, run `~/.vim/bundle/YCM-Generator/config_gen.py PROJECT_DIRECTORY`, where PROJECT_DIRECTORY contains the root makefile of your C project.
+In the template for your homework assignments, we will include a file `kernel/.ycm_extra_conf.py` that enables YCM. If you want to see how this works, check out [YCM-Generator](https://github.com/rdnetto/YCM-Generator) and the original YCM github page.
 
 
-TODO: add ycm_extra_conf files and vimrc configs
-
-Note: for YCM in the kernel to work properly you need to be *inside* the kernel directory.
-e.g. `cd <path-to-homework-assignment>/kernel && vim`
-
-
-
-To move cursor around: ctrl-O and ctrl-I
-
+__Important Note__: for YCM in the kernel to work properly you need to be *inside* the kernel directory when you activate vim. e.g. `cd <path-to-homework-assignment>/kernel && vim`
 
 ## Cscope
 
-Cscope is a code browser that works in your terminal and within vim. It is far more powerful than a standard grepper (such as the one at http://elixir.free-electrons.com/linux/v3.10/). For example, Cscope can answer:
+This is the final step: Function GOTOs and efficiently browing code.
+
+[Cscope](http://cscope.sourceforge.net/) is a code browser that works in your terminal and within vim. It is far more powerful than a standard grepper (such as the one at http://elixir.free-electrons.com/linux/v3.10/). For example, Cscope can answer:
 
 - Where is this variable used?
 - What is the value of this preprocessor symbol?
@@ -219,8 +315,9 @@ cd ~ && wget https://sourceforge.net/projects/cscope/files/cscope/15.8a/cscope-1
 tar xvzf cscope-15.8a.tar.gz
 ```
 
-To install, `cd cscope-15.8a` and run
+To install:
 ```
+cd ~/cscope-15.8a
 ./configure
 make
 sudo make install
@@ -234,11 +331,24 @@ In the template code for all your written assignments, we will include the follo
 - `cscope.files`, `cscope.in.out`, `cscope.out`: Files comprising the Cscope database. Do not touch these!
   - If you do accidentally delete them, run `cscope -b -q -k` in the kernel directory to regenerate.
 
-TODO: insert demo video.
+To use the Cscope browser:
+
+```
+cd <PATH-TO-HW-REPO>/kernel
+cscope -d
+```
 
 Use `<Tab>` to alternate between the menu and the list of matching lines. See [manpage](http://cscope.sourceforge.net/cscope_man_page.html) for more usage instructions of the Cscope browser.
 
-To enable vim support, we need to add a new `cscope_maps.vim` file. First, if it doesn't already exist, `mkdir ~/.vim/plugin/`. All `.vim` files in this directory will automatically be sourced into your `~/.vimrc`. Then run:
+Demo:
+
+![Cscope](images/cscope.gif)
+
+To enable vim support, we need to add a new `cscope_maps.vim` file. First, if it doesn't already exist, run
+```
+mkdir ~/.vim/plugin/
+```
+All `.vim` files in this directory will automatically be sourced into your `~/.vimrc`. Then run:
 
 ```
 cd ~/.vim/plugin && wget http://cscope.sourceforge.net/cscope_maps.vim
