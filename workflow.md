@@ -163,7 +163,7 @@ nmap <leader>q :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 ```
 
-Now to navigate your window left/right between buffers, just press `<leader>` + `l` or `<leader>` + `r`. To close a buffer, press `<leader>` + `q`.
+Now to navigate your window left/right between buffers, just press `<leader>` + `h` or `<leader>` + `l`. To close a buffer, press `<leader>` + `q`.
 
 ## Window navigation
 
