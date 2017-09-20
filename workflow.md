@@ -290,10 +290,26 @@ git submodule update --init --recursive
 ./install.py --clang-completer
 ```
 
+And add the following to your `~/.vimrc`:
+
+```
+" YCM
+let g:ycm_complete_in_comments_and_strings=1
+let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_semantic_triggers = { 'c': [ 're!.' ] }
+
+" Uncomment below if you want less invasive autocomplete
+" let g:ycm_semantic_triggers = { 'c': [ '->', '.' ] }
+
+set completeopt-=preview
+```
+
 In the template for your homework assignments, we will include a file `kernel/.ycm_extra_conf.py` that enables YCM. If you want to see how this works, check out [YCM-Generator](https://github.com/rdnetto/YCM-Generator) and the original YCM github page.
 
 
-__Important Note__: for YCM in the kernel to work properly you need to be *inside* the kernel directory when you activate vim. e.g. 
+__Important Note__: for YCM in the kernel to work properly you need to be *inside* the kernel directory when you activate vim. e.g.
 ```
 cd <path-to-homework-assignment>/kernel && vim
 ```
