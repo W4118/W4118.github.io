@@ -92,20 +92,31 @@ Here's an example of what this should look like. Note that I never open a new ta
 
 Now let's get to installing plugins.
 
-[Pathogen](https://github.com/tpope/vim-pathogen) is a plugin manager for Vim. We'll be using pathogen to install the remaining plugins, so do this first! Run this:
-
-```
-mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-```
+[vim-plug](https://github.com/junegunn/vim-plug) is a plugin manager for Vim. We'll be using vim-plug to install the remaining plugins, so do this first! 
 
 And add the following to your `~/.vimrc`:
 
 ```
-execute pathogen#infect()
+" automatically downloads vim-plug to your machine if not found.
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Define plugins to install
+call plug#begin('~/.vim/plugged')
+
+" All of your Plugins must be added before the following line
+call plug#end()
 ```
 
-Now all plugins can be installed inside `~/.vim/bundle` and they will be automatically added to your vim `runtimepath`.
+After adding some plugins, run
+```
+:PlugInstall
+```
+
+Now all plugins will be installed inside `~/.vim/plugged` and they will be automatically added to your vim `runtimepath`.
 
 ### Remapping Leader
 
@@ -125,14 +136,20 @@ We will be using leader keys through the rest of the guide. When you see somethi
 
 ## Bufferline Display:
 
-[Airline](https://github.com/vim-airline/vim-airline) is a package to display status information such as git branch and what buffer you are currently viewing. To install, run
+[Airline](https://github.com/vim-airline/vim-airline) is a package to display status information such as git branch and what buffer you are currently viewing. Add this plugin to your vimrc.
 
 ```
-git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
+" Define plugins to install
+call plug#begin('~/.vim/plugged')
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" All of your Plugins must be added before the following line
+call plug#end()
 ```
 
 And in your `~/.vimrc` add
-
 ```
 " Airline
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
@@ -190,8 +207,20 @@ To close a window, press `ctrl-w` + `c`
 The Linux kernel is a massive code base, so for easy navigation we'll want to add a filename grepper ([ctrl-p](https://github.com/kien/ctrlp.vim)) and file tree ([Nerdtree](https://github.com/scrooloose/nerdtree))
 
 ```
-git clone https://github.com/ctrlpvim/ctrlp.vim ~/.vim/bundle/vim-ctrlp
-git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+" Define plugins to install
+call plug#begin('~/.vim/plugged')
+...
+
+" Browse the file system
+Plug 'scrooloose/nerdtree'
+
+" Ctrlp
+Plug 'kien/ctrlp.vim'
+
+...
+
+" All of your Plugins must be added before the following line
+call plug#end()
 ```
 
 Now add the following to your `~/.vimrc`:
@@ -211,8 +240,7 @@ nmap <leader>p :CtrlP<cr>  " enter file search mode
 " Nerdtree
 autocmd vimenter * NERDTree
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+b:NERDTree.isTabTree()) | q | endif
 map <C-n> :NERDTreeToggle<CR>  " open and close file tree
 nmap <leader>n :NERDTreeFind<CR>  " open current buffer in file tree
 ```
@@ -225,7 +253,6 @@ Altogether it looks like this:
 ![File Navigation](images/file_nav.gif)
 
 ## YCM
-
 Next we are going to add semantic auto-complete through a plugin called [YouCompleteMe](https://valloric.github.io/YouCompleteMe/). This part is a little involved, so here's a demo first so you can decide if it's worth the setup:
 
 ![YCM](images/ycm.gif)
@@ -248,12 +275,10 @@ Uninstall your current vim:
 ```
 sudo apt-get remove vim vim-runtime gvim
 ```
-
 Install python2:
 ```
 sudo apt-get install python python-dev
 ```
-
 And build vim!
 ```
 cd ~
@@ -283,25 +308,45 @@ sudo update-alternatives --set vi /usr/local/bin/vim
 
 Finally, install YCM
 ```
-cd ~/.vim/bundle
-git clone https://github.com/Valloric/YouCompleteMe.git
-cd YouCompleteMe
+" Define plugins to install
+call plug#begin('~/.vim/plugged')
+...
+
+" YCM
+Plug 'Valloric/YouCompleteMe'
+
+...
+
+" All of your Plugins must be added before the following line
+call plug#end()
+
+cd ~/.vim/plugged/YouCompleteMe
 git submodule update --init --recursive
+
 ./install.py --clang-completer
 ```
 
 And add the following to your `~/.vimrc`:
 
 ```
-" YCM
+" Modify below if you want less invasive autocomplete
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
+
 let g:ycm_complete_in_comments_and_strings=1
 let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
 let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_semantic_triggers = { 'c': [ 're!.' ] }
 
-" Uncomment below if you want less invasive autocomplete
-" let g:ycm_semantic_triggers = { 'c': [ '->', '.' ] }
+let g:ycm_global_ycm_extra_conf = '<path/to/your/ycm_extra_conf'
 
 set completeopt-=preview
 ```
@@ -380,12 +425,12 @@ Demo:
 
 To enable vim support, we need to add a new `cscope_maps.vim` file. First, if it doesn't already exist, run
 ```
-mkdir ~/.vim/plugin/
+mkdir -p ~/.vim/plugged/
 ```
 All `.vim` files in this directory will automatically be sourced into your `~/.vimrc`. Then run:
 
 ```
-cd ~/.vim/plugin && wget http://cscope.sourceforge.net/cscope_maps.vim
+cd ~/.vim/plugged && wget http://cscope.sourceforge.net/cscope_maps.vim
 ```
 
 See this [tutorial](http://cscope.sourceforge.net/cscope_vim_tutorial.html) for more usage details. For now, I will tell you the single most useful feature we have just added: __Function GOTOs__! Now, when your cursor is over a function call, enter `ctrl + ]` and you will automatically jump to the function declaration in a new buffer. And to move your cursor back and forth, use `ctrl + o` (backwards) and `ctrl + i` (forwards). See demo video below:
@@ -397,5 +442,7 @@ My last recommendation is to use 2 terminal windows when working: one dedicated 
 ## Fin
 
 And that completes this developer workflow guide. Congrats if you've made it this far; hopefully the time spent reading this will be vastly outweighed by time you'll have saved in this class and beyond.
+
+You can also take a look at Howon's example [vimrc](https://github.com/Howon/Config/blob/master/vimrc) here.
 
 Please send any suggestions/errata to w4118@lists.cs.columbia.edu
