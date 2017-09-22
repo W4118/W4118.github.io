@@ -346,11 +346,24 @@ sudo make install
 
 Verify installation succeeded by running `cscope`. This should open up the Cscope browser in your terminal window. To exit, use `ctrl-d`.
 
-In the template code for all your written assignments, we will include the following files in `<PATH-TO-HW-REPO>/kernel`:
+In the template code for all your written assignments, we will include the following a script `<PATH-TO-HW-REPO>/gen_cscope_files.sh`. To use cscope you will need to first build the cscope db, which can be done via:
 
-- `cscope.files`: lists all kernel files Cscope will include in its project database
-- `cscope.files`, `cscope.in.out`, `cscope.out`: Files comprising the Cscope database. Do not touch these!
-  - If you do accidentally delete them, run `cscope -b -q -k` in the kernel directory to regenerate.
+```
+chmod +x gen_cscope_files.sh
+./gen_cscope_files.sh
+```
+
+This will generate `kernel/cscope.files`, which lists all kernel files Cscope will include in its project database.
+Then
+
+```
+cd kernel/
+cscope -b -q -k
+```
+
+This builds the cscope db, which is comprised of three files: `cscope.files`, `cscope.in.out`, `cscope.out`. 
+Do not touch these! They are automatically gitignored.
+ - If you do accidentally delete them, run `cscope -b -q -k` in the kernel directory to regenerate.
 
 To use the Cscope browser:
 
