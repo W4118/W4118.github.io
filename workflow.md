@@ -60,7 +60,7 @@ To optimize your git workflow, you can add shortcuts to the   `~/.gitconfig` fil
 
 __Non-vim users__: If you have a cool emacs/atom/etc setup, feel free to send us a guide and we will share it on the course website.
 
-The remainder of this guide will be dedicated to building out a robust vim developer environment, so only continue if are planning to use vim for this class.
+The remainder of this guide will be dedicated to building out a robust vim developer environment, so if you are not planning to use vim for this class jump straight to [Cscope](https://w4118.github.io/workflow#cscope)
 
 ## The Philosophy of Vim
 
