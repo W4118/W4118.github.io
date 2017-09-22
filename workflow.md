@@ -92,7 +92,7 @@ Here's an example of what this should look like. Note that I never open a new ta
 
 Now let's get to installing plugins.
 
-[vim-plug](https://github.com/junegunn/vim-plug) is a plugin manager for Vim. We'll be using vim-plug to install the remaining plugins, so do this first! 
+[vim-plug](https://github.com/junegunn/vim-plug) is a plugin manager for Vim. We'll be using vim-plug to install the remaining plugins, so do this first!
 
 And add the following to your `~/.vimrc`:
 
@@ -261,7 +261,7 @@ Before installing YCM, we need to rebuild vim from source to get a compatible ve
 
 First install some packages:
 ```
-sudo apt-get update && apt-get install libncurses5-dev libgnome2-dev \
+sudo apt-get update && sudo apt-get install libncurses5-dev libgnome2-dev \
     libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
     python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
@@ -406,7 +406,7 @@ cd kernel/
 cscope -b -q -k
 ```
 
-This builds the cscope db, which is comprised of three files: `cscope.files`, `cscope.in.out`, `cscope.out`. 
+This builds the cscope db, which is comprised of three files: `cscope.files`, `cscope.in.out`, `cscope.out`.
 Do not touch these! They are automatically gitignored.
  - If you do accidentally delete them, run `cscope -b -q -k` in the kernel directory to regenerate.
 
