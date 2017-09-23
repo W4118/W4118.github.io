@@ -266,9 +266,9 @@ sudo apt-get update && sudo apt-get install libncurses5-dev libgnome2-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
     python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
 ```
-Install clang (make take a while)
+Install clang (make take a while) and cmake
 ```
-sudo apt-get install clang
+sudo apt-get install clang cmake
 ```
 
 Uninstall your current vim:
