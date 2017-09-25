@@ -391,8 +391,28 @@ sudo make install
 
 Verify installation succeeded by running `cscope`. This should open up the Cscope browser in your terminal window. To exit, use `ctrl-d`.
 
-In the template code for all your written assignments, we will include the following a script `<PATH-TO-HW-REPO>/gen_cscope_files.sh`. To use cscope you will need to first build the cscope db, which can be done via:
+In the template code for all your written assignments, we will include the following a script `<PATH-TO-HW-REPO>/gen_cscope_files.sh`. 
 
+___
+
+__Note__: If you have just pulled HW2, the `gen_cscope_files.sh` is broken and generates bad paths. Please replace its contents with:
+
+```bash
+find ./kernel \
+    -path "./kernel/arch/*" ! -path "./kernel/arch/arm*" -prune -o \
+    -path "./kernel/tmp*" -prune -o \
+    -path "./kernel/Documentation*" -prune -o \
+    -path "./kernel/scripts*" -prune -o \
+    -path "./kernel/drivers*" -prune -o \
+    -type f -wholename "./kernel/*.[chsS]" -printf '%p\n' \
+    | sed -e 's/^\.\/kernel\///' > kernel/cscope.files
+```
+
+All homeworks after HW2 will have the correct version of `gen_cscope_files.sh`.
+
+___
+
+Now, To use cscope you will need to first build the cscope db, which can be done via:
 ```
 chmod +x gen_cscope_files.sh
 ./gen_cscope_files.sh
