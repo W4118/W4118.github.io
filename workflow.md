@@ -391,7 +391,7 @@ sudo make install
 
 Verify installation succeeded by running `cscope`. This should open up the Cscope browser in your terminal window. To exit, use `ctrl-d`.
 
-In the template code for all your written assignments, we will include the following a script `<PATH-TO-HW-REPO>/gen_cscope_files.sh`. 
+In the template code for all your written assignments, we will include the following script: `<PATH-TO-HW-REPO>/gen_cscope_files.sh`. 
 
 ___
 
