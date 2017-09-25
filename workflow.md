@@ -136,7 +136,7 @@ We will be using leader keys through the rest of the guide. When you see somethi
 
 ## Bufferline Display:
 
-[Airline](https://github.com/vim-airline/vim-airline) is a package to display status information such as git branch and what buffer you are currently viewing. Add this plugin to your vimrc.
+[Airline](https://github.com/vim-airline/vim-airline) is a package to display status information such as git branch and what buffer you are currently viewing. Add this plugin to your `~/.vimrc`.
 
 ```
 " Define plugins to install
@@ -149,7 +149,7 @@ Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 ```
 
-And in your `~/.vimrc` add
+And in your `~/.vimrc` also add
 ```
 " Airline
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
@@ -443,6 +443,6 @@ My last recommendation is to use 2 terminal windows when working: one dedicated 
 
 And that completes this developer workflow guide. Congrats if you've made it this far; hopefully the time spent reading this will be vastly outweighed by time you'll have saved in this class and beyond.
 
-You can also take a look at Howon's example [vimrc](https://github.com/Howon/Config/blob/master/vimrc) here.
+You can also take a look at Howon's example [~/.vimrc](https://github.com/Howon/Config/blob/master/vimrc) here.
 
 Please send any suggestions/errata to w4118@lists.cs.columbia.edu
