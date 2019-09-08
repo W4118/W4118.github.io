@@ -35,8 +35,8 @@ For example, click on the link below to be invited to the first assignment:
 
 Then, you will need to clone your homework repository locally to start working on it: 
 ```
-$ git clone git@github.com:W4118/f18-hmwkN-UserName.git
-Initialized empty Git repository in f18-hmwkN-UserName/.git/
+$ git clone git@github.com:W4118/f19-hmwkN-UserName.git
+Initialized empty Git repository in f19-hmwkN-UserName/.git/
 Receiving objects: 100% (x/x), done.
 remote: Counting objects: x, done.
 remote: Total x (delta 0), reused 0 (delta 0)
