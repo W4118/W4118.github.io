@@ -87,9 +87,9 @@ The procedure for doing so would be the following:
 ```
 $ pushd /tmp
 $ git clone git@github.com:W4118/f22-hmwkN-UserName.git
-$ cd s21-hmwkN-UserName
+$ cd f22-hmwkN-UserName
 # ... check contents of directory and test aginst your test cases
 $ cd ..
-$ rm -rf s21-hmwkN-UserName
+$ rm -rf f22-hmwkN-UserName
 $ popd
 ```
