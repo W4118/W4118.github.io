@@ -1,6 +1,6 @@
 # Getting started with Git
 
-## W4118 Spring 2021
+## W4118 Fall 2022
 
 Git is a version control system that Linux hackers use. If you don't know git, you probably want to start by reading the [**Pro Git Book**](https://git-scm.com/book/en/v2).
 
@@ -25,7 +25,7 @@ guide**](https://help.github.com/articles/set-up-git/). There is also [**ssh set
 
 Also please fill in the [**Google Form**](https://docs.google.com/forms/d/e/1FAIpQLSeq53hOHYuktSwFHDfs4j1JCSUZJ1Pzc3R76LMFgvglnU9cEQ/viewform?usp=sf_link) to declare your Github user name and UNI.
 
-Your source code will be stored at **_github.com/W4118/s21-hmwkN-UserName_** as a private repository. Only you or your group members are allowed to push/pull from the repository. The sample code repository is at **_github.com/W4118/s21-template-hmwkN_**. Your repository will be cloned from the sample repository initially, and you will be working on that repository afterwards. Be careful not to overwrite those initial commits made by professors or TAs in your repository. Otherwise it would be much harder for TAs to grade your homework.
+Your source code will be stored at **_github.com/W4118/f22-hmwkN-UserName_** as a private repository. Only you or your group members are allowed to push/pull from the repository. The sample code repository is at **_github.com/W4118/f22-template-hmwkN_**. Your repository will be cloned from the sample repository initially, and you will be working on that repository afterwards. Be careful not to overwrite those initial commits made by professors or TAs in your repository. Otherwise it would be much harder for TAs to grade your homework.
 
 Each assignment will be published as a Github Classroom invitation link. Click "Accept Assignment" to setup your own copy of the assignment. Please wait until Github finishes the initialization process. You may visit [**W4118 Organization**](https://github.com/w4118) to see all the sample codes and your repositories.
 
@@ -35,8 +35,8 @@ For example, click on the link below to be invited to the first assignment:
 
 Then, you will need to clone your homework repository locally to start working on it: 
 ```
-$ git clone git@github.com:W4118/s21-hmwkN-UserName.git
-Initialized empty Git repository in s21-hmwkN-UserName/.git/
+$ git clone git@github.com:W4118/f22-hmwkN-UserName.git
+Initialized empty Git repository in f22-hmwkN-UserName/.git/
 Receiving objects: 100% (x/x), done.
 remote: Counting objects: x, done.
 remote: Total x (delta 0), reused 0 (delta 0)
@@ -86,7 +86,7 @@ Once you have submitted your homework we strongly recommend that your re-clone t
 The procedure for doing so would be the following:
 ```
 $ pushd /tmp
-$ git clone git@github.com:W4118/s21-hmwkN-UserName.git
+$ git clone git@github.com:W4118/f22-hmwkN-UserName.git
 $ cd s21-hmwkN-UserName
 # ... check contents of directory and test aginst your test cases
 $ cd ..
