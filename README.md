@@ -30,7 +30,7 @@ Each assignment will be published as a Github Classroom invitation link. Click "
 
 For example, click on the link below to be invited to the first assignment:
 
-[**Homework 1**](https://classroom.github.com/a/ERMvfdUD)
+[**Homework 1**](https://classroom.github.com/a/XXX)
 
 Then, you will need to clone your homework repository locally to start working on it:
 
