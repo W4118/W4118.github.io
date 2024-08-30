@@ -22,17 +22,11 @@ While there are a number of different Git-based systems, you will be using Githu
 sure you have a registered Github account. If you are new to Github, please check out the [**getting started
 guide**](https://help.github.com/articles/set-up-git/). There is also [**ssh setup guide**](https://help.github.com/articles/connecting-to-github-with-ssh/) for you to enable ssh access to Github.
 
-Also please fill in the [**Google Form**](https://forms.gle/snGeHf1TzEjFfH8w7) to declare your Github user name and UNI.
+Please fill in the [**Google Form**](https://forms.gle/snGeHf1TzEjFfH8w7) to declare your Github user name and UNI.  This must be done by the last day of the Change of Program period for you to take this class.
 
-Your source code will be stored at **_github.com/W4118/f24-hmwkN-UserName_** as a private repository. Only you or your group members are allowed to push/pull from the repository. The sample code repository is at **_github.com/W4118/f24-template-hmwkN_**. Your repository will be cloned from the sample repository initially, and you will be working on that repository afterwards. Be careful not to overwrite those initial commits made by professors or TAs in your repository. Otherwise it would be much harder for TAs to grade your homework.
+Your source code will be stored at **_github.com/W4118/f24-hmwkN-UserName_** as a private repository. Only you or your group members are allowed to push/pull from the repository. The sample code repository is at **_github.com/W4118/f24-template-hmwkN_**. Your repository will be cloned from the sample repository initially, and you will be working on that repository afterwards. Be careful not to overwrite those initial commits made by professors or TAs in your repository. Otherwise it would be much harder for TAs to grade your homework.  Instructions will be provided with each assignment on how to access your repository for the respective assignment.
 
-Each assignment will be published as a Github Classroom invitation link. Click "Accept Assignment" to setup your own copy of the assignment. Please wait until Github finishes the initialization process. You may visit [**W4118 Organization**](https://github.com/w4118) to see all the sample codes and your repositories.
-
-For example, click on the link below to be invited to the first assignment:
-
-[**Homework 1**](https://classroom.github.com/a/XXX)
-
-Then, you will need to clone your homework repository locally to start working on it:
+Once you have access to your assignment repository, you will need to clone your homework repository locally to start working on it:
 
 ```
 $ git clone git@github.com:W4118/f24-hmwkN-UserName.git
