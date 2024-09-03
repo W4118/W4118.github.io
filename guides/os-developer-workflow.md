@@ -86,7 +86,7 @@ Here is an approximate translation from actions in sublime --> actions in vim:
 
 Here's an example of what this should look like. Note that I never open a new tab. Instead, I have 3 buffers open (top line) and 1 or 2 windows open. To view a file, I simply navigate the window I want to the appropriate buffer.
 
-![Demo](images/philosophy.gif)
+![Demo](../images/philosophy.gif)
 
 ## Install Pathogen
 
@@ -158,7 +158,7 @@ let g:airline#extensions#tabline#fnamemod = ':t' " Show just the filename
 
 When it's all done, you should have a header that looks like:
 
-![buffer](images/buffer)
+![buffer](../images/buffer)
 
 To easily maneuver around these buffers, add this to your `~/.vimrc`:
 
@@ -251,12 +251,12 @@ Now if you want to search for and open a file, press `<leader>` + `p`. This is a
 Nerdtree will show a file tree in the window on the left of your screen. To collapse/expand it, press `ctrl` + `n`. To expose your current working file in the file tree, press `<leader>` + `n`.
 
 Altogether it looks like this:
-![File Navigation](images/file_nav.gif)
+![File Navigation](../images/file_nav.gif)
 
 ## YCM
 Next we are going to add semantic auto-complete through a plugin called [YouCompleteMe](https://valloric.github.io/YouCompleteMe/). This part is a little involved, so here's a demo first so you can decide if it's worth the setup:
 
-![YCM](images/ycm.gif)
+![YCM](../images/ycm.gif)
 
 Before installing YCM, we need to rebuild vim from source to get a compatible version.
 
@@ -442,7 +442,7 @@ Use `<Tab>` to alternate between the menu and the list of matching lines. See [m
 
 Demo:
 
-![Cscope](images/cscope.gif)
+![Cscope](../images/cscope.gif)
 
 To enable vim support, we need to add a new `cscope_maps.vim` file. First, if it doesn't already exist, run
 ```
@@ -456,7 +456,7 @@ cd ~/.vim/plugged && wget http://cscope.sourceforge.net/cscope_maps.vim
 
 See this [tutorial](http://cscope.sourceforge.net/cscope_vim_tutorial.html) for more usage details. For now, I will tell you the single most useful feature we have just added: __Function GOTOs__! Now, when your cursor is over a function call, enter `ctrl + ]` and you will automatically jump to the function declaration in a new buffer. And to move your cursor back and forth, use `ctrl + o` (backwards) and `ctrl + i` (forwards). See demo video below:
 
-![Function GOTO Demo](images/function_goto.gif)
+![Function GOTO Demo](../images/function_goto.gif)
 
 My last recommendation is to use 2 terminal windows when working: one dedicated to vim/writing code, and the other dedicated to cscope/browsing code.
 
