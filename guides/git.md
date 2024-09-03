@@ -1,7 +1,5 @@
 # Getting started with Git
 
-## W4118 Fall 2024
-
 Git is a version control system that Linux hackers use. If you don't know git, you probably want to start by reading the [**Pro Git Book**](https://git-scm.com/book/en/v2).
 
 Remember to config your git settings on your developing machine, either physical or virtual, properly. Create (or edit) the file ~/.gitconfig with the following content
