@@ -75,4 +75,4 @@ After your system restarts, you may also be prompted to configure the following 
 Using your Ubuntu VM
 --------------------
 
-Two tips you may find useful for using your VM include [using SSH to connect to your VM](./ssh.md) and [setting up vim to do development in your VM](https://cs4118.github.io/dev-guides/vim-workflow.html). The latter guide was originally written for Debian, but it should work fine with Ubuntu.
+One tip you may find useful when using your VM is [using SSH to connect to your VM](./ssh.md).
