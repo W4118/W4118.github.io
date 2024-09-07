@@ -121,8 +121,8 @@ If you see a greeting with your username, you’re all set! Happy coding!
 
 ## Using VS Code (Optional)
 
-If you’re a fan of Visual Studio Code, you can work on your VM directly from a VS Code window on your host machine. This allows you to take advantage of all of VSCode’s features (such as quickly opening any file without navigating directories using Ctrl + P, which becomes really useful when dealing with Linux kernel source code).
+If you’re a fan of Visual Studio Code, you can work on your VM directly from a VS Code window on your host machine. This allows you to take advantage of all of VS Code’s features (such as quickly opening any file without navigating directories using `Ctrl + P`, which becomes really useful when dealing with Linux kernel source code).
 
-To enable SSH access via VS Code, all you have to do is install the [VSCode SSH Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh). Then, make sure you've set up your SSH config file as mentioned above.
+To enable SSH access via VS Code, all you have to do is install the [VS Code SSH Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh). Then, make sure you've set up your SSH config file as mentioned above.
 
-From now on, you can SSH into your VM by opening your Command Palette (`Ctrl-Shift-P`) and looking for `Remote-SSH: Connect to Host`. Alternatively, you can click the double triangle icon at the bottom left corner of the window. This will give you a variety of SSH-related options. Selecting `Connect to Host` or `Connect Current Window to Host` will give you a list of remote machines from your SSH config file. Choose your OS VM - if you’ve properly configured your SSH keys, it should log in automatically and start setting up a remote VSCode server.
+From now on, you can SSH into your VM by opening your Command Palette (`Ctrl-Shift-P`) and looking for `Remote-SSH: Connect to Host`. Alternatively, you can click the double triangle icon at the bottom left corner of the window. This will give you a variety of SSH-related options. Selecting `Connect to Host` or `Connect Current Window to Host` will give you a list of remote machines from your SSH config file. Choose your OS VM - if you’ve properly configured your SSH keys, it should log in automatically and start setting up a remote VS Code server.

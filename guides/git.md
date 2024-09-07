@@ -1,8 +1,8 @@
 # Getting started with Git
 
-Git is a version control system that Linux hackers use. If you don't know git, you probably want to start by reading the [**Pro Git Book**](https://git-scm.com/book/en/v2).
+Git is a version control system. If you don't know git, you probably want to start by reading the [Pro Git Book](https://git-scm.com/book/en/v2).
 
-Remember to config your git settings on your developing machine, either physical or virtual, properly. Create (or edit) the file ~/.gitconfig with the following content
+It might be helpful to configure the Git settings on the machine you're using for development (in this case, your VM). Create or edit the file `~/.gitconfig` and add the following content:
 
 ```
 [user]
@@ -16,14 +16,11 @@ Remember to config your git settings on your developing machine, either physical
         default = matching
 ```
 
-While there are a number of different Git-based systems, you will be using Github Classroom for this course. Make
-sure you have a registered Github account. If you are new to Github, please check out the [**getting started
-guide**](https://help.github.com/articles/set-up-git/). There is also [**ssh setup guide**](https://help.github.com/articles/connecting-to-github-with-ssh/) for you to enable ssh access to Github.
+While there are a number of different Git-based systems, you will be using Github Classroom for this course. Make sure you have a Github account. If you are new to Github, please check out the [getting started guide](https://help.github.com/articles/set-up-git/).
 
-Please fill in the [**Google Form**](https://forms.gle/snGeHf1TzEjFfH8w7) to declare your Github user name and UNI.  This must be done by the last day of the Change of Program period for you to take this class.
+**Please fill in [this Google Form](https://forms.gle/snGeHf1TzEjFfH8w7)** to let us know your Github username and your UNI. This must be done by the last day of the Change of Program period.
 
-Your source code will be stored at **_github.com/W4118/f24-hmwkN-UserName_** as a private repository. Only you or your group members are allowed to push/pull from the repository. The sample code repository is at **_github.com/W4118/f24-template-hmwkN_**. Your repository will be cloned from the sample repository initially, and you will be working on that repository afterwards. Be careful not to overwrite those initial commits made by professors or TAs in your repository. Otherwise it would be much harder for TAs to grade your homework.  Instructions will be provided with each assignment on how to access your repository for the respective assignment.  You may visit [**W4118
-Organization**](https://github.com/w4118) to see all the sample codes and repositories that are available to you for the class.
+For each homework assignment, your team's source code will be stored at `github.com/W4118/f24-hmwkN-UserName` as a private repository. Only you or your group members will be allowed to push/pull from the repository. A repository containing skeleton code for that assignment will also be available at `github.com/W4118/f24-template-hmwkN`. The initial state of your repository will be set to match the skeleton code. Instructions will be provided with each assignment on how to access your repository for the respective assignment. You may visit [our GitHub organization](https://github.com/w4118) to see all the repositories available to you.
 
 Once you have access to your assignment repository, you will need to clone your homework repository locally to start working on it:
 
@@ -38,52 +35,32 @@ remote: Total x (delta 0), reused 0 (delta 0)
 Your typical workflow:
 
 ```
-$ git diff # see what you've changed
+$ git diff              # see what you've changed
 $ git add file1 file2
-$ git diff --cached # see what you are about to commit
-$ git commit # explain what you did on file1 file2
+$ git diff --cached     # see what you are about to commit
+$ git commit            # explain what you did on file1 file2
 ```
 
-A few commits later
+A few commits later:
 
 ```
-$ git push # upload your changes on the repository
+$ git push              # upload your changes to the repository
 Counting objects: x, done.
 Delta compression using up to x threads.
 Compressing objects: 100% (x/x), done.
 Writing objects: 100% (x/x), x bytes, done.
 Total x (delta 0), reused 0 (delta 0)
 To git+ssh://xxx
-   xxxxxxx..xxxxxxx  master -> master
+   xxxxxxx..xxxxxxx  main -> main
 ```
 
-If git asks you for a password whenever you try to do a clone/push/pull/fetch then you need to make sure that your ~/.ssh/ directory looks like this:
-
-```
-$ ls -lh ~/.ssh
--rw------- 1 root root 672 Aug 17 2007 id_rsa
--rw-r--r-- 1 root root 604 Aug 17 2007 id_rsa.pub
-```
-
-If you already use ssh keys for logging into other servers or git repositories, you can save the private/public keypair that was created for you as ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub and create the file ~/.ssh/config like this:
-
-```
-$ touch ~/.ssh/config
-$ chmod 600
-```
-
-Then open the file and input this data:
-
-```
-Host github.com
-	IdentityFile ~/.ssh/id_rsa
-	User git
-```
+If git asks you for a password whenever you try to do a clone/push/pull/fetch then you need to make sure that you set up SSH authentication. See the section on `Pushing from your VM to GitHub` in [this guide](./ssh.md) for more details.
 
 **Checking your submissions**
 
-Once you have submitted your homework we strongly recommend that your re-clone the submission to your machine to check that what we have received is in fact what you intended to submit.
-**Note:** You can always submit again until the deadline. After the deadline, you will not be able to push to the git repository.
+Once you have submitted your homework, we strongly recommend that you re-clone the submission to your machine to check that what we have received is in fact what you intended to submit.
+
+> **Note:** You can always submit again until the deadline. After the deadline, you will not be able to push to the git repository.
 
 The procedure for doing so would be the following:
 
@@ -91,7 +68,9 @@ The procedure for doing so would be the following:
 $ pushd /tmp
 $ git clone git@github.com:W4118/f24-hmwkN-UserName.git
 $ cd f24-hmwkN-UserName
-# ... check contents of directory and test aginst your test cases
+
+# Check contents of the directory and test aginst your test cases
+
 $ cd ..
 $ rm -rf f24-hmwkN-UserName
 $ popd
