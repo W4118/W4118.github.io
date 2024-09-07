@@ -4,10 +4,16 @@
 
 ### Dependencies
 
-Install the following dependencies:
+First, update the package repository cache by running the following command:
 
 ```
-build-essential bc python3 bison flex rsync libelf-dev libssl-dev libncurses-dev dwarves
+$ sudo apt update
+```
+
+Then, install the following dependencies:
+
+```
+$ sudo apt install build-essential bc python3 bison flex rsync libelf-dev libssl-dev libncurses-dev dwarves
 ```
 
 ### Source code
@@ -118,9 +124,9 @@ $ sudo make modules_install && sudo make install
 Make sure that the installation **actually succeeds**, i.e. your output ends with something like `done`. If the above command errors out, i.e. your output ends with something like `make: *** [Makefile:240: __sub-make] Error 2`, try doing the following:
 
 ```
-sudo apt remove initramfs-tools
-sudo apt clean
-sudo apt install initramfs-tools
+$ sudo apt remove initramfs-tools
+$ sudo apt clean
+$ sudo apt install initramfs-tools
 ```
 
 Verify that you have the following 3 files in `/boot/`:
@@ -145,7 +151,7 @@ If you have not done so before, enable the boot selection screen (called grub) s
 Reboot your VM:
 
 ```
-sudo reboot
+$ sudo reboot
 ```
 
 When your VM boots up, select `Advanced options for Ubuntu` and choose the kernel you want. In this case, you'll choose the kernel whose name ends with `-cs4118` (the `CONFIG_LOCALVERSION` identifier you set in `.config`).
@@ -153,7 +159,7 @@ When your VM boots up, select `Advanced options for Ubuntu` and choose the kerne
 Now verify that you’re running your own custom kernel by running:
 
 ```
-uname -r
+$ uname -r
 ```
 
 Instead of `6.8.0-41-generic`, you should now see your kernel version string, `6.8.0-cs4118`!
