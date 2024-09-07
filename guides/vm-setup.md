@@ -75,6 +75,4 @@ After your system restarts, you may also be prompted to configure the following 
 Using your Ubuntu VM
 --------------------
 
-Two tips you may find useful for using your VM include [using SSH to connect to your VM](https://cs4118.github.io/dev-guides/vm-ssh.html), which you may find more convenient at times instead of using the graphical console, and [setting up vim to do development in your VM](https://cs4118.github.io/dev-guides/vim-workflow.html).
-
-For the SSH guide, note that a shell prompt of `#` indicates that the command has to be executed with `sudo`. All shell commands that aren't prefixed with `[host]` should be executed in the **terminal of your VM on VMware**, not in the terminal of your personal machine. Both of the guides were originally written for Debian, but they should work perfectly fine with Ubuntu.
+Two tips you may find useful for using your VM include [using SSH to connect to your VM](./vm-setup.md) and [setting up vim to do development in your VM](https://cs4118.github.io/dev-guides/vim-workflow.html). The latter guide was originally written for Debian, but it should work fine with Ubuntu.
