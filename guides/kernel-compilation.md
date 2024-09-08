@@ -111,7 +111,7 @@ To build the kernel, run the following as a **non-root user**:
 $ make -j$(nproc)
 ```
 
-You can also run `make -jN`, where N is the number of parallel compilation jobs to run, which should correspond to the number of cores in your VM.
+In the command above, `nproc` evaluates to the number of cores in your VM. You can also set the parallelization level to a different value by using `make -jN`, where N is the number of parallel compilation jobs to run. Note that setting N to greater than `nproc` won't necessarily make things faster, and may even lead to more overhead.
 
 ## Installing the kernel
 
