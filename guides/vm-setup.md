@@ -75,4 +75,4 @@ After your system restarts, you may also be prompted to configure the following 
 Using your Ubuntu VM
 --------------------
 
-One tip you may find useful when using your VM is [using SSH to connect to your VM](./ssh.md).
+Two tips you may find useful when using your VM are [using SSH to connect to your VM](./ssh.md) and [using Vim and cscope for development](./vim.md).

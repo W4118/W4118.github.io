@@ -4,6 +4,7 @@
 
 - [Getting started with Git](./guides/git.md)
 - [SSHing into your VM instance](./guides/ssh.md)
+- [Using Vim and cscope for development](./guides/vim.md)
 
 ### Kernel development
 
