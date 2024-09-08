@@ -149,7 +149,7 @@ To open a new window, enter:
 
 You can also use `Ctrl-w + s` or `+ v` to make a horizontal or vertical split, respectively.
 
-To navigate between windows, use `Ctrl-w + h|j|k|l` to navigate left|down|up|right.
+To navigate between windows, use `Ctrl-w + h/j/k/l` to navigate left/down/up/right.
 
 Alternatively, add this to your `~/.vimrc` so that you can move between windows using arrow keys:
 
