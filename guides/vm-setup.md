@@ -76,3 +76,8 @@ Using your Ubuntu VM
 --------------------
 
 Two tips you may find useful when using your VM are [using SSH to connect to your VM](./ssh.md) and [using Vim and cscope for development](./vim.md).
+
+Shutting down your Ubuntu VM
+----------------------------
+
+Shutting down a VM using VMware e.g. using `Virtual Machine -> Shut Down` may not always work properly. See [this link](https://docs.vmware.com/en/VMware-Workstation-Pro/17/com.vmware.ws.using.doc/GUID-4966A19E-316D-4037-A07D-CB0E42934A2B.html) for more details. To ensure a graceful shutdown is performed, you should always shut down your VM from within the guest operating system itself. In Linux, you can do this by running `sudo shutdown`.
