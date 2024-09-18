@@ -14,3 +14,4 @@
 ## Homework prompts
 
 - [Homework 1](https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/hmwk1.html)
+- [Homework 2](./homework/hw2.md)
