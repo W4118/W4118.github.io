@@ -16,6 +16,8 @@ Group programming problems are to be done in your assigned groups. We will let y
 $ git clone git@github.com:W4118/f24-hmwk2-teamN.git
 ```
 
+> **IMPORTANT**: You should clone the repository **directly in the terminal of your VM**, instead of cloning it on your local machine and then copying it into your VM. The filesystem in your VM is case-sensitive, but your local machine might use a case-insensitive filesystem (for instance, this is the default setting on macs). Cloning the repository to a case-insensitive filesystem might end up clobbering some kernel source code files. See [this post](https://unix.stackexchange.com/questions/753038/is-building-the-linux-kernel-on-a-case-insensitive-filesystem-possible) for some examples.
+
 This repository will be accessible to all members of your team, and all team members are expected to make local commits and push changes or contributions to GitHub equally. You should become familiar with team-based shared repository Git commands such as [git-pull][git-pull], [git-merge][git-merge], [git-fetch][git-fetch]. For more information, see [this guide](../guides/git.md).
 
 There should be at least five commits **per member** in the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://www.kernel.org/doc/html/v6.8/process/coding-style.html). You **must** check your commits with the `run_checkpatch.sh` script provided as part of your team repository. Errors from the script in your submission will cause a deduction of points. (Note that the script only checks the changes up to your latest commit. Changes in the working tree or staging area will not be checked.)
@@ -24,7 +26,7 @@ The kernel programming for this assignment will be run using your Linux VM. As p
 
 **For this assignment, you will write a system call to dump the process tree and a user space program to use the system call.**
 
-For students on Arm Mac computers (e.g. with M1/M2/M3 CPU): if you want your submission to be built/tested for Arm, you must create and submit a file called `.armpls` in the top-level directory of your repo; feel free to use the following one-liner:
+For students on Arm computers (e.g. macs with M1/M2/M3 CPU): if you want your submission to be built/tested for Arm, you must create and submit a file called `.armpls` in the top-level directory of your repo; feel free to use the following one-liner:
 
 ```
 $ cd "$(git rev-parse --show-toplevel)" && touch .armpls && git add .armpls && git commit -m "Arm pls"
@@ -118,7 +120,7 @@ This copies the UAPI header files to `/usr/`. You should now be able to see your
 	]
 	```
 
-	Note that in this example, there are 7 processes (0, 1, 3, 6, 7, 8, and 9) and 3 threads (2, 4, and 5). Also, 7 is a child of 2 not 1, and 8 and 9 are children of 4. In this scenario, commands like `ps` might differ from ours in output (see the hint below on `PID vs TGID` for an explanation).
+	Note that in this example, there are 7 processes (0, 1, 3, 6, 7, 8, and 9) and 3 threads (2, 4, and 5). Also, 7 is a child of 2 not 1, and 8 and 9 are children of 4. In this scenario, commands like `ps` might differ from ours in output (see the hint below on `PID vs TGID` for an explanation). Note also that the levels are zero-indexed, and level 0 refers to tasks at the same level as the task with PID `root_pid` (this might not always be the task with PID 0).
 
 * There should be no duplicate information of processes inside the buffer.
 
