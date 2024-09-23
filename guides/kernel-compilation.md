@@ -180,19 +180,13 @@ A large amount of time is spent compiling and installing kernel modules you neve
 
 ## Overall workflow
 
-When you are hacking kernel code, you’ll often make simple changes to only a handful of `.c` files. If you didn’t touch any header files, the modules will not be rebuilt when you run make; thus there is no reason to reinstall all modules every time you rebuild your kernel. In other words, when installing your kernel, you can simply do:
-
-```
-$ sudo make install
-```
-
-This assumes you have previously run `sudo make modules_install` with the kernel configuration you are currently using.
-
-Just to reemphasize the earlier point, when you are hacking kernel code, the standard workflow will be to modify kernel code, then build the kernel and install the updated kernel using the following two steps:
+When you are hacking kernel code, you’ll often make simple changes to only a handful of `.c` files. If you didn’t touch any header files, the modules will not be rebuilt when you run make; thus there is no reason to reinstall all modules every time you rebuild your kernel. In this case, when compiling and installing your kernel, you can simply do:
 
 ```
 $ make -j$(nproc)
 $ sudo make install
 ```
 
-Then reboot your VM and select your kernel in grub. In other words, there is no need to go through the sections `Configuring your kernel build` or `Optimizing your kernel compilation time` each time you build your kernel. Those steps only need to be done once. Of couse, if you do a fresh clone of the kernel source code, you'll need to go through all of these steps again.
+**Again, this assumes that you did NOT modify any header files potentially used by kernel modules.** This also assumes you have not changed your kernel configuration since you last ran `sudo make modules_install`.
+
+Then, reboot your VM and select your kernel in grub. In other words, there is no need to go through the sections `Configuring your kernel build` or `Optimizing your kernel compilation time` each time you build your kernel. Those steps only need to be done once. Of couse, if you do a fresh clone of the kernel source code, you'll need to go through all of these steps again.
