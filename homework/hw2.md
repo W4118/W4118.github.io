@@ -220,13 +220,15 @@ Part 4: Investigate kernel source code
 
 Write answers to the following questions in the `user/part4.txt` text file, following the provided template **exactly**. Make sure to include any references you use in your `references.txt` file.
 
-1. There are a few PIDs that are reserved for system processes and kernel threads. These include PIDs 0, 1, and 2. What is the name associated with each of these three PIDs?
+> <span style="color:red">IMPORTANT: The skeleton code pushed to the assignment repo has an error in question two. The original skeleton code asks about the init process. The question should be about the **PROCESS WITH PID 0**, as is the case below.</span>
 
-2. Give the exact URL on [elixir.bootlin.com][elixir.bootlin.com] pointing to the file and line number of code at which the data structure describing the process with PID 0 is defined. Note: make sure you use v6.8.
+1. There are a few PIDs that are reserved for system processes and kernel threads. These include PIDs 0, 1, and 2. What is the process name associated with each of these three PIDs (some may have multiple acceptable names)?
 
-3. Give the exact URL on [elixir.bootlin.com][elixir.bootlin.com] pointing to the file and line number of code at which the function that executes instructions to context switch from one task to another is defined. The function you identify, which may be in assembly code, should be the one that contains the actual instruction that switches the CPU's program counter register to the task so it can run. Please provide an answer for both arm64 and x86-64. Note: use v6.8.
+2. Give the exact URL on https://elixir.bootlin.com/linux/v6.8/source pointing to the file and line number at which the data structure describing the process with PID 0 is defined. Note: make sure you use v6.8.
 
-4. Give the exact URL on [elixir.bootlin.com][elixir.bootlin.com] pointing to the file and line number of code at which the process with PID 1 starts running as the currently running process. Please provide an answer for both arm64 and x86-64. Note: use v6.8.
+3. Give the exact URL on https://elixir.bootlin.com/linux/v6.8/source pointing to the file and line number at which the function that executes instructions to context-switch from one task to another is defined. Please provide an answer for both arm64 and x86-64. The function you identify, which may be in assembly code, should be the one that contains the actual instruction that switches the CPU's program counter register to the task so it can run. Note: use v6.8.
+
+4. Give the exact URL on https://elixir.bootlin.com/linux/v6.8/source pointing to the file and line number at which the process with PID 1 starts running as the currently running process. Please provide an answer for both arm64 and x86-64. Note: use v6.8.
 
 For reference, the URLs you answer with should be in the following format: https://elixir.bootlin.com/linux/v6.8/source/kernel/sched/core.c#L6607
 
