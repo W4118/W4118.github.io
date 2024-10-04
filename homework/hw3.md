@@ -95,7 +95,7 @@ Once you can successfully indicate which processes should be traced, you should 
 /* The data structure representing the global ring buffer */
 struct pstrace_kernel {
     struct pstrace entry[PSTRACE_BUF_SIZE]; /* State changes */
-    atomic_t counter;                       /* Number of records */
+    long counter;                           /* Number of records */
 
     /* Include other fields that you may need */
 };
