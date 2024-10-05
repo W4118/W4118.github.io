@@ -225,26 +225,26 @@ You will now update the implementation of your `pstrace_get()` system call to su
  * If @counter points to 0, copy the immediate pstrace ring buffer.
  * If @counter points to a value < 0, return an error.
  * If @counter points to a value > 0, the caller process will wait until
- *   a full buffer can be returned after record *counter (i.e. copy records
- *   numbering from *counter + 1 to *counter + PSTRACE_BUF_SIZE from the
- *   pstrace ring buffer to @buf).
+ *   a full buffer can be returned starting from record *counter
+ *   (i.e. copy records numbering between *counter and
+ *   *counter + PSTRACE_BUF_SIZE - 1 from the pstrace ring buffer to @buf).
  *
  * Returns the number of records copied.
  */
 long pstrace_get(struct pstrace *buf, long *counter);
 ```
 
-Specifically, a positive value of `*counter` indicates a request for a full buffer starting at ring buffer counter `*counter + 1`. That is, your system call should copy records into `@buf` in chronological order such that the first record is the record corresponding to ring buffer counter `*counter + 1`, and the last record is the record corresponding to ring buffer counter `*counter + PSTRACE_BUF_SIZE`.
+Specifically, a positive value of `*counter` indicates a request for a full buffer starting at ring buffer counter `*counter`. That is, your system call should copy records into `@buf` in chronological order such that the first record is the record corresponding to ring buffer counter `*counter`, and the last record is the record corresponding to ring buffer counter `*counter + PSTRACE_BUF_SIZE - 1`.
 
-If the ring buffer counter has not yet reached record `*counter + PSTRACE_BUF_SIZE` (the last record requested), your system call should sleep until this happens and the full buffer can be returned. When you return, update `*counter` to the value of the ring buffer counter corresponding to the last record that was requested.
+If the ring buffer counter has not yet reached record `*counter + PSTRACE_BUF_SIZE - 1` (the last record requested), your system call should sleep until this happens and the full buffer can be returned. When you return, update `*counter` to the value of the ring buffer counter corresponding to the last record that was requested.
 
-> For example, if `pstrace_get()` is called with `*counter = 1000`, it should not return until the ring buffer counter has reached 1500. When it returns, it should return the relevant corresponding buffer records from buffer counter 1001 to 1500, with `*counter` updated to 1500.
+> For example, if `pstrace_get()` is called with `*counter = 1000`, it should not return until the ring buffer counter has reached 1499. When it returns, it should return the relevant corresponding buffer records from buffer counter 1000 to 1499, with `*counter` updated to 1499.
 
-If the ring buffer counter has already exceeded record `*counter + PSTRACE_BUF_SIZE` (the last record requested), you will only be able to partially fill the buffer. In particular, only copy relevant records within the requested range. You should NOT copy in any other records to fill the buffer.
+If the ring buffer counter has already exceeded record `*counter + PSTRACE_BUF_SIZE - 1` (the last record requested), you will only be able to partially fill the buffer. In particular, only copy relevant records within the requested range. You should NOT copy in any other records to fill the buffer.
 
-> For example, if `pstrace_get()` is called with `*counter = 800`, then the last record that is copied over should be the record corresponding to the counter 1300. However, if the ring buffer counter is already at 1400, then it means that it only contains the previous 500 records (corresponding to counters 901 to 1400). Therefore, you should only return 400 buffer records (corresponding to counters 901 to 1300) instead of a full buffer, since those are the only relevant records within the requested range that are available.
+> For example, if `pstrace_get()` is called with `*counter = 800`, then the last record that is copied over should be the record corresponding to the counter 1299. However, if the ring buffer counter is already at 1399, then it means that it only contains records corresponding to counters 900 to 1399. Therefore, you should only return 400 buffer records (corresponding to counters 900 to 1299) instead of a full buffer, since those are the only relevant records within the requested range that are available.
 
-If all the records within the requested range have already been evicted from the ring buffer, that is if `*counter + PSTRACE_BUF_SIZE` (the last requested record) is less than `current ring buffer counter - PSTRACE_BUF_SIZE` (the earliest record left in the ring buffer), set `*counter` to be the current value of the ring buffer counter and return immediately. Do not copy any records from the ring buffer in this case.
+If all the records within the requested range have already been evicted from the ring buffer, that is if `*counter + PSTRACE_BUF_SIZE - 1` (the last requested record) is less than the earliest record left in the ring buffer, set `*counter` to be the current value of the ring buffer counter and return immediately. Do not copy any records from the ring buffer in this case.
 
 > For example, if `pstrace_get()` is called with `*counter = 100` when the ring buffer counter is already at 1400, no records can be copied and `*counter` is updated to 1400.
 
