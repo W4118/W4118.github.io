@@ -191,7 +191,7 @@ Extend the usage of `pstrace_add()` to now record changes in processes’ state 
 2. `TASK_RUNNABLE`
 3. `TASK_INTERRUPTIBLE`
 4. `TASK_UNINTERRUPTIBLE`
-5. `_TASK_STOPPED`
+5. `__TASK_STOPPED`
 6. `EXIT_ZOMBIE`
 7. `EXIT_DEAD`
 
@@ -291,7 +291,7 @@ For questions, 2, 3, and 4, give your answer in the format `[STATE] -> [STATE]`,
     - `TASK_RUNNABLE`
     - `TASK_INTERRUPTIBLE`
     - `TASK_UNINTERRUPTIBLE`
-    - `_TASK_STOPPED`
+    - `__TASK_STOPPED`
     - `EXIT_ZOMBIE`
     - `EXIT_DEAD`
 
