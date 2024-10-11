@@ -2,7 +2,9 @@
 
 > <span style="color:red">**DUE: Wednesday 10/2/2024 at 11:59pm ET**</span>
 
-> Last modified: Fri Sep 27, 0005 hrs (part 4, question 2)
+> Modified: Fri Sep 27, 0005 hrs (part 4, question 2)
+
+> Modified: Fri Oct 11, 1505 hrs (clarification on what happens when procs > *nr -- added for future semesters)
 
 ## General instructions
 
@@ -89,7 +91,7 @@ This copies the UAPI header files to `/usr/`. You should now be able to see your
 **Description of parameters**
 
 * **buf** points to a buffer to store the thread data from the process tree. The thread data stored inside the buffer should be sorted first according to the associated main process in BFS order, where processes at a higher level (level 0 is considered to be higher than level 10) should appear before processes at a lower level. Then, when listing threads within a process's thread group, the threads should be stored in ascending order of PID.
-* **nr** points to an integer that represents the size of this buffer (number of entries). The system call copies at most `*nr` entries of thread data to the buffer, and stores the number of entries actually copied in `*nr`. Note that the actual size of the buffer will be `*nr * sizeof(struct tskinfo)` bytes.
+* **nr** points to an integer that represents the size of this buffer (number of entries). The system call copies at most `*nr` entries of thread data to the buffer, and stores the number of entries actually copied in `*nr`. Note that the actual size of the buffer will be `*nr * sizeof(struct tskinfo)` bytes. **If the number of processes in the subtree is larger than the size of the buffer, you MUST still fill the buffer with as many entries as possible.** In other words, if there are 100 processes in the subtree and the buffer is of size 10, you should just copy the first 10 entries into the buffer.
 * **root_pid** represents the PID of the thread that will serve as the root of the subtree you are required to traverse. See the hint below on `PID vs TGID` for more information on what we mean when we say the PID of a thread. Information of nodes outside this subtree shouldn't be put into `buf`. **If the thread with PID `root_pid` is part of a thread group with multiple threads, they (and all of their children) should be included in `buf`, unless the maximum number of entries is reached.** Note that this means you might end up including threads whose PID is smaller than `root_pid`, as long as these threads are in the same thread group as the thread with PID `root_pid`.
 * **Return value:** The function defining your system call should return 0 on success, and return an appropriate error on failure such that `errno` contains the correct error code.
 
