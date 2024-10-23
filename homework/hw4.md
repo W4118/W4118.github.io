@@ -4,19 +4,39 @@
 
 ## General Instructions
 
-All homework submissions are to be made via [Git](http://git-scm.com/). You must submit a detailed list of references as part your homework submission indicating clearly what sources you referenced for each homework problem. You do not need to cite the course textbooks and instructional staff. All other sources must be cited. Please edit and include this [file](https://www.cs.columbia.edu/~nieh/teaching/w4118_f24/homeworks/references.txt) in the top-level directory of your homework submission in the test branch of your team repo. Homeworks submitted without this file will not be graded. **Be aware that commits pushed after the deadline will not be considered.** Refer to the homework policy section on the [class web site](http://www.cs.columbia.edu/~nieh/teaching/w4118) for further details.
+All homework submissions are to be made via [Git][Git]. You must submit a detailed list of references as part of your homework submission indicating clearly what sources you referenced for each homework problem. You do not need to cite the course textbooks and instructional staff. All other sources must be cited. Please edit and include this [file][file] in the top-level directory of your homework submission in the `main` branch of your team repo. **Be aware that commits pushed after the deadline will not be considered.** Refer to the homework policy section on the [class website][class-web-site] for further details.
+
+[Git]: https://git-scm.com/
+[file]: https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/references.txt
+[class-web-site]: https://www.cs.columbia.edu/~nieh/teaching/w4118/
+
+Group programming problems are to be done in your assigned groups. We will let you know when the Git repository for your group has been set up on GitHub. It can be cloned using the following command. Replace `teamN` with your team number, e.g. `team0`. You can find your group number [here](https://docs.google.com/spreadsheets/d/1sWSEjtqSqSsl2dJ3R3YZKYlw4WG4GtfpHNECpqFJiks/edit?gid=260033287#gid=260033287).
+
+```
+$ git clone git@github.com:W4118/f24-hmwk2-teamN.git
+```
+
+> **IMPORTANT**: You should clone the repository **directly in the terminal of your VM**, instead of cloning it on your local machine and then copying it into your VM. The filesystem in your VM is case-sensitive, but your local machine might use a case-insensitive filesystem (for instance, this is the default setting on macs). Cloning the repository to a case-insensitive filesystem might end up clobbering some kernel source code files. See [this post](https://unix.stackexchange.com/questions/753038/is-building-the-linux-kernel-on-a-case-insensitive-filesystem-possible) for some examples.
+
+This repository will be accessible to all members of your team, and all team members are expected to make local commits and push changes or contributions to GitHub equally. You should become familiar with team-based shared repository Git commands such as [git-pull][git-pull], [git-merge][git-merge], [git-fetch][git-fetch]. For more information, see [this guide](../guides/git.md).
+
+There should be at least five commits **per member** in the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://www.kernel.org/doc/html/v6.8/process/coding-style.html). You **must** check your commits with the `run_checkpatch.sh` script provided as part of your team repository. Errors from the script in your submission will cause a deduction of points. (Note that the script only checks the changes up to your latest commit. Changes in the working tree or staging area will not be checked.)
+
+For students on Arm computers (e.g. macs with M1/M2/M3 CPU): if you want your submission to be built/tested for Arm, you must create and submit a file called `.armpls` in the top-level directory of your repo; feel free to use the following one-liner:
+
+```
+$ cd "$(git rev-parse --show-toplevel)" && touch .armpls && git add .armpls && git commit -m "Arm pls"
+```
+
+You should do this first so that this file is present in any code you submit for grading.
+
+For all programming problems, you should submit your source code as well as a single README file documenting your files and code for each part. Please do NOT submit kernel images. The README should explain any way in which your solution differs from what was assigned, and any assumptions you made. You are welcome to include a test run in your README showing how your system call works. **It should also state explicitly how each group member contributed to the submission and how much time each member spent on the homework.** The README should be placed in the top level directory of the main branch of your team repo (on the same level as the `linux/` and `user/` directories).
+
+[git-pull]: https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-pull.html
+[git-merge]: https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-merge.html
+[git-fetch]: https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-fetch.html
 
 ### Programming Problems:
-
-Group programming problems are to be done in your assigned [groups](https://docs.google.com/spreadsheets/d/1_JyOj9XQr-MUumeYRiquAYlmPZ5s8rW5ckCErBYsKFs/edit#gid=1258428042). The Git repository for your group has been setup already on Github. You don't need the Github Classroom link for the group assignment and do not need to initialize the repository. It can be cloned using: git clone git@github.com:W4118/f24-hmwk4-teamN.git (Replace teamN with the name of your team, e.g. team0). This repository will be accessible to all members of your team, and all team members are expected to commit (local) and push (update the server) changes / contributions to the repository equally. You should become familiar with team-based shared repository Git commands such as [git-pull](https://urldefense.proofpoint.com/v2/url?u=http-3A__www.kernel.org_pub_software_scm_git_docs_git-2Dpull.html&d=DwMGaQ&c=009klHSCxuh5AI1vNQzSO0KGjl4nbi2Q0M1QLJX9BeE&r=3PpFqEKfXKvLHyKCj94gMpFFYntNz3xc-95Jnoslw78&m=3IfkBTLJ5MjahgGxBzIKFNSe0iUMr1bHrGyxl9ZtL8z5kbOJ7EHikkDwv-W8XLai&s=gQR6EGQjdvPYfevBY7aFXJucd3933f47YhrgZERgy68&e=), [git-merge](https://urldefense.proofpoint.com/v2/url?u=http-3A__www.kernel.org_pub_software_scm_git_docs_git-2Dmerge.html&d=DwMGaQ&c=009klHSCxuh5AI1vNQzSO0KGjl4nbi2Q0M1QLJX9BeE&r=3PpFqEKfXKvLHyKCj94gMpFFYntNz3xc-95Jnoslw78&m=3IfkBTLJ5MjahgGxBzIKFNSe0iUMr1bHrGyxl9ZtL8z5kbOJ7EHikkDwv-W8XLai&s=Ii_Sa121piF7OiZA-q9hhaghDFzH69tIMq0yZfROHVw&e=), and [git-fetch](https://urldefense.proofpoint.com/v2/url?u=http-3A__www.kernel.org_pub_software_scm_git_docs_git-2Dfetch.html&d=DwMGaQ&c=009klHSCxuh5AI1vNQzSO0KGjl4nbi2Q0M1QLJX9BeE&r=3PpFqEKfXKvLHyKCj94gMpFFYntNz3xc-95Jnoslw78&m=3IfkBTLJ5MjahgGxBzIKFNSe0iUMr1bHrGyxl9ZtL8z5kbOJ7EHikkDwv-W8XLai&s=MbqMCSaACZGoGhE_nUL-SGSJYwZK89ZSQlKFevUkJt8&e=).
-
-All team members should make at least _five_ commits to the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://urldefense.proofpoint.com/v2/url?u=https-3A__www.kernel.org_doc_html_v5.4_process_coding-2Dstyle.html&d=DwMGaQ&c=009klHSCxuh5AI1vNQzSO0KGjl4nbi2Q0M1QLJX9BeE&r=3PpFqEKfXKvLHyKCj94gMpFFYntNz3xc-95Jnoslw78&m=3IfkBTLJ5MjahgGxBzIKFNSe0iUMr1bHrGyxl9ZtL8z5kbOJ7EHikkDwv-W8XLai&s=ewdKhjPwo1VGtwp8gnz_Vfd-X2FsTRlEo-TpA9TIKW8&e=) and check your commits with checkpatch.pl. Errors or warnings in your submission will cause a deduction of points.
-
-For students on Arm Mac computers (e.g. with M1 or M2 CPU): if you want your submission to be built/tested for Arm, you must create and submit a file called .armpls in the top-level directory of your repo; feel free to use the following one-liner: cd "$(git rev-parse --show-toplevel)" && touch .armpls && git add .armpls && git commit -m "Arm pls" You should do this first so that this file is present in any code you submit for grading.
-
-For all programming problems you should submit your source code as well as a single README file documenting your files and code for each part. Please do NOT submit kernel images. The README should explain any way in which your solution differs from what was assigned, and any assumptions you made. You are welcome to include a test run in your README showing how your system call works. **It should also state explicitly how each group member contributed to the submission and how many hours each member spent on the homework.** The README should be placed in the top level directory of the main branch of your team repo (on the same level as the linux/ and user/ directories).
-
-**Scenario**
 
 Having completed the first half of your operating systems training, you and your team are now well-versed OS developers, and have been hired by W4118 Inc. to work on their next-generation operating systems. In this next-gen OS, W4118 Inc. has tasked your team to improve the Linux kernel's scheduling capabilities and optimize for workloads typical of W4118 Inc.'s customers.
 
@@ -29,11 +49,10 @@ Data privacy is important in modern computing, so instead of real customer progr
 
 Given these two task sets, W4118 Inc. is interested in a scheduler (let's call it "Oven") that can optimize for the **completion time** of the tasks. Specifically, the scheduler should provide the minimum average completion time for each task set across all tasks in the respective task set.
 
-**Let's begin!**
 
 Part 1: Measure scheduler performance with eBPF
 ------
-    
+	
 To see how well a scheduler performs, it is necessary to first have a way to measure performance, specifically completion time of tasks. W4118 Inc. is looking for a way to trace scheduling events and determine how well a scheduler functions by measuring tasks' run queue latency and total duration from start to finish.
 
 Extended Berkeley Packet Filter ([eBPF](https://ebpf.io/)) is a powerful feature of the Linux kernel that allows programs to inject code into the kernel at runtime to gather metrics and observe kernel state. You will use eBPF to trace scheduler events. Tracepoints for these scheduler events are already available in the scheduler (for example, you can search in core.c for trace\_sched\_), so your job is to write code that will be injected into the kernel to use them. You should not need to modify any kernel source code files for this first part of the assignment.
@@ -66,11 +85,11 @@ Now that you have an eBPF measurement tool, use it to measure the completion tim
 **Hint:** You may find it useful to reference the bpftrace [GitHub project](https://github.com/iovisor/bpftrace), which contains a manual and a list of sample scripts. A useful example script to start with is [runqlat.bt](https://github.com/iovisor/bpftrace/blob/master/tools/runqlat.bt).
 
 **Note:** Since your profiler will run on the same machine as the test workloads, you will need to ensure that the profiler gets sufficient CPU time to record data. What could you do to the profiler's scheduling class and priority to ensure it can run over the test workloads? You may find [`chrt`](https://man7.org/linux/man-pages/man1/chrt.1.html) helpful.
-    
+	
 
 Part 2: Create your scheduler
 ------
-    
+	
 W4118 Inc. has tasked you with creating a new scheduling policy that provides better average completion time than the default Linux scheduling policy. You should begin by implement a new scheduler policy. Call this policy OVEN. For this stage, the scheduler should work as follows:
 
 1.  Only tasks whose policy is set to SCHED\_OVEN should be considered for selection by your new scheduler.
@@ -94,11 +113,11 @@ Some notes that may be helpful in your implementation:
 *   You may want your scheduler to have a minimum valid weight well above the priority range normally used for `sched_priority` such that any weight assignment less than the minimum valid weight is instead forced to be the MAX\_WEIGHT. The reason for this is that there are system programs that use sched\_setscheduler with lower values for `sched_priority`. If they are scheduled using your scheduling class, you want to detect their invalid weight assignments and schedule them using your round-robin algorithm.
 *   For a more responsive system, you may want to set the scheduler of kernel threads to be SCHED\_OVEN as well (otherwise, SCHED\_OVEN tasks can starve the SCHED\_NORMAL tasks to a degree). To do this, you can modify kernel/kthread.c and replace SCHED\_NORMAL with SCHED\_OVEN. It is strongly suggested that you do this to ensure that your VM is responsive enough for the test cases, but you should not do this until you are certain your scheduler works properly.
 *   Check out the [debugging tips](#debugging-tips) provided below.
-    
+	
 
 Part 3: Optimizing and measuring your new scheduler
 ------
-    
+	
 Recall your average completion time measurements from part 1, which used the CFS scheduler. Can you do better?
 
 You should consider how you might modify the fibonacci program to set its OVEN weight. How did you determine when jobs of different weights will be scheduled in relation to each other? What weights and scheduling algorithm will optimize for average completion time? Make any changes to fibonacci and your scheduler, then submit eBPF traces of the two task sets running on your scheduler. You should use the same two VM CPU configurations you used earlier to measure performance using CFS. Submit your eBPF traces for the two task sets and CPU configurations as user/taskset1\_average.txt, user/taskset1\_average\_smp.txt, user/taskset2\_average.txt, and user/taskset2\_average\_smp.txt Write the average completion times for each workload in your README and compare against CFS.
@@ -106,10 +125,10 @@ You should consider how you might modify the fibonacci program to set its OVEN w
 **Hint:** Configuring the scheduling class and priority within the Fibonacci program will be too late (why is this the case?). You may want to write a small program to set the scheduler and weight before calling exec on Fibonacci.
 
 **Note:** When launching jobs from the task list, start tasks in the order they are listed, but do not wait for tasks to finish before launching the next one. Also, for all trace submissions in this section, filter out any process that is not fibonacci.
-    
+	
 Part 4: Add load-balancing features
 ------
-    
+	
 So far, your scheduler will run a task only on the CPU that it was originally assigned. Let's change that now! For this part you will be implementing idle balancing, which is when a CPU will attempt to steal a task from another CPU when it doesn't have any tasks to run (i.e. when its runqueue is empty).
 
 Load balancing is a key feature of the default Linux scheduler (Completely Fair Scheduler). While CFS follows a rather complicated policy to balance tasks and works to move more than one task in a single go, your scheduler will have a simple policy in this regard.
@@ -125,7 +144,7 @@ Once you add idle load balancing, repeat the performance tests you conducted in 
 
 Part 5: Tail completion time
 ------
-    
+	
 Thus far you have focused on optimizing the average completion time across all jobs. Another important metric to consider is tail completion time, which is the maximum completion time across 99% of all jobs. Tail completion time focuses on ensuring that the completion time of most jobs is no worse than some amount. Using tail completion time as the performance metric of interest, compare your optimized scheduling class versus the default Linux scheduler for the W4118 Inc. workloads. Which one does better? If the default Linux scheduler has better tail completion time, can you change how you use your OVEN scheduler (without modifying the OVEN scheduler code) to provide tail completion time comparable to the default Linux scheduler?
 
 Make any changes to fibonacci , then submit eBPF traces of the two task sets running on your scheduler as user/taskset1\_tail.txt and user/taskset2\_tail.txt. You only need to submit results in this case for the same multi-CPU VM configuration as you used previously, but do not need to submit single-CPU VM results for this case. Write the tail completion times for each workload in your README and compare against CFS.
@@ -133,7 +152,7 @@ Make any changes to fibonacci , then submit eBPF traces of the two task sets run
 
 Part 6: Analysis and investigation of kernel source code
 ------
-    
+	
 Write answers to the following questions in the user/part6.txt text file, following the provided template exactly. Make sure to include any references you use in your references.txt file.
 
 1.  Give the exact URL on elixir.bootlin.com pointing to the file and line number of the function that initializes the idle tasks on CPUs other than the boot CPU for a multi-CPU system. What is the PID of the task that calls this function? Note: make sure you use v6.8.
@@ -147,19 +166,19 @@ The following are some debugging tips you may find useful as you create your new
 
 *   Before testing, take a snapshot of your VM if you have not done so already. That way, if your kernel crashes or is unresponsive because of scheduler malfunction, you can restore the state of the VM prior to the problem.
 *   It is possible that your kernel gets stuck at boot time, preventing you from reading debug messages via dmesg. In this scenario, you may find it helpful to redirect your debug messages to a file on your host machine.
-    1.  Right click on your VM and click "Settings"
-    2.  Under "Hardware", click "Add" and create a Serial Port.
-    3.  Under "Device", click on your new Serial Port.
-    4.  Click on "Use output file", and specify the file on your host machine to which your would like to dump the kernel log.
-    5.  Turn on your VM, move to your kernel in the GRUB menu, and press e.
-    6.  Move toward the bottom until you find a line that looks like (linux   /boot/vmlinuz-6.8-cs4118...).
-    7.  At the end of this line, replace quiet with console=ttyS0 (try console=ttyS1 if this doesn't work).
-    8.  Hit F10 to boot your kernel. The kernel log should be written to the file on your host machine you specified earlier.
-    9.  If neither ttyS0 nor ttyS1 work, you may need to remove the virtual printer hardware in your VMware VM settings.
+	1.  Right click on your VM and click "Settings"
+	2.  Under "Hardware", click "Add" and create a Serial Port.
+	3.  Under "Device", click on your new Serial Port.
+	4.  Click on "Use output file", and specify the file on your host machine to which your would like to dump the kernel log.
+	5.  Turn on your VM, move to your kernel in the GRUB menu, and press e.
+	6.  Move toward the bottom until you find a line that looks like (linux   /boot/vmlinuz-6.8-cs4118...).
+	7.  At the end of this line, replace quiet with console=ttyS0 (try console=ttyS1 if this doesn't work).
+	8.  Hit F10 to boot your kernel. The kernel log should be written to the file on your host machine you specified earlier.
+	9.  If neither ttyS0 nor ttyS1 work, you may need to remove the virtual printer hardware in your VMware VM settings.
 *   You may find it helpful to use ps, top, or htop to view information such as the CPU usage and scheduling policies of your tasks. These commands rely on execution time statistics reported by certain scheduler functions in the kernel. As a result, bugs in your scheduling class could cause these commands to report inaccurate information. This cuts two ways. First, it is possible that your scheduler is working properly in terms of selecting the right tasks to execute for the right amount of time, but your calculation of execution time statistics in the kernel is wrong, so these commands appear to report that your tasks are not running at all when in fact they are. Second, it is possible that your scheduler is not working properly such that these tools report that tasks are using your scheduling class when in fact they are not.
-    
-    As a result, you should not exclusively rely on these tools to determine if your scheduling class is working properly. For example, when you make your scheduling class the default scheduling class, the fact that user-level tools claim that all tasks are using your scheduling class may not necessarily mean that this is the case. Instead, to ensure that your scheduling class functions are actually being used, you might add a printk to a function like your class's enqueue\_task() and verify that it appears in dmesg output. Make sure that you do not submit your code with such debugging printk statements as they can cause issues if invoked too frequently.
-    
+	
+	As a result, you should not exclusively rely on these tools to determine if your scheduling class is working properly. For example, when you make your scheduling class the default scheduling class, the fact that user-level tools claim that all tasks are using your scheduling class may not necessarily mean that this is the case. Instead, to ensure that your scheduling class functions are actually being used, you might add a printk to a function like your class's enqueue\_task() and verify that it appears in dmesg output. Make sure that you do not submit your code with such debugging printk statements as they can cause issues if invoked too frequently.
+	
 
 Submission Checklist
 --------------------
