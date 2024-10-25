@@ -2,6 +2,8 @@
 
 > <span style="color:red">**DUE: Wednesday 10/16/2024 at 11:59pm ET**</span>
 
+> Modified: Fri Oct 25, 1502 hrs (clarification on parts 4 and 5 -- added for future semesters)
+
 ## General instructions
 
 All homework submissions are to be made via [Git][Git]. You must submit a detailed list of references as part of your homework submission indicating clearly what sources you referenced for each homework problem. You do not need to cite the course textbooks and instructional staff. All other sources must be cited. Please edit and include this [file][file] in the top-level directory of your homework submission in the `main` branch of your team repo. **Be aware that commits pushed after the deadline will not be considered.** Refer to the homework policy section on the [class website][class-web-site] for further details.
@@ -269,9 +271,11 @@ If all the records within the requested range have already been evicted from the
 
 ## Part 4: Test your pstrace
 
-Write a program that calls the `pstrace` functionality repeatedly to return the records in the buffer over time. Show how you can use the counter value so that successive calls to `pstrace` return a chronological ordering of all records. The program should be in the `user/part4/` directory of your team repo, and your `Makefile` should generate an executable named **`test`**.
+Write a program named **`test`** that calls the the `pstrace_get()` function repeatedly to return the records in the buffer over time. Show how you can use the counter value so that successive calls to `pstrace_get()` return a chronological ordering of all records. The program should be in the `user/part4/` directory of your team repo.
 
-For testing purposes, you should also write another program that changes its states between running and sleeping a certain number of times and then exits. Use your `test` program to trace the process of this second program. This should be done by modifying `test` so that it forks a child process that execs the second program. In other words, we should be able to see the results of your second program by simply doing `make && ./test`, **without** needing to start the second program manually in another terminal. Note that this means that you will have to modify your `Makefile` so that it also automatically compiles the second program.
+For testing purposes, you should also write another program named **`seven_states`** that changes its states between running and sleeping a certain number of times and then exits. Use your `test` program to trace the process of this second program. This should be done by modifying `test` so that it forks a child process that execs the second program. In other words, we should be able to see the results of your second program by simply doing `./test`, **without** needing to start your `seven_states` program manually in another terminal.
+
+**Your `Makefile` must have a distinct rule to build `test`, and a distinct rule to build `seven_states`.** In other words, we should be able to call `make test` and `make seven_states` separately to compile each of the executables. **Calling `make` without any specified target should compile both executables.** In other words, we should be able to see all your results by simply doing `make && ./test`.
 
 You should be able to observe how the second program turns from running to sleeping and finally, to zombie, and exits. Your testing should generate at least one record for each of the seven distinct process states we have asked you to record, and you should include the resulting output in your submission in a file `user/part4/pstrace_output.txt`.
 
@@ -282,6 +286,8 @@ You should be able to observe how the second program turns from running to sleep
 Write answers to the following questions in the `user/part5.txt` text file, following the provided template **exactly**. Make sure to include any references you use in your `references.txt file`.
 
 For question 1, make sure that you are referencing the correct kernel version in bootlin (**[v6.8](https://elixir.bootlin.com/linux/v6.8/source)**). For reference, the URLs you answer with should be in the following format: https://elixir.bootlin.com/linux/v6.8/source/kernel/sched/core.c#L1234
+
+> **IMPORTANT**: For each of the URLs you give, make sure the line numbers correspond to the line numbers on bootlin. In other words, they should be the line numbers **BEFORE** you made any changes to the kernel source code.
 
 For questions, 2, 3, and 4, give your answer in the format `[STATE] -> [STATE]`, replacing `STATE` with the relevant state. For example: `[TASK_RUNNING] -> [TASK_INTERRUPTIBLE]`. Do NOT remove the brackets around the state names.
 
