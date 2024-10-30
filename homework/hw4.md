@@ -98,6 +98,7 @@ W4118 Inc. has tasked you with creating a new scheduling policy that provides be
 4.  Tasks with a weight less than 10000 should be prioritzed over weights equal to MAX\_WEIGHT, and use your choice of scheduling algorithm and time quantum to optimize the overall average completion time metric for running the Fibonacci workload. Essentially, your scheduling class defaults to round-robin but should have a special mode that is optimized for running the Fibonnaci workload, where the optimized scheduling algorithm is up to you to decide.
 5.  Tasks using the SCHED\_OVEN policy should take priority over tasks using the SCHED\_NORMAL policy, but _not_ over tasks using the SCHED\_RR or SCHED\_FIFO policies.
 6.  The new scheduling policy should operate alongside the existing Linux schedulers. The value of SCHED\_OVEN should be 7.
+7.  You should keep track of runtime statistics so commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) work with your scheduling class.
 
 Some notes that may be helpful in your implementation:
 
