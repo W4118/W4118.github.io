@@ -251,6 +251,7 @@ Now that you can create and destroy the page table, the next step is to populate
 First, focus on correctly tracking changes to VMAs (both existence and state) within our target range. Then extend to tracking PTE states.
 
 1.  **Beginning and end of tracking**
+
     ```c
 	/*
 	 * Syscall No. 464
@@ -303,12 +304,9 @@ First, focus on correctly tracking changes to VMAs (both existence and state) wi
     4.  Full deallocation due to process exit.
     5.  Replacement by the `execve` system call.
     6.  Expansion for a VMA marked `VM_GROWSDOWN`/`VM_GROWSUP`.
-    <!--4.  Protection change by the mprotect() system call.
-    5.  Replacement by the execve() system call.
-    6.  Expansion for a VMA marked VM\_GROWSDOWN/VM\_GROWSUP.
-    7.  Full deallocation due to process exit.-->
-    
-      
+    <!-- 7.  Protection change by the mprotect() system call. -->
+
+
     **Notes:**
     
     *   When reading from components of the memory management system, remember that you are not the only one using them. Make sure that you grab the appropriate locks and increment reference counts as necessary while accessing shared kernel data structures.<!-- *   Note that the SPTE\_VADDR\_WRITEABLE flag is entirely separate from and is not the same as SPTE\_PTE\_WRITEABLE flag; the first relates to a VMA struct, and the second to a PTE. -->
