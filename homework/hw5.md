@@ -185,7 +185,7 @@ For simplicity, our shadow page table will only have a single level, and will st
 
     Consider the following steps to implement remapping:
     - Allocate kernel pages used for the remapping (`alloc_pages_exact` may be useful).
-    - Find the VMA (`find_vma`) to be used in `remap_pfn_range`. If the memory range provided by the inspector does not exactly fall into a VMA, use `split_vma` to carve it out.
+    - Find the VMA (`find_vma`) containing the memory to be used in `remap_pfn_range`, and prepare it for remapping by calling the `vma_modify` function. 
     - Check that no PTEs have been allocated in the VMA so that our remapping does not corrupt any existing user mappings. You may find it helpful to review kernel functions such as `__handle_mm_fault`, `__do_page_fault`, `show_pte` for walking page tables.
     - Modify the VMA flags so that it cannot be written from userspace. You may also want to restore the original VMA flags later so the inspector process can use the memory normally after tracking ends.
     - Call `remap_pfn_range`.
@@ -195,6 +195,7 @@ For simplicity, our shadow page table will only have a single level, and will st
     
     *   Make sure your system call handles race conditions between multiple callers and in general handles concurrency gracefully. Under any condition, when any number of callers make the system call, at most one should return successfully and be unaffected by the others.
     *   Any errors or failures in your handler should be handled appropriately. On failure, anything allocated or referenced should be cleaned up and the appropriate errno should be returned.<!-- *   [There are a lot of ways to allocate memory in the kernel.](https://www.kernel.org/doc/html/next/core-api/mm-api.html) Think carefully when choosing one for allocating the pages that you will eventually remap to userspace. (Hint: think about why `vmalloc` would be incorrect in this scenario). -->
+    *   The `vma_modify` function takes in attributes (flags, start address, end address, etc.) about what some section of a `vma` will look like _after_ you modify it, and either merges it with its neighbors (if attributes match) or splits it based on start and end to create an isolated vma with the new attributes. In this case, focus on how to parameterize `vma_modify` to guarantee that the memory you will remap is isolated in exactly one `vma`.
     *   It may seem a bit weird that we allocate memory for the page table twice (once in userspace and once in kernel space). This is correct though, because what we are really doing with `remap_pfn_range` is updating the page table entries of the inspector so that they point to the same physical pages that we allocated in kernel space. The virtual memory allocated in userspace does not have any physical memory associated initially.
     
       
