@@ -172,7 +172,7 @@ For simplicity, our shadow page table will only have a single level, and will st
     *   Only a superuser should be able to make the system call, otherwise, it should give `-EPERM`.
     *   The start address and end address should be page aligned. Otherwise, return `-EINVAL`.
     *   If the target range spans more than `MAX_SPT_RANGE`, truncate `end_vaddr` while keeping `start_vaddr` unchanged. Update the `user_shadow_pt` at `dest` so the user will be notified.
-    *   If the address range at `entries` is already mapped, return `-EINVAL`.
+    *   If the address range at `entries` is already mapped to physical pages, return `-EINVAL`.
     
       
     **Remapping Details**
@@ -225,7 +225,7 @@ For simplicity, our shadow page table will only have a single level, and will st
     
     Since you don’t want to leave the inspector process with access to kernel pages, you should undo the `remap_pfn_range` to disconnect the virtual addresses of the process from these physical pages. There are multiple ways to do this, but a good place to begin is by looking through the `munmap` system call to see how it breaks down a regular mmap’d region. You may also find `zap_vma_ptes` helpful.
     
-    Once the close syscall is made, the entries range should behave as if `shadowpt_open` were never called, and the region was just mmap’d.
+    Once the close syscall is made, the `entries` range should behave as if `shadowpt_open` were never called, and the region was just mmap’d.
     
       
     **Inspector Process Exit**
