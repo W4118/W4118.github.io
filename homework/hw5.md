@@ -170,7 +170,8 @@ For simplicity, our shadow page table will only have a single level, and will st
     
     *   Only one process can be inspecting another at a time. If a process calls the system call while another process is using it, they should receive `-EBUSY`.
     *   Only a superuser should be able to make the system call, otherwise, it should give `-EPERM`.
-    *   The start address and end address should be page aligned and the target range should not span more than `MAX_SPT_RANGE` virtual addresses. Otherwise, return `-EINVAL`.
+    *   The start address and end address should be page aligned. Otherwise, return `-EINVAL`.
+    *   If the target range spans more than `MAX_SPT_RANGE`, truncate `end_vaddr` while keeping `start_vaddr` unchanged. Update the `user_shadow_pt` at `dest` so the user will be notified.
     *   If the address range at `entries` is already mapped, return `-EINVAL`.
     
       
