@@ -160,7 +160,7 @@ For simplicity, our shadow page table will only have a single level, and will st
 
     **System Call Usage/Behavior**
     
-    An inspector process will call this system call with the pid of the process it would like to inspect and a `struct user_shadow_pt`. This struct should be populated to contain the target start and end addresses, and a linear, preallocated entries array.
+    An inspector process will call this system call with the pid of the process it would like to inspect and a `struct user_shadow_pt`. This struct should be populated to contain the target start and end addresses, and a linear, preallocated `entries` array. `entries` should point to a virtual memory region that has been allocated by the inspector process.
     
     In the system call function, the kernel should take these inputs, validate them, and build a corresponding shadow page table in kernel space. Once this has been done, your function should remap the pages storing the shadow page table into the inspector’s virtual memory, at the `entries` pointer provided in the `struct user_shadow_pt`. Once this is done, the `entries` pointer provided by the userspace process should map to the same physical memory as the shadow page table created by the kernel.
     
@@ -170,9 +170,8 @@ For simplicity, our shadow page table will only have a single level, and will st
     
     *   Only one process can be inspecting another at a time. If a process calls the system call while another process is using it, they should receive `-EBUSY`.
     *   Only a superuser should be able to make the system call, otherwise, it should give `-EPERM`.
-    *   The start address and end address should be page aligned. If they are not, the system call should shift them down to the nearest aligned values.
-    *   The target range should not span more than `MAX_SPT_RANGE` virtual addresses. If it does, the system call should reduce the range to be `MAX_SPT_RANGE`.
-    *   If either of the previous two happen, an updated `user_shadow_pt` struct with the new range values should be copied back to the userspace pointer.
+    *   The start address and end address should be page aligned and the target range should not span more than `MAX_SPT_RANGE` virtual addresses. Otherwise, return `-EINVAL`.
+    *   If the address range at `entries` is already mapped, return `-EINVAL`.
     
       
     **Remapping Details**
@@ -225,7 +224,7 @@ For simplicity, our shadow page table will only have a single level, and will st
     
     Since you don’t want to leave the inspector process with access to kernel pages, you should undo the `remap_pfn_range` to disconnect the virtual addresses of the process from these physical pages. There are multiple ways to do this, but a good place to begin is by looking through the `munmap` system call to see how it breaks down a regular mmap’d region. You may also find `zap_vma_ptes` helpful.
     
-    Once the close syscall is made, the entries range can either no longer be mapped (i.e. an access causes a segmentation fault in userspace) or can behave as if `shadowpt_open` were never called, and the region was just mmap’d.
+    Once the close syscall is made, the entries range should behave as if `shadowpt_open` were never called, and the region was just mmap’d.
     
       
     **Inspector Process Exit**
@@ -356,7 +355,7 @@ First, focus on correctly tracking changes to VMAs (both existence and state) wi
     *   You might want more than just the provided example `update_shadow_pte` function to behave in different contexts (with different locks held, for example).
     *   A nonexistent PTE can be detected either if the `pte_none` function returns true, or if some containing table higher in the page tables does not exist. Note that this is different from the `PTE_PRESENT` bit, which indicates whether the page has been swapped to disk (which we are not asking you to track).
     *   Once again, make sure you keep concurrency in mind. Many processes can access the kernel’s memory-related data structures at once, so be sure to grab the appropriate locks and references when you read and write kernel shared data.<!--*   Be sure to understand how the kernel enforces copy-on-write protections when a process forks–it will help you complete the assignment, and is an excellent demonstration of the efficiency gains the kernel makes using smart handling of memory.-->
-    *   There are a huge number of places in the kernel where PTEs are invalidated, and placing an update after each one would be extremely time consuming. Luckily, we’re not the only ones interested in page tables, and as a result the kernel provides the [MMU notifier](https://elixir.bootlin.com/linux/v6.8/source/include/linux/mmu_notifier.h), which allows us to register our own callback functions. These callback functions will be called whenever a particular range of PTEs is going to be invalidated. 
+    *   There is a huge number of places in the kernel where PTEs are invalidated, and placing an update after each one would be extremely time consuming. Luckily, we’re not the only ones interested in page tables, and as a result the kernel provides the [MMU notifier](https://elixir.bootlin.com/linux/v6.8/source/include/linux/mmu_notifier.h), which allows us to register our own callback functions. These callback functions will be called whenever a particular range of PTEs is going to be invalidated. 
     *   Read [this article](https://lwn.net/Articles/266320/) for information about when the MMU notifier was first implemented, and [this one](https://lwn.net/Articles/732952/) for an update about recent changes that could provide some context for how to use it. A good idea would be to add an `mmu_notifier` to your kernel shadow page table and include something like the following in your code:
 
         ```c
