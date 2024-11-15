@@ -163,16 +163,7 @@ For simplicity, our shadow page table will only have a single level, and will st
     An inspector process will call this system call with the pid of the process it would like to inspect and a `struct user_shadow_pt`. This struct should be populated to contain the target start and end addresses, and a linear, preallocated `entries` array. `entries` should point to a virtual memory region that has been allocated by the inspector process.
     
     In the system call function, the kernel should take these inputs, validate them, and build a corresponding shadow page table in kernel space. Once this has been done, your function should remap the pages storing the shadow page table into the inspector’s virtual memory, at the `entries` pointer provided in the `struct user_shadow_pt`. Once this is done, the `entries` pointer provided by the userspace process should map to the same physical memory as the shadow page table created by the kernel.
-    
-    **Input Checking**
-    
-    If any of the provided arguments are invalid (for example, if the target process does not exist, or the start address is greater than the end address), your system call should return `-EINVAL`. In addition to basic sanity checking of the inputs, there are some additional limitations you should impose on callers:
-    
-    *   Only one process can be inspecting another at a time. If a process calls the system call while another process is using it, they should receive `-EBUSY`.
-    *   Only a superuser should be able to make the system call, otherwise, it should give `-EPERM`.
-    *   The start address and end address should be page aligned. Otherwise, return `-EINVAL`.
-    *   If the target range spans more than `MAX_SPT_RANGE`, truncate `end_vaddr` while keeping `start_vaddr` unchanged. Update the `user_shadow_pt` at `dest` so the user will be notified.
-    *   If the address range at `entries` is already mapped to physical pages, return `-EINVAL`.
+
     
       
     **Remapping Details**
@@ -186,11 +177,23 @@ For simplicity, our shadow page table will only have a single level, and will st
     Consider the following steps to implement remapping:
     - Allocate kernel pages used for the remapping (`alloc_pages_exact` may be useful).
     - Find the VMA (`vma_lookup`/`find_vma`) containing the memory to be used in `remap_pfn_range`, and prepare it for remapping by calling the `vma_modify` function. 
-    - Check that no PTEs have been allocated in the VMA so that our remapping does not corrupt any existing user mappings. You may find it helpful to review kernel functions such as `__handle_mm_fault`, `__do_page_fault`, `show_pte` for walking page tables.
+    - Check that no PTEs have been allocated in the VMA so that our remapping does not corrupt any existing user mappings. You may find it helpful to review kernel functions such as `__handle_mm_fault`, `__do_page_fault`, `show_pte(arm64)` for walking page tables.
     - Modify the VMA flags so that it cannot be written from userspace. You may also want to restore the original VMA flags later so the inspector process can use the memory normally after tracking ends.
     - Call `remap_pfn_range`.
     - Above changes to the memory mappings should be within a `mmap_write_lock`.
+
+
+    **Input Checking**
     
+    If any of the provided arguments are invalid (for example, if the target process does not exist, or the start address is greater than the end address), your system call should return `-EINVAL`. In addition to basic sanity checking of the inputs, there are some additional limitations you should impose on callers:
+    *   Only one process can be inspecting another at a time. If a process calls the system call while another process is using it, they should receive `-EBUSY`.
+    *   Only a superuser should be able to make the system call, otherwise, it should give `-EPERM`.
+    *   The start address and end address should be page aligned. Otherwise, return `-EINVAL`.
+    *   If the target range spans more than `MAX_SPT_RANGE`, truncate `end_vaddr` while keeping `start_vaddr` unchanged. Update the `user_shadow_pt` at `dest` so the user will be notified.
+    *   If the address range at `entries` is already mapped to physical pages, return `-EINVAL`.
+    *   If the VMA at `entries` is not large enough to hold the shadow page table, return `-EINVAL`. Note `remap_pfn_range` is done at page granularity, so the actual required memory size needs to be rounded up to the next page boundary.
+
+
     **Notes:**
     
     *   Make sure your system call handles race conditions between multiple callers and in general handles concurrency gracefully. Under any condition, when any number of callers make the system call, at most one should return successfully and be unaffected by the others.
@@ -352,7 +355,7 @@ First, focus on correctly tracking changes to VMAs (both existence and state) wi
     
     **Notes:**
     
-    *   You will need to walk the page tables at some point. While there are many functions that already exist in the kernel to do this, they are pretty much all far too complicated for our purposes. You should implement your own function for walking the page table rather than trying to use an existing function. You may find it helpful to review kernel functions such as `__handle_mm_fault`, `__do_page_fault`, `show_pte`.
+    *   You will need to walk the page tables at some point. While there are many functions that already exist in the kernel to do this, they are pretty much all far too complicated for our purposes. You should implement your own function for walking the page table rather than trying to use an existing function. You may find it helpful to review kernel functions such as `__handle_mm_fault`, `__do_page_fault`, `show_pte(arm64)`.
     *   You might want more than just the provided example `update_shadow_pte` function to behave in different contexts (with different locks held, for example).
     *   A nonexistent PTE can be detected either if the `pte_none` function returns true, or if some containing table higher in the page tables does not exist. Note that this is different from the `PTE_PRESENT` bit, which indicates whether the page has been swapped to disk (which we are not asking you to track).
     *   Once again, make sure you keep concurrency in mind. Many processes can access the kernel’s memory-related data structures at once, so be sure to grab the appropriate locks and references when you read and write kernel shared data.<!--*   Be sure to understand how the kernel enforces copy-on-write protections when a process forks–it will help you complete the assignment, and is an excellent demonstration of the efficiency gains the kernel makes using smart handling of memory.-->
