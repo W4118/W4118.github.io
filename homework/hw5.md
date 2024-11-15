@@ -176,7 +176,7 @@ For simplicity, our shadow page table will only have a single level, and will st
 
     Consider the following steps to implement remapping:
     - Allocate kernel pages used for the remapping (`alloc_pages_exact` may be useful).
-    - Find the VMA (`vma_lookup`/`find_vma`) containing the memory to be used in `remap_pfn_range`, and prepare it for remapping by calling the `vma_modify` function. 
+    - Find the VMA (`vma_lookup`/`find_vma`) containing the memory to be used in `remap_pfn_range`, and tailor it for remapping (`vma_modify`) so that the VMA contains exactly the range of addresses to be remapped. See notes below on how to use `vma_modify`. 
     - Check that no PTEs have been allocated in the VMA so that our remapping does not corrupt any existing user mappings. You may find it helpful to review kernel functions such as `__handle_mm_fault`, `__do_page_fault`, `show_pte(arm64)` for walking page tables.
     - Modify the VMA flags so that it cannot be written from userspace. You may also want to restore the original VMA flags later so the inspector process can use the memory normally after tracking ends.
     - Call `remap_pfn_range`.
