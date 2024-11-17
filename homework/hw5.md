@@ -433,6 +433,8 @@ Again, the only changes you need to generate are the ones you were asked to trac
 
 *   It's a bad idea to use malloc to prepare a memory section for mapping page table entries, because malloc cannot allocate memory with more than `M_MMAP_THRESHOLD` (128KB by default). Instead you should consider using the `mmap` system call; take a look at `do_mmap` in `mm/mmap.c` to set up the proper flags to pass to `mmap`.
 *   Once you've mmap'ed a memory area for remapping page table entries, the kernel will create a Virtual Memory Area for it. The flags for the memory area should include `MAP_ANONYMOUS` and `MAP_PRIVATE`.
+*   For testing `malloc`, you may test the underlying system call, which provides information about the heap location.
+*   `/proc/pid/maps` and `/proc/pid/pagemap` may be useful for inspecting the address space of a program.
 
 **Tasks**
 
