@@ -186,7 +186,7 @@ For simplicity, our shadow page table will only have a single level, and will st
     **Input Checking**
     
     If any of the provided arguments are invalid (for example, if the target process does not exist, or the start address is greater than the end address), your system call should return `-EINVAL`. In addition to basic sanity checking of the inputs, there are some additional limitations you should impose on callers:
-    *   Only one process can be inspecting another at a time. If a process calls the system call while another process is using it, they should receive `-EBUSY`.
+    *   Only one process can be inspecting another at a time. If a process calls the system call when another process has already `open`ed a shadow page table, it should receive `-EBUSY`.
     *   Only a superuser should be able to make the system call, otherwise, it should give `-EPERM`.
     *   The start address and end address should be page aligned. Otherwise, return `-EINVAL`.
     *   If the target range spans more than `MAX_SPT_RANGE`, truncate `end_vaddr` while keeping `start_vaddr` unchanged. Update the `user_shadow_pt` at `dest` so the user will be notified.
