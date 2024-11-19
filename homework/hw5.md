@@ -302,7 +302,7 @@ First, focus on correctly tracking changes to VMAs (both existence and state) wi
     
     There are a reasonably large number of corner cases that can cause an update to the VMA, so for our purposes you only need to place hooks in various places throughout the memory management code to track changes that happen for one of the following reasons:
     
-    1.  Full initialization to existing VMA status when `shadowpt_open` is called.
+    1.  Full initialization to existing VMA status when `shadowpt_start` is called.
     2.  Allocation by `malloc` and `mmap`.
     3.  Deallocation by `free` and `munmap`.
     4.  Full deallocation due to process exit.
