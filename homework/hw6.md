@@ -10,7 +10,7 @@ All homework submissions are to be made via [Git][Git]. You must submit a detail
 [file]: https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/references.txt
 [class-web-site]: https://www.cs.columbia.edu/~nieh/teaching/w4118/
 
-Group programming problems are to be done in your assigned groups. We will let you know when the Git repository for your group has been set up on GitHub. It can be cloned using the following command. Replace `teamN` with your team number, e.g. `team0`. You can find your group number [here](https://docs.google.com/spreadsheets/d/1sWSEjtqSqSsl2dJ3R3YZKYlw4WG4GtfpHNECpqFJiks/edit?gid=83555991#gid=83555991).
+Group programming problems are to be done in your assigned groups. We will let you know when the Git repository for your group has been set up on GitHub. It can be cloned using the following command. Replace `teamN` with your team number, e.g. `team0`. You can find your group number [here](https://docs.google.com/spreadsheets/d/1sWSEjtqSqSsl2dJ3R3YZKYlw4WG4GtfpHNECpqFJiks/edit?gid=522457781#gid=522457781).
 
 ```
 $ git clone git@github.com:W4118/f24-hmwk6-teamN.git
