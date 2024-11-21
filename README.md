@@ -27,3 +27,4 @@ The guides above have been updated for the latest version of Linux used in this 
 - [Homework 3](./homework/hw3.md)
 - [Homework 4](./homework/hw4.md)
 - [Homework 5](./homework/hw5.md)
+- [Homework 6](./homework/hw6.md)
