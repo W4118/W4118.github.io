@@ -57,7 +57,9 @@ This would indicate that student with UNI abc123 spent 15 hrs on this assignment
 
 
 ### Programming Problems:
-In this assignment, you will write your own disk-based file system, EZFS. You will learn how to use a loop device to turn a regular file into a block storage device, then format that device into an EZFS file system. Then you will use EZFS to access the file system. EZFS will be built as a kernel module that you can load into the **stock Ubuntu 24.04.1** kernel in your VM. You do not need to use the 4118 kernel you built for previous homework assignments and there is no need to build the entire Linux kernel tree for this assignment.
+In this assignment, you will write your own disk-based file system, EZFS. You may find it helpful to first review the [EZFS paper][ezfspaper].  You will learn how to use a loop device to turn a regular file into a block storage device, then format that device into an EZFS file system. Then you will use EZFS to access the file system. EZFS will be built as a kernel module that you can load into the **stock Ubuntu 24.04.1** kernel in your VM. You do not need to use the 4118 kernel you built for previous homework assignments and there is no need to build the entire Linux kernel tree for this assignment.
+
+[ezfspaper]: [https://www.cs.columbia.edu/~nieh/pubs/sigcse2025_ezfs.pdf]
 
 Part 1: Formatting and mounting a disk
 ------
