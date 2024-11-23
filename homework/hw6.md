@@ -391,7 +391,7 @@ Until you introduced writing files, you were not really modifying your file syst
 
 [BFS]: https://elixir.bootlin.com/linux/v6.8/source/fs/bfs
 
-Note that you should also be able to seek to different positions of the file to write data and your filesystem should behave correctly. For example, you should be able to write to the first block of a file, seek 100 blocks ahead and then write to that block of the file. After writing such a file, what should you see when you read the file?  Note that there is a `zero_blocks` bit vector in the EZFS superblock in `ezfs.h`; if helpful, you may use that for your implementation.
+Once you can write multi-block files, you should also ensure you can seek to different positions of a file to write data. For example, you should be able to write to the first block of a file, seek 100 blocks ahead and then write to that block of the file. After writing such a file, what should you see when you read the file?  Supporting seeking and writing may require additional implementation effort.  Note that there is also a `zero_blocks` bit vector in the EZFS superblock in `ezfs.h`; if helpful, you may use that for your implementation.
 
 Part 9: Creating new files
 ------
