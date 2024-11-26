@@ -42,7 +42,7 @@ Finally, since this is the last assignment of the semester, EACH group member sh
 2. A rank ordering of the difficulty of the homework assignments
 3. A rank ordering of how much you learned on each homework assignment
 4. The extent to which you agree that this assignment has significantly improved your understanding of file systems  (1=strongly disagree, 2=disagree, 3=neutral, 4=agree, 5=strongly agree)
-5. Any comments about your how your educational experience doing this assignment. 
+5. Any comments about your educational experience doing this assignment. 
 
 The format should be EXACTLY as shown below for each group member:
 ```
