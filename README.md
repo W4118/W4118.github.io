@@ -20,11 +20,4 @@ The guides above have been updated for the latest version of Linux used in this 
 - [Linux kernel debugging](https://columbia-os.github.io/dev-guides/kernel-debugging.html)
 - [GRUB bootloader configuration](https://columbia-os.github.io/dev-guides/bootloader-config.html)
 
-## Homework prompts
 
-- [Homework 1](https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/hmwk1.html)
-- [Homework 2](./homework/hw2.md)
-- [Homework 3](./homework/hw3.md)
-- [Homework 4](./homework/hw4.md)
-- [Homework 5](./homework/hw5.md)
-- [Homework 6](./homework/hw6.md)
