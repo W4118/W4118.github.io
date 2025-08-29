@@ -20,13 +20,13 @@ $ sudo apt install build-essential bc python3 bison flex rsync libelf-dev libssl
 
 Clone the source code for the kernel. The source code that you will use is located in the `linux/` folder in the `main` branch of your team repository. This directory will be the root of your kernel tree. All subsequent commands in this guide should be run in that directory.
 
-You should verify the version of the kernel. The first 6 lines of Linux’s top-level `Makefile` will show you the version. For this class, we will be using Linux 6.8.0:
+You should verify the version of the kernel. The first 6 lines of Linux’s top-level `Makefile` will show you the version. For this class, we will be using Linux 6.14.0:
 
 ```
 $ head -n 6 Makefile
 # SPDX-License-Identifier: GPL-2.0
 VERSION = 6
-PATCHLEVEL = 8
+PATCHLEVEL = 14
 SUBLEVEL = 0
 EXTRAVERSION =
 NAME = Hurr durr I'ma ninja sloth
@@ -44,7 +44,7 @@ To create your kernel `.config`, use the following steps:
     $ make mrproper
     ```
 
-2. Create a config file based on the config file of your current kernel. Make sure that you're running the stock Ubuntu kernel before you do this step. You don't want to copy a bad config! You can verify this by running `uname -r`. You should get something like `6.8.0-41-generic`.
+2. Create a config file based on the config file of your current kernel. Make sure that you're running the stock Ubuntu kernel before you do this step. You don't want to copy a bad config! You can verify this by running `uname -r`. You should get something like `6.14.0-41-generic`.
 
     The config file that was used to build your current kernel is located in the `/boot/` directory. The following command copies over that file, and updates any missing options with default values.
 
@@ -78,7 +78,7 @@ To create your kernel `.config`, use the following steps:
 
     Make the following changes, using either of the above methods:
 
-    - `CONFIG_LOCALVERSION`: This setting gives your custom kernel a unique name to distinguish it from other kernels present in your system. The local version will be appended to your kernel version to form your kernel name. For example, if we build a 6.8.0 kernel with the local version set to `-cs4118`, it will be named `6.8.0-cs4118`. For your pristine kernel build, set this to `-cs4118`.
+    - `CONFIG_LOCALVERSION`: This setting gives your custom kernel a unique name to distinguish it from other kernels present in your system. The local version will be appended to your kernel version to form your kernel name. For example, if we build a 6.14.0 kernel with the local version set to `-cs4118`, it will be named `6.14.0-cs4118`. For your pristine kernel build, set this to `-cs4118`.
 
         In menuconfig, this can be found under `General setup`, in the `Local Version - append to kernel release` option. Alternatively, you can run `scripts/config --set-str CONFIG_LOCALVERSION "-cs4118"` as mentioned above.
 
@@ -101,7 +101,7 @@ SYSTEM_TRUSTED_KEYS "debian/canonical-certs.pem" -> ""
 SYSTEM_REVOCATION_KEYS "debian/canonical-revoked-certs.pem" -> ""
 ```
 
-If you used `scripts/config`, you can do a diff against the stock config file in the `/boot/` directory. For instance, run `scripts/diffconfig /boot/config-6.8.0-41-generic .config`. If you do this, you'll probabably see some extra changes besides the three lines listed above. That's okay, because `make olddefconfig` also updates some of the other configs. Just make sure your desired changes are reflected in the output.
+If you used `scripts/config`, you can do a diff against the stock config file in the `/boot/` directory. For instance, run `scripts/diffconfig /boot/config-6.14.0-41-generic .config`. If you do this, you'll probabably see some extra changes besides the three lines listed above. That's okay, because `make olddefconfig` also updates some of the other configs. Just make sure your desired changes are reflected in the output.
 
 ## Building the kernel
 
@@ -132,9 +132,9 @@ $ sudo apt install initramfs-tools
 Verify that you have the following 3 files in `/boot/`:
 
 ```
-initrd.img-6.8.0-cs4118
-System.map-6.8.0-cs4118
-vmlinuz-6.8.0-cs4118
+initrd.img-6.14.0-cs4118
+System.map-6.14.0-cs4118
+vmlinuz-6.14.0-cs4118
 ```
 
 ## Booting to the new kernel
@@ -162,13 +162,13 @@ Now verify that you’re running your own custom kernel by running:
 $ uname -r
 ```
 
-Instead of `6.8.0-41-generic`, you should now see your kernel version string, `6.8.0-cs4118`!
+Instead of `6.14.0-41-generic`, you should now see your kernel version string, `6.14.0-cs4118`!
 
 ## Optimizing your kernel compilation time
 
 A large amount of time is spent compiling and installing kernel modules you never use. To reduce your kernel compilation time, you can optionally regenerate a `.config` so that it only contains modules you are using by following these instructions:
 
-1. Back up your `.config` to something like `.config.[UNI]-from-lts`. Make sure to keep your `CONFIG_LOCALVERSION` the same; that is, your kernel should still be named 6.8.0-cs4118.
+1. Back up your `.config` to something like `.config.[UNI]-from-lts`. Make sure to keep your `CONFIG_LOCALVERSION` the same; that is, your kernel should still be named 6.14.0-cs4118.
 
 2. Run `make localmodconfig` in your kernel source tree. This will take your current `.config` and turn off all modules that you are not using. It will ask you a few questions. You can hit ENTER to accept the defaults, or just have `yes` do so for you:
 
