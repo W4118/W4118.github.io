@@ -20,13 +20,13 @@ While there are a number of different Git-based systems, you will be using Githu
 
 **Please fill in [this Google Form](https://forms.gle/snGeHf1TzEjFfH8w7)** to let us know your Github username and your UNI. This must be done by the last day of the Change of Program period.
 
-For each homework assignment, your team's source code will be stored at `github.com/W4118/f24-hmwkN-UserName` as a private repository. Only you or your group members will be allowed to push/pull from the repository. A repository containing skeleton code for that assignment will also be available at `github.com/W4118/f24-template-hmwkN`. The initial state of your repository will be set to match the skeleton code. Instructions will be provided with each assignment on how to access your repository for the respective assignment. You may visit [our GitHub organization](https://github.com/w4118) to see all the repositories available to you.
+For each homework assignment, your team's source code will be stored at `github.com/W4118/f25-hmwkN-UserName` as a private repository. Only you or your group members will be allowed to push/pull from the repository. A repository containing skeleton code for that assignment will also be available at `github.com/W4118/f25-template-hmwkN`. The initial state of your repository will be set to match the skeleton code. Instructions will be provided with each assignment on how to access your repository for the respective assignment. You may visit [our GitHub organization](https://github.com/w4118) to see all the repositories available to you.
 
 Once you have access to your assignment repository, you will need to clone your homework repository locally to start working on it:
 
 ```
-$ git clone git@github.com:W4118/f24-hmwkN-UserName.git
-Initialized empty Git repository in f24-hmwkN-UserName/.git/
+$ git clone git@github.com:W4118/f25-hmwkN-UserName.git
+Initialized empty Git repository in f25-hmwkN-UserName/.git/
 Receiving objects: 100% (x/x), done.
 remote: Counting objects: x, done.
 remote: Total x (delta 0), reused 0 (delta 0)
@@ -66,12 +66,12 @@ The procedure for doing so would be the following:
 
 ```
 $ pushd /tmp
-$ git clone git@github.com:W4118/f24-hmwkN-UserName.git
-$ cd f24-hmwkN-UserName
+$ git clone git@github.com:W4118/f25-hmwkN-UserName.git
+$ cd f25-hmwkN-UserName
 
 # Check contents of the directory and test aginst your test cases
 
 $ cd ..
-$ rm -rf f24-hmwkN-UserName
+$ rm -rf f25-hmwkN-UserName
 $ popd
 ```
