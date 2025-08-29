@@ -20,7 +20,7 @@ Download Ubuntu Linux
 
 There are many GNU+Linux distributions, but we will use [Ubuntu](https://ubuntu.com/). Ubuntu is a distribution derived from [Debian](https://www.debian.org/). This class used to use Debian, but Ubuntu provides more recent kernel versions.
 
-We will be using Ubuntu 24.04.1. All files mentioned below can be found [here](https://cdimage.ubuntu.com/noble/daily-live/current/).
+We will be using Ubuntu 25.04. All files mentioned below can be found [here](https://cdimage.ubuntu.com/noble/daily-live/current/).
 
 - If your computer has an x86 CPU, download `noble-desktop-amd64.iso`
 - If your computer has an Arm CPU, download `noble-desktop-arm64.iso`
