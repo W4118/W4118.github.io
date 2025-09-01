@@ -18,7 +18,7 @@ It might be helpful to configure the Git settings on the machine you're using fo
 
 While there are a number of different Git-based systems, you will be using Github Classroom for this course. Make sure you have a Github account. If you are new to Github, please check out the [getting started guide](https://help.github.com/articles/set-up-git/).
 
-**Please fill in [this Google Form](https://forms.gle/snGeHf1TzEjFfH8w7)** to let us know your Github username and your UNI. This must be done by the last day of the Change of Program period.
+**Please fill in [this Google Form](https://forms.gle/xxeEgMAN4me55J6A8)** to let us know your Github username and your UNI. This must be done by the last day of the Change of Program period.
 
 For each homework assignment, your team's source code will be stored at `github.com/W4118/f25-hmwkN-UserName` as a private repository. Only you or your group members will be allowed to push/pull from the repository. A repository containing skeleton code for that assignment will also be available at `github.com/W4118/f25-template-hmwkN`. The initial state of your repository will be set to match the skeleton code. Instructions will be provided with each assignment on how to access your repository for the respective assignment. You may visit [our GitHub organization](https://github.com/w4118) to see all the repositories available to you.
 
