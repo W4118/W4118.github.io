@@ -20,10 +20,10 @@ Download Ubuntu Linux
 
 There are many GNU+Linux distributions, but we will use [Ubuntu](https://ubuntu.com/). Ubuntu is a distribution derived from [Debian](https://www.debian.org/). This class used to use Debian, but Ubuntu provides more recent kernel versions.
 
-We will be using Ubuntu 25.04. All files mentioned below can be found [here](https://releases.ubuntu.com/plucky/).
+We will be using Ubuntu 25.04.
 
-- If your computer has an x86 CPU, download `ubuntu-25.04-desktop-amd64.iso`
-- If your computer has an Arm CPU, download `ubuntu-25.04-desktop-arm64.iso`
+- If your computer has an x86 CPU, download `ubuntu-25.04-desktop-amd64.iso` from [here](https://releases.ubuntu.com/plucky/).
+- If your computer has an Arm CPU, download `ubuntu-25.04-desktop-arm64.iso` from [here](https://cdimage.ubuntu.com/releases/plucky/release/).
 
 Always verify the checksums of your downloads. You can follow the instructions [here](https://ubuntu.com/tutorials/how-to-verify-ubuntu#1-overview). Try to understand what each of these steps does. You will need to use the checksum files `SHA256SUMS` and `SHA256SUMS.gpg`.
 
