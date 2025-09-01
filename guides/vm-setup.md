@@ -6,11 +6,11 @@ You will be doing development and testing on a Linux system. To make this easy t
 Download and Install VMware
 ---------------------------
 
-Download and install the latest version of [VMware's desktop hypervisor](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion). Once you're in the Broadcom portal, go to the `My Downloads` tab. Then, you may need to click on the button in the top right corner beside your name, and select `VMware Cloud Foundation`.
+Download and install the latest version of [VMware's desktop hypervisor](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion). Once you're in the Broadcom portal, go to the `My Downloads` tab. You may need to create a Broadcom account. Then, you may need to click on the button in the top right corner beside your name, and select `VMware Cloud Foundation`.
 
 Use:
 
-- VMware Workstation if you use Windows or Linux
+- VMware Workstation Pro if you use Windows or Linux
 - VMware Fusion if you use macOS
 
 Select the version labeled with `for Personal Use`.
@@ -20,10 +20,10 @@ Download Ubuntu Linux
 
 There are many GNU+Linux distributions, but we will use [Ubuntu](https://ubuntu.com/). Ubuntu is a distribution derived from [Debian](https://www.debian.org/). This class used to use Debian, but Ubuntu provides more recent kernel versions.
 
-We will be using Ubuntu 25.04. All files mentioned below can be found [here](https://cdimage.ubuntu.com/noble/daily-live/current/).
+We will be using Ubuntu 25.04. All files mentioned below can be found [here](https://releases.ubuntu.com/plucky/).
 
-- If your computer has an x86 CPU, download `noble-desktop-amd64.iso`
-- If your computer has an Arm CPU, download `noble-desktop-arm64.iso`
+- If your computer has an x86 CPU, download `ubuntu-25.04-desktop-amd64.iso`
+- If your computer has an Arm CPU, download `ubuntu-25.04-desktop-arm64.iso`
 
 Always verify the checksums of your downloads. You can follow the instructions [here](https://ubuntu.com/tutorials/how-to-verify-ubuntu#1-overview). Try to understand what each of these steps does. You will need to use the checksum files `SHA256SUMS` and `SHA256SUMS.gpg`.
 
@@ -80,4 +80,4 @@ Two tips you may find useful when using your VM are [using SSH to connect to you
 Shutting down your Ubuntu VM
 ----------------------------
 
-Shutting down a VM using VMware e.g. using `Virtual Machine -> Shut Down` may not always work properly. See [this link](https://docs.vmware.com/en/VMware-Workstation-Pro/17/com.vmware.ws.using.doc/GUID-4966A19E-316D-4037-A07D-CB0E42934A2B.html) for more details. To ensure a graceful shutdown is performed, you should always shut down your VM from within the guest operating system itself. In Linux, you can do this by running `sudo shutdown`.
+Shutting down a VM using VMware e.g. using `Virtual Machine -> Shut Down` may not always work properly. See [this link](https://techdocs.broadcom.com/us/en/vmware-cis/desktop-hypervisors/workstation-pro/17-0/using-vmware-workstation-pro/using-virtual-machines-in-workstation-pro-user-guide/stopping-virtual-machines/shut-down-a-virtual-machine.html) for more details. To ensure a graceful shutdown is performed, you should always shut down your VM from within the guest operating system itself. In Linux, you can do this by running `sudo shutdown`.
