@@ -39,7 +39,7 @@ For the boot firmware, choose `Legacy BIOS`. If you are using an M1/M2/M3 Mac, t
 The default settings for memory and storage are probably too small. Customize your VM as detailed below. Note that on some platforms, you may need to press `Finish` and actually create the VM before you can edit these settings. Once the VM is created, click on `Virtual Machine` and then `Settings`.
 
 - **Name**: (your choice; whatever name you want for saving the VM so you can open it again later in VMware)
-- **CPU**: 2 processor cores
+- **CPU**: 4 processor cores
 - **RAM**: 2 GB minimum; 4 GB or more highly recommended, provided that your host machine has 8 GB of RAM or more
 - **Hard disk**: 64 GB minimum, 128 GB or more recommended
 
