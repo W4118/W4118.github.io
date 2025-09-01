@@ -13,7 +13,7 @@ $ sudo apt update
 Then, install the following dependencies:
 
 ```
-$ sudo apt install build-essential bc python3 bison flex rsync libelf-dev libssl-dev libncurses-dev dwarves
+$ sudo apt install build-essential git bc python3 bison flex rsync libelf-dev libssl-dev libncurses-dev dwarves libdw-dev gawk
 ```
 
 ### Source code
@@ -29,7 +29,7 @@ VERSION = 6
 PATCHLEVEL = 14
 SUBLEVEL = 0
 EXTRAVERSION =
-NAME = Hurr durr I'ma ninja sloth
+NAME = Baby Opossum Posse
 ```
 
 ## Configuring your kernel build
@@ -88,7 +88,7 @@ To create your kernel `.config`, use the following steps:
 
     - `SYSTEM_REVOCATION_KEYS`: Set this to the empty string as well.
 
-        In menuconfig, this can be found by opening the `Cryptographic API` section, then opening the `Certificates for signature checking` section at the bottom. The specific field is `X.509 certificates to be preloaded into the system blacklist keyring`.
+        In menuconfig, this can be found by opening the `Cryptographic API` section, then opening the `Certificates for signature checking` section at the bottom. The specific field is `X.509 certificates to be preloaded into the system blacklist keyring`. The corresponding command is `scripts/config --set-str SYSTEM_REVOCATION_KEYS ""`.
 
 Take a moment to inspect the contents of the `.config` file. Make sure that the options you configured are set to what you expect them to be.
 
