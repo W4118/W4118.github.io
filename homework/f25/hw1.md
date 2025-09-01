@@ -1,13 +1,13 @@
 # HW1 (W4118 Fall 2025)
 
-> <span style="color:red">**DUE: Thursday 9/18/2024 at 11:59pm ET**</span>
+> <span style="color:red">**DUE: Thursday 9/18/2025 at 11:59pm ET**</span>
 
 All homework submissions are to be made via [Git](http://git-scm.com/).
 You must submit a detailed list of references as part your homework
 submission indicating clearly what sources you referenced for each
 homework problem. You do not need to cite the course textbooks and
 instructional staff. All other sources must be cited. Please edit and
-include this [file](https://nieh.net/teaching/w4118_f24/homeworks/references.txt) in the top-level directory of your
+include this [file](https://nieh.net/teaching/w4118_f25/homeworks/references.txt) in the top-level directory of your
 homework submission. **Homeworks submitted without this file will
 receive an automatic deduction of 10 points.**
 
@@ -23,7 +23,7 @@ one, and follow the
 [instructions](https://w4118.github.io/guides/git.html) for the W4118
 GitHub organization, including filling out the Google Form listed there
 so that we can associate your GitHub username with your Columbia UNI.
-**You must complete this form by Friday 9/13 at 11:59pm ET.**
+**You must complete this form by Friday 9/12 at 11:59pm ET.**
 
 Once you have a GitHub account and login, you can
 [create](https://classroom.github.com/a/-AGB4N5E) your GitHub repository
@@ -67,10 +67,9 @@ to use the following one-liner: [cd \"\$(git rev-parse
 \--show-toplevel)\" && touch .armpls && git add .armpls && git commit -m
 \"Arm pls\"]{.kbd}
 
-#### Simple Shell and OS {#simple-shell-and-os .part_header}
 
-::: programming_requirements_wrapper
-#### Part 1: The Simple Shell {#part-1-the-simple-shell .part_header}
+Part 1: The Simple Shell
+------
 
 An operating system like Linux makes it easy to run programs. For
 example, from a shell, it is easy to write, compile, and run a simple
@@ -186,7 +185,8 @@ extensive testing than what is provided with the testing skeleton, so
 you should make sure to write additional test cases yourself to test
 your code.
 
-#### Part 2: Simple Shell Directly Calling System Calls {#part-2-simple-shell-directly-calling-system-calls .part_header}
+Part 2: Simple Shell Directly Calling System Calls
+------
 
 The simple shell you wrote in Part 1 relies on various C library
 functions that in turn call system calls. You can use [strace]{.kbd} to
@@ -254,7 +254,8 @@ will be heavily penalized. w4118_sh2 should have all the same
 functionality as w4118_sh, except that it does not call any C library
 functions that call other system calls.
 
-#### Part 3: Bare-metal Hello World OS {#part-3-bare-metal-hello-world-os .part_header}
+Part 3: Bare-metal Hello World OS
+------
 
 Without an operating system, running a program on a computer will be
 harder. On an x86 computer, when the power button is pressed, the CPU is
