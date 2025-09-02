@@ -58,7 +58,7 @@ assignment.** The README should be placed in the top level directory of
 your GitHub repository for this assignment. Refer to the homework
 submission page on the class web site for additional submission
 instructions. In addition, please pay attention to the [additional
-requirements](#requirements) listed at the bottom of this assignment.
+requirements](#additional-requirements) listed at the bottom of this assignment.
 
 **For students on Arm Mac computers (e.g. with M1 or M2 CPU):** if you want
 your submission to be built/tested for Arm, you must create and submit a
@@ -315,14 +315,14 @@ environment in which to execute.
     and a space after the comma before the second word*. The following
     is an example showing the correct printing on the screen:
 
-    ![](https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world.png)
+    <img src="https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world.png" alt="hello world" width="400">
 
     In contrast, the following examples show INCORRECT printing because
     of incorrect placement, extra spaces, etc.:
-
-    ![](https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_wrong_1.png)
-    ![](https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_wrong_2.png)
-    ![](https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_wrong_4.png)
+    
+    <img src="https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_wrong_1.png" alt="hello world" width="300">
+    <img src="https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_wrong_2.png" alt="hello world" width="300">
+    <img src="https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_wrong_4.png" alt="hello world" width="300">
 
     The memory for each character on the VGA console is two bytes - one
     byte for the ascii code and the other for the color. For example, to
@@ -482,14 +482,14 @@ environment in which to execute.
     The following is an example showing the correct printing on the
     screen with ip and sp values of 7ca8 and 8d7e, respectively:
 
-    ![](https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_ip_sp.png)
+    <img src="https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_ip_sp.png" alt="hello world ip sp" width="400">
 
     In contrast, the following examples show INCORRECT printing because
     of incorrect background color, extra spaces, etc.:
 
-    ![](https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_ip_sp_wrong_1.png)
-    ![](https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_ip_sp_wrong_2.png)
-    ![](https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_ip_sp_wrong_3.png)
+    <img src="https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_ip_sp_wrong_1.png" alt="hello world ip sp" width="300">
+    <img src="https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_ip_sp_wrong_2.png" alt="hello world ip sp" width="300">
+    <img src="https://nieh.net/teaching/w4118_f24/homeworks/hmwk1/hello_world_ip_sp_wrong_3.png" alt="hello world ip sp" width="300">
 
     To read the IP and SP registers, you need to use assembly code. The
     SP register can be read directly using the `mov` instruction.
