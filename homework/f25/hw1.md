@@ -110,7 +110,7 @@ as the Makefile. If we cannot simply run make and then w4118_sh, you
 will be heavily penalized.
 
 2. **The shell should run continuously, and display a prompt when waiting
-for input.** The prompt should be EXACTLY \'\$\'. No spaces, no extra
+for input.** The prompt should be EXACTLY `$`. No spaces, no extra
 characters. Example with a command:
 
         $/bin/ls -lha /home/w4118/my_docs
@@ -145,7 +145,7 @@ but your shell should not terminate.
 
 6. **Implement Built-in Commands, `exit` and `cd`.** `exit`
 simply exits your shell after performing any necessary clean up. `cd
-\[dir\]`, short for \"change directory\", changes the current
+[dir]`, short for \"change directory\", changes the current
 working directory of your shell. Do not worry about implementing the
 command line options that the real cd command has in Bash. Just
 implement cd such that it takes a single command line parameter: the
@@ -172,7 +172,7 @@ properly. Many failed function calls should not be fatal to a program.
     Typically, a system call will return -1 in the case of an error (malloc will return NULL). If a function call sets the errno variable (see the function\'s man page to find out if it does), you should use the first error message as described above. As far as system calls are concerned, you will want to use one of the mechanisms described in [Error Reporting](https://www.gnu.org/software/libc/manual/html_mono/libc.html#Error-Reporting).
 
 9. **A testing script skeleton is provided in a [GitHub
-repository](https://github.com/W4118/f24-tester-hmwk1) to help you with
+repository](https://github.com/W4118/f23-tester-hmwk1) to help you with
 testing your program.** You should make sure your program works correct
 with this script. For grading purposes, we will conduct much more
 extensive testing than what is provided with the testing skeleton, so
@@ -604,9 +604,9 @@ Include the following in your main branch. Only include source code (ie
   references to materials that you used to complete your assignment,
   including URLs to websites and names of other students you asked for
   help.
-- Implementation of simple shell in [part1]{.icmd} with Makefile
+- Implementation of simple shell in [part1](#part-1-the-simple-shell) with Makefile
   generating w4118_sh executable
 - Implementation of simple shell using only system calls in
-  [part2]{.icmd} with Makefile generating w4118_sh2 executable
-- Implementation of hello world OS in [part3]{.icmd} with Makefile
+  [part2](#part-2-simple-shell-directly-calling-system-calls) with Makefile generating w4118_sh2 executable
+- Implementation of hello world OS in [part3](#part-3-bare-metal-hello-world-os) with Makefile
   generating floppy.flp bootable OS
