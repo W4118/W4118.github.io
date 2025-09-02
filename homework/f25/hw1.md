@@ -1,6 +1,6 @@
 # HW1 (W4118 Fall 2025)
 
-> <span style="color:red">**DUE: Thursday 9/18/2025 at 11:59pm ET**</span>
+> <span style="color:red">**DUE: Wednesday 9/17/2025 at 11:59pm ET**</span>
 
 All homework submissions are to be made via [Git](http://git-scm.com/).
 You must submit a detailed list of references as part your homework
