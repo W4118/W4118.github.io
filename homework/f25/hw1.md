@@ -249,7 +249,7 @@ Part 3: Bare-metal Hello World OS
 
 Without an operating system, running a program on a computer will be
 harder. On an x86 computer, when the power button is pressed, the CPU is
-reset to its initially state and firmware, the BIOS, is executed. The
+reset to its initial state and firmware, the BIOS, is executed. The
 BIOS checks the hardware resources of the computer, loads the first
 program on the storage device, for example the hard drive, into the RAM
 and transfers control to the program.
