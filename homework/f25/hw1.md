@@ -119,25 +119,25 @@ characters. Example with a command:
 should be parsed out into a *command* and *all its arguments*. In other
 words, tokenize it.
 
-- You may assume that the only supported delimiter is the whitespace
-  character (ASCII character number 32).
-- You do not need to handle \"special\" characters. Do not worry about
-  handling quotation marks, backslashes, and tab characters. This means
-  your shell will be unable support arguments with spaces in them. For
-  example, your shell will not support file paths with spaces in them.
-- You may set a reasonable maximum on the number of command line
-  arguments, but your shell should handle input lines of any length. You
-  may find `getline()` useful.
+    - You may assume that the only supported delimiter is the whitespace
+      character (ASCII character number 32).
+    - You do not need to handle \"special\" characters. Do not worry about
+      handling quotation marks, backslashes, and tab characters. This means
+      your shell will be unable support arguments with spaces in them. For
+      example, your shell will not support file paths with spaces in them.
+    - You may set a reasonable maximum on the number of command line
+      arguments, but your shell should handle input lines of any length. You
+      may find `getline()` useful.
 
 4. **After parsing and lexing the command, your shell should execute it.**
 A command can either be a reference to an executable OR a built-in shell
 command (see below). For now, just focus on running executables, and not
 on built-in commands.
 
-- Executing commands that are not shell built-ins is done by invoking
-  `fork()` and then invoking `exec()`
-- You may **NOT** use the `system()` function, as it just invokes
-  the `/bin/sh` shell to do all the work.
+    - Executing commands that are not shell built-ins is done by invoking
+      `fork()` and then invoking `exec()`
+    - You may **NOT** use the `system()` function, as it just invokes
+      the `/bin/sh` shell to do all the work.
 
 5. **Ensure Ctrl-C works.** Typing Ctrl-C in your shell should function as
 expected, that is, if a command is running, the command will terminate,
@@ -172,7 +172,7 @@ properly. Many failed function calls should not be fatal to a program.
     Typically, a system call will return -1 in the case of an error (malloc will return NULL). If a function call sets the errno variable (see the function\'s man page to find out if it does), you should use the first error message as described above. As far as system calls are concerned, you will want to use one of the mechanisms described in [Error Reporting](https://www.gnu.org/software/libc/manual/html_mono/libc.html#Error-Reporting).
 
 9. **A testing script skeleton is provided in a [GitHub
-repository](https://github.com/W4118/f23-tester-hmwk1) to help you with
+repository](https://github.com/W4118/f25-tester-hmwk1) to help you with
 testing your program.** You should make sure your program works correct
 with this script. For grading purposes, we will conduct much more
 extensive testing than what is provided with the testing skeleton, so
