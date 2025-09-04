@@ -26,7 +26,7 @@ so that we can associate your GitHub username with your Columbia UNI.
 **You must complete this form by Friday 9/12 at 11:59pm ET.**
 
 Once you have a GitHub account and login, you can
-create (updating) your GitHub repository
+[create] (https://classroom.github.com/a/kkzZubaD) your GitHub repository
 for this assignment using GitHub Classroom. Click \"Accept Assignment\"
 to setup your own copy of the assignment. Please wait until Github
 finishes the initialization process.
