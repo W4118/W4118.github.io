@@ -44,7 +44,7 @@ To create your kernel `.config`, use the following steps:
     $ make mrproper
     ```
 
-2. Create a config file based on the config file of your current kernel. Make sure that you're running the stock Ubuntu kernel before you do this step. You don't want to copy a bad config! You can verify this by running `uname -r`. You should get something like `6.14.0-41-generic`.
+2. Create a config file based on the config file of your current kernel. Make sure that you're running the stock Ubuntu kernel before you do this step. You don't want to copy a bad config! You can verify this by running `uname -r`. You should get something like `6.14.0-29-generic`.
 
     The config file that was used to build your current kernel is located in the `/boot/` directory. The following command copies over that file, and updates any missing options with default values.
 
@@ -101,7 +101,7 @@ SYSTEM_TRUSTED_KEYS "debian/canonical-certs.pem" -> ""
 SYSTEM_REVOCATION_KEYS "debian/canonical-revoked-certs.pem" -> ""
 ```
 
-If you used `scripts/config`, you can do a diff against the stock config file in the `/boot/` directory. For instance, run `scripts/diffconfig /boot/config-6.14.0-41-generic .config`. If you do this, you'll probabably see some extra changes besides the three lines listed above. That's okay, because `make olddefconfig` also updates some of the other configs. Just make sure your desired changes are reflected in the output.
+If you used `scripts/config`, you can do a diff against the stock config file in the `/boot/` directory. For instance, run `scripts/diffconfig /boot/config-6.14.0-29-generic .config`. If you do this, you'll probabably see some extra changes besides the three lines listed above. That's okay, because `make olddefconfig` also updates some of the other configs. Just make sure your desired changes are reflected in the output.
 
 ## Building the kernel
 
@@ -162,7 +162,7 @@ Now verify that you’re running your own custom kernel by running:
 $ uname -r
 ```
 
-Instead of `6.14.0-41-generic`, you should now see your kernel version string, `6.14.0-cs4118`!
+Instead of `6.14.0-29-generic`, you should now see your kernel version string, `6.14.0-cs4118`!
 
 ## Optimizing your kernel compilation time
 
