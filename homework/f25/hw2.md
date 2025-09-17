@@ -1,6 +1,6 @@
 # HW2 (W4118 Fall 2025)
 
-> <span style="color:red">**DUE: Wednesday 10/01/2024 at 11:59pm ET**</span>
+> <span style="color:red">**DUE: Wednesday 10/01/2025 at 11:59pm ET**</span>
 
 ## General instructions
 
