@@ -15,8 +15,7 @@ homework policy section on the [class website][class-web-site] for further
 details.
 
 [Git]: https://git-scm.com/
-[file]:
-  https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/references.txt
+[file]: https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/references.txt
 [class-web-site]: https://www.cs.columbia.edu/~nieh/teaching/w4118/
 
 Group programming problems are to be done in your assigned groups. We will let
@@ -88,12 +87,9 @@ and how much time each member spent on the homework.** The README should be
 placed in the top level directory of the main branch of your team repo (on the
 same level as the `linux/` and `user/` directories).
 
-[git-pull]:
-  https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-pull.html
-[git-merge]:
-  https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-merge.html
-[git-fetch]:
-  https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-fetch.html
+[git-pull]: https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-pull.html
+[git-merge]: https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-merge.html
+[git-fetch]: https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-fetch.html
 
 ## Part 1: Build your own Linux 6.14.0 kernel and install and run it in your Linux VM
 
@@ -357,19 +353,13 @@ you update a header file that is part of the user space API of the kernel.
   not leave extraneous debugging messages enabled in your code when submitting
   your homework, not in stdout/stderr, and not in the kernel logs.
 
-[this-blog-post]:
-  https://chengyihe.wordpress.com/2015/12/29/kernel-thread-and-thread-group/
-[include/linux/sched.h]:
-  https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h#L737
-[this-stackoverflow-answer]:
-  https://stackoverflow.com/questions/9305992/if-threads-share-the-same-pid-how-can-they-be-identified/9306150#9306150
-[this-(optional)-paper-from-2002]:
-  https://www.kernel.org/doc/ols/2002/ols2002-pages-330-337.pdf
-[include/linux/syscalls.h]:
-  https://elixir.bootlin.com/linux/v6.14/source/include/linux/syscalls.h
+[this-blog-post]: https://chengyihe.wordpress.com/2015/12/29/kernel-thread-and-thread-group/
+[include/linux/sched.h]: https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h#L737
+[this-stackoverflow-answer]: https://stackoverflow.com/questions/9305992/if-threads-share-the-same-pid-how-can-they-be-identified/9306150#9306150
+[this-(optional)-paper-from-2002]: https://www.kernel.org/doc/ols/2002/ols2002-pages-330-337.pdf
+[include/linux/syscalls.h]: https://elixir.bootlin.com/linux/v6.14/source/include/linux/syscalls.h
 [kernel/sys.c]: https://elixir.bootlin.com/linux/v6.14/source/kernel/sys.c
-[kernel-memory-allocation]:
-  https://www.kernel.org/doc/html/latest//core-api/memory-allocation.html
+[kernel-memory-allocation]: https://www.kernel.org/doc/html/latest//core-api/memory-allocation.html
 [printk]: https://www.kernel.org/doc/html/v5.13/core-api/printk-basics.html
 
 ## Part 3: Test your new system call
@@ -518,8 +508,7 @@ You do not need to handle `ctrl-c` for foo.
      target process tree easily by calling `pthread_create()` from a certain
      process.
 
-[change-the-maximum-possible-pid-value]:
-  https://stackoverflow.com/questions/6294133/maximum-pid-in-linux
+[change-the-maximum-possible-pid-value]: https://stackoverflow.com/questions/6294133/maximum-pid-in-linux
 [pthread_create()]: https://man7.org/linux/man-pages/man3/pthread_create.3.html
 
 ## Submission Checklist
