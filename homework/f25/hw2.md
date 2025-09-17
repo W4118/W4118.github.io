@@ -42,7 +42,7 @@ members are expected to make local commits and push changes or contributions to
 GitHub equally. You should become familiar with team-based shared repository Git
 commands such as [git-pull][git-pull], [git-merge][git-merge],
 [git-fetch][git-fetch]. For more information, see
-[this guide](../guides/git.md).
+[this guide](../../guides/git.md).
 
 There should be at least five commits **per member** in the team's Git
 repository. The point is to make incremental changes and use an iterative
@@ -96,7 +96,7 @@ same level as the `linux/` and `user/` directories).
 You will need to install your own custom kernel in your VM to do this
 assignment. The source code for the kernel you will use is located in your team
 repository on GitHub. Follow the instructions provided
-[here](../guides/kernel-compilation.md) to build and install the kernel in your
+[here](../../guides/kernel-compilation.md) to build and install the kernel in your
 VM.
 
 ## Part 2: Write a new system call in Linux
