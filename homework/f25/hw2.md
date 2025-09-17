@@ -426,11 +426,6 @@ Write answers to the following questions in the `user/part4.txt` text file,
 following the provided template **exactly**. Make sure to include any references
 you use in your `references.txt` file.
 
-> <span style="color:red">IMPORTANT: The skeleton code pushed to the assignment
-> repo has an error in question two. The original skeleton code asks about the
-> init process. The question should be about the **PROCESS WITH PID 0**, as is
-> the case below.</span>
-
 1. There are a few PIDs that are reserved for system processes and kernel
    threads. These include PIDs 0, 1, and 2. What is the process name associated
    with each of these three PIDs (some may have multiple acceptable names)?
