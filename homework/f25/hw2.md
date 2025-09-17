@@ -236,7 +236,7 @@ you update a header file that is part of the user space API of the kernel.
 - If a value to be set in `tskinfo` is accessible through a pointer which is
   null, set the value in `tskinfo` to 0.
 
-- Your system call should be assigned the number **462** and be implemented in a
+- Your system call should be assigned the number **467** and be implemented in a
   file `ptree.c` in the `kernel/` directory, i.e. `kernel/ptree.c`. Note again
   that this path is relative to the root directory of your kernel source tree.
   You will need to modify the appropriate kernel `Makefile` so that it is aware
@@ -453,7 +453,7 @@ you use in your `references.txt` file.
    x86-64. Note: use v6.14.
 
 For reference, the URLs you answer with should be in the following format:
-https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c#L6607
+`https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c#L6607`
 
 [elixir.bootlin.com]: https://elixir.bootlin.com/linux/v6.14/source
 
