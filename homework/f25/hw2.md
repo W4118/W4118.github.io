@@ -60,7 +60,7 @@ part of this assignment, you will be experimenting with Linux platforms and
 gaining familiarity with the development environment. Linux platforms can run on
 many different architectures, but the specific platforms we will be targeting
 are the X86_64 or Arm64 CPU families. All of your kernel builds will be done in
-the same Linux VM from homework 1. You will be developing with the Linux 6.8
+the same Linux VM from homework 1. You will be developing with the Linux 6.14
 kernel.
 
 **For this assignment, you will write a system call to dump the process tree and
@@ -95,7 +95,7 @@ same level as the `linux/` and `user/` directories).
 [git-fetch]:
   https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-fetch.html
 
-## Part 1: Build your own Linux 6.8.0 kernel and install and run it in your Linux VM
+## Part 1: Build your own Linux 6.14.0 kernel and install and run it in your Linux VM
 
 You will need to install your own custom kernel in your VM to do this
 assignment. The source code for the kernel you will use is located in your team
@@ -360,14 +360,14 @@ you update a header file that is part of the user space API of the kernel.
 [this-blog-post]:
   https://chengyihe.wordpress.com/2015/12/29/kernel-thread-and-thread-group/
 [include/linux/sched.h]:
-  https://elixir.bootlin.com/linux/v6.8/source/include/linux/sched.h#L737
+  https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h#L737
 [this-stackoverflow-answer]:
   https://stackoverflow.com/questions/9305992/if-threads-share-the-same-pid-how-can-they-be-identified/9306150#9306150
 [this-(optional)-paper-from-2002]:
   https://www.kernel.org/doc/ols/2002/ols2002-pages-330-337.pdf
 [include/linux/syscalls.h]:
-  https://elixir.bootlin.com/linux/v6.8/source/include/linux/syscalls.h
-[kernel/sys.c]: https://elixir.bootlin.com/linux/v6.8/source/kernel/sys.c
+  https://elixir.bootlin.com/linux/v6.14/source/include/linux/syscalls.h
+[kernel/sys.c]: https://elixir.bootlin.com/linux/v6.14/source/kernel/sys.c
 [kernel-memory-allocation]:
   https://www.kernel.org/doc/html/latest//core-api/memory-allocation.html
 [printk]: https://www.kernel.org/doc/html/v5.13/core-api/printk-basics.html
@@ -435,27 +435,27 @@ you use in your `references.txt` file.
    threads. These include PIDs 0, 1, and 2. What is the process name associated
    with each of these three PIDs (some may have multiple acceptable names)?
 
-2. Give the exact URL on https://elixir.bootlin.com/linux/v6.8/source pointing
+2. Give the exact URL on https://elixir.bootlin.com/linux/v6.14/source pointing
    to the file and line number at which the data structure describing the
-   process with PID 0 is defined. Note: make sure you use v6.8.
+   process with PID 0 is defined. Note: make sure you use v6.14.
 
-3. Give the exact URL on https://elixir.bootlin.com/linux/v6.8/source pointing
+3. Give the exact URL on https://elixir.bootlin.com/linux/v6.14/source pointing
    to the file and line number at which the function that executes instructions
    to context-switch from one task to another is defined. Please provide an
    answer for both arm64 and x86-64. The function you identify, which may be in
    assembly code, should be the one that contains the actual instruction that
    switches the CPU's program counter register to the task so it can run. Note:
-   use v6.8.
+   use v6.14.
 
-4. Give the exact URL on https://elixir.bootlin.com/linux/v6.8/source pointing
+4. Give the exact URL on https://elixir.bootlin.com/linux/v6.14/source pointing
    to the file and line number at which the process with PID 1 starts running as
    the currently running process. Please provide an answer for both arm64 and
-   x86-64. Note: use v6.8.
+   x86-64. Note: use v6.14.
 
 For reference, the URLs you answer with should be in the following format:
-https://elixir.bootlin.com/linux/v6.8/source/kernel/sched/core.c#L6607
+https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c#L6607
 
-[elixir.bootlin.com]: https://elixir.bootlin.com/linux/v6.8/source
+[elixir.bootlin.com]: https://elixir.bootlin.com/linux/v6.14/source
 
 ## Part 5: Create your own process tree
 
