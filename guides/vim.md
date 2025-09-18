@@ -13,7 +13,7 @@ Most of this guide is dedicated to building out a robust Vim developer environme
 First install some dependencies:
 
 ```
-$ sudo apt install vim-gtk3 clang cmake curl python3 python3-dev
+$ sudo apt install vim-gtk3 clang cmake curl python3 python3-dev python3-setuptools
 ```
 
 We install `vim-gtk3` over the default Vim package because the default version is not compiled with python support, which is needed for the [`YouCompleteMe`](https://github.com/ycm-core/YouCompleteMe/) plugin later. (Don’t worry if you have already installed a different Vim package before, `vim-gtk3` will take priority over it.)
