@@ -40,7 +40,9 @@ The default settings for memory and storage are probably too small. Customize yo
 
 - **Name**: (your choice; whatever name you want for saving the VM so you can open it again later in VMware)
 - **CPU**: 2 processor cores minimum; 4 or more cores highly recommended, provided that your host machine has 4 or more cores
-- **RAM**: 2 GB minimum; 4 GB or more highly recommended, provided that your host machine has 8 GB of RAM or more
+- **RAM**: 6 GB or more highly recommended, provided that your host machine has 
+8 GB of RAM or more. Ubuntu 25.04 with linux 6.14 has been known to go into 
+memory deadlock with 4GB of RAM.
 - **Hard disk**: 64 GB minimum, 128 GB or more recommended
 
 Installing and Setting Up Ubuntu
