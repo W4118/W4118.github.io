@@ -61,13 +61,13 @@ In this part, we will set up the relevant system calls to enable/disable the tra
 
 ```c
 /*
- * Syscall No. 462
+ * Syscall No. 467
  * Enable the tracing for @pid. If -1 is given, trace all processes.
  */
 long pstrace_enable(pid_t pid);
 
 /*
- * Syscall No. 463
+ * Syscall No. 468
  * Disable tracing.
  */
 long pstrace_disable();
@@ -152,7 +152,7 @@ At this point, we’ve allowed users to enable/disable the tracing of processes,
 
 ```c
 /*
- * Syscall No. 464
+ * Syscall No. 469
  *
  * Copy the pstrace ring buffer into @buf.
  * If @counter points to 0, copy the pstrace ring buffer.
@@ -169,7 +169,7 @@ In addition, you should have another system call that clears the ring buffer.
 
 ```c
 /*
- * Syscall No. 465
+ * Syscall No. 470
  *
  * Clear the pstrace buffer. Cleared records should
  * never be returned by `pstrace_get()`. This function
@@ -221,7 +221,7 @@ You will now update the implementation of your `pstrace_get()` system call to su
 
 ```c
 /*
- * Syscall No. 464
+ * Syscall No. 469
  *
  * Copy the pstrace ring buffer into @buf.
  * If @counter points to 0, copy the immediate pstrace ring buffer.
