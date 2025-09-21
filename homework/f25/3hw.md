@@ -22,7 +22,7 @@ $ git clone git@github.com:W4118/f24-hmwk3-teamN.git
 
 This repository will be accessible to all members of your team, and all team members are expected to make local commits and push changes or contributions to GitHub equally. You should become familiar with team-based shared repository Git commands such as [git-pull][git-pull], [git-merge][git-merge], [git-fetch][git-fetch]. For more information, see [this guide](../guides/git.md).
 
-There should be at least five commits **per member** in the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://www.kernel.org/doc/html/v6.8/process/coding-style.html). You **must** check your commits with the `run_checkpatch.sh` script provided as part of your team repository. Errors or warnings from the script in your submission will cause a deduction of points.
+There should be at least five commits **per member** in the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://www.kernel.org/doc/html/v6.14/process/coding-style.html). You **must** check your commits with the `run_checkpatch.sh` script provided as part of your team repository. Errors or warnings from the script in your submission will cause a deduction of points.
 
 For students on Arm computers (e.g. macs with M1/M2/M3 CPUs): if you want your submission to be built/tested for Arm, you must create and submit a file called `.armpls` in the top-level directory of your repo; feel free to use the following one-liner:
 
@@ -206,7 +206,7 @@ Note that you should represent a task that is on the run queue as `TASK_RUNNABLE
 
 To get around this, you should introduce a `TASK_RUNNABLE` state for tracing purposes only (i.e. `TASK_RUNNABLE` is not stored in the actual `__state` field of the `task_struct`). 
 
-**You should define `TASK_RUNNABLE` to have a value of 3.** (See [here](https://elixir.bootlin.com/linux/v6.8/source/include/linux/sched.h#L95) for more details.) 
+**You should define `TASK_RUNNABLE` to have a value of 3.** (See [here](https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h#L99) for more details.) 
 
 Note that since `TASK_RUNNABLE` is not an actual value stored in the `__state` field of the `task_struct`, you will find it useful to use the `stateoption` argument of `pstrace_add()` to record when a process's state changes to `TASK_RUNNABLE`.
 
@@ -301,7 +301,7 @@ You should be able to observe how the second program turns from running to sleep
 
 Write answers to the following questions in the `user/part5.txt` text file, following the provided template **exactly**. Make sure to include any references you use in your `references.txt file`.
 
-For question 1, make sure that you are referencing the correct kernel version in bootlin (**[v6.8](https://elixir.bootlin.com/linux/v6.8/source)**). For reference, the URLs you answer with should be in the following format: https://elixir.bootlin.com/linux/v6.8/source/kernel/sched/core.c#L1234
+For question 1, make sure that you are referencing the correct kernel version in bootlin (**[v6.8](https://elixir.bootlin.com/linux/v6.14/source)**). For reference, the URLs you answer with should be in the following format: https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c#L1234
 
 > **IMPORTANT**: For each of the URLs you give, make sure the line numbers correspond to the line numbers on bootlin. In other words, they should be the line numbers **BEFORE** you made any changes to the kernel source code.
 
