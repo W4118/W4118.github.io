@@ -1,8 +1,6 @@
 # HW3 (W4118 Fall 2024)
 
-> <span style="color:red">**DUE: Wednesday 10/16/2024 at 11:59pm ET**</span>
-
-> Modified: Fri Oct 25, 1502 hrs (clarification on parts 4 and 5 -- added for future semesters)
+<span style="color:red">**DUE: Wednesday 10/15/2025 at 11:59pm ET**</span>
 
 ## General instructions
 
