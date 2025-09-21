@@ -293,6 +293,8 @@ For testing purposes, you should also write another program named **`seven_state
 
 You should be able to observe how the second program turns from running to sleeping and finally, to zombie, and exits. Your testing should generate at least one record for each of the seven distinct process states we have asked you to record, and you should include the resulting output in your submission in a file `user/part4/pstrace_output.txt`.
 
+TODO: COME UP WITH A NORMALIZED OUTPUT
+
 > As was the case in HW2, you will have to run `sudo make headers_install INSTALL_HDR_PATH=/usr` in the root of your kernel source tree to make your new kernel header files available to user space programs.
 
 ## Part 5: Process lifecycle
