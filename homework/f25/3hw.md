@@ -270,6 +270,7 @@ If all the records within the requested range have already been evicted from the
 - You should plan to use [Linux wait queues](https://embetronicx.com/tutorials/linux/device-drivers/waitqueue-in-linux-device-driver-tutorial/). A wait queue is a list of processes waiting for some event to occur. The functions that use wait queues are designed to either wake up a single process or all processes on a wait queue. All the processes on a wait queue should be waiting for the same event. If the desired functionality is for processes to wait for different events to occur, the typical approach is to use a separate wait queue for each event. The functions that use wait queues are not designed to search a wait queue to identify processes waiting for different events to occur.
 - You should think carefully about how and when you will copy the contents of the ring buffer in response to a `pstrace_get()` to provide the expected functionality. In particular, there may be an arbitrary amount of time that elapses between when a process is woken up and when the process is actually run to complete the system call and return the records to the calling process. Be sure to return the correct records requested when possible.
 - You should also think carefully about what happens if you are tracing a process that is waiting on a `pstrace_get()` call, to ensure that you do not deadlock your system. How does that process wake up? What trace records are generated as a result of waking up that process? What locks are held when you are recording trace records?
+- Another is that you have a `pstrace_get` call waiting for a certain counter but the target process exits before that counter is reached. **You do not need to handle this case.**
 - Also make sure that you do not deadlock your system when handling wait queues and interrupts.
 
 **Additional requirements**
@@ -293,9 +294,18 @@ For testing purposes, you should also write another program named **`seven_state
 
 You should be able to observe how the second program turns from running to sleeping and finally, to zombie, and exits. Your testing should generate at least one record for each of the seven distinct process states we have asked you to record, and you should include the resulting output in your submission in a file `user/part4/pstrace_output.txt`.
 
-**TODO: COME UP WITH A NORMALIZED OUTPUT**
-
 > As was the case in HW2, you will have to run `sudo make headers_install INSTALL_HDR_PATH=/usr` in the root of your kernel source tree to make your new kernel header files available to user space programs.
+
+
+**TODO:VERIFY**
+We have provided a sample program to showcase a traced process in `part4/sample_programs` for you to test the progress of homework 3. You may use this as a helper to see how your process behaves in comparison to the output.txt file. Note that it is possible to have a different output despite a correct solution as the output of your team's run is dependent on when exactly the traces begins, but you may still use this program to get an idea of whether you are correctly reporting your states.
+
+**Importantly, the output for your programs in this part must follow the same format as the sample output we provided.**
+**TODO:VERIFY^**
+
+**Hints**
+- Consider how you may force a task to visit all states. Disk I/O is an example of a task going into the `TASK_UNINTERRUPTIBLE` state, but you must ensure that the target data for read is not cached in memory. For this, you may consider ([clearing memory caches](https://linuxconfig.org/clear-cache-on-linux))
+
 
 ## Part 5: Process lifecycle
 
