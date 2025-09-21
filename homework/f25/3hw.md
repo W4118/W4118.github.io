@@ -1,4 +1,4 @@
-# HW3 (W4118 Fall 2024)
+# HW3 (W4118 Fall 2025)
 
 > <span style="color:red">**DUE: Wednesday 10/15/2025 at 11:59pm ET**</span>
 
