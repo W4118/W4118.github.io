@@ -201,11 +201,24 @@ Extend the usage of `pstrace_add()` to now record changes in processes’ state 
 6. `EXIT_ZOMBIE`
 7. `EXIT_DEAD`
 
-Note that you should represent a task that is on the run queue as `TASK_RUNNABLE` while a task that is actually running on the CPU should be `TASK_RUNNING`. However, Linux does not have an actual state `TASK_RUNNABLE`. It denotes both the state of being on the run queue and actually running as `TASK_RUNNING`. To get around this, you should introduce a `TASK_RUNNABLE` state for tracing purposes only (i.e. `TASK_RUNNABLE` is not stored in the actual `__state` field of the `task_struct`). **You should define `TASK_RUNNABLE` to have a value of 3.** (See [here](https://elixir.bootlin.com/linux/v6.8/source/include/linux/sched.h#L95) for more details.) Note that since `TASK_RUNNABLE` is not an actual value stored in the `__state` field of the `task_struct`, you will find it useful to use the `stateoption` argument of `pstrace_add()` to record when a process's state changes to `TASK_RUNNABLE`.
+Note that you should represent a task that is on the run queue as `TASK_RUNNABLE` while a task that is actually running on the CPU should be `TASK_RUNNING`. However, Linux does not have an actual state `TASK_RUNNABLE`. It denotes both the state of being on the run queue and actually running as `TASK_RUNNING`. 
 
-Again, your job is to record actual changes in process state, not necessarily whenever the `__state` field is changed. You should identify where a process's state actually changes and record those events as opposed to trying to insert `pstrace_add()` calls whenever you find the `__state` field is being modified. You should minimize the number of `pstrace_add()` calls required to trace the seven states.
+To get around this, you should introduce a `TASK_RUNNABLE` state for tracing purposes only (i.e. `TASK_RUNNABLE` is not stored in the actual `__state` field of the `task_struct`). 
+
+**You should define `TASK_RUNNABLE` to have a value of 3.** (See [here](https://elixir.bootlin.com/linux/v6.8/source/include/linux/sched.h#L95) for more details.) 
+
+Note that since `TASK_RUNNABLE` is not an actual value stored in the `__state` field of the `task_struct`, you will find it useful to use the `stateoption` argument of `pstrace_add()` to record when a process's state changes to `TASK_RUNNABLE`.
+
+Again, your job is to record actual changes in process state, not necessarily whenever the `__state` field is changed. You should identify where a process's state actually changes and record those events as opposed to trying to insert `pstrace_add()` calls whenever you find the `__state` field is being modified. 
+
+**You should minimize the number of `pstrace_add()` calls required to trace the seven states.**
 
 You will also need to carefully consider the code paths in which you insert `pstrace_add()` since the function does locking. Otherwise, you may deadlock your system. In particular, you should ask yourself whether the code path in which you insert `pstrace_add()` could be executed as a result of an interrupt and what implications that may have on the specific locking primitives you use.
+
+**Tasks**
+
+- Update `pstrace_add()` to now track all specified process state changes.
+- Modify any relevant files in the kernel where these changes occur.
 
 **Hints**
 
@@ -214,10 +227,6 @@ You may want to look at the following files when thinking about where to add (a)
 - `kernel/exit.c`
 - `kernel/sched/core.c`
 
-**Tasks**
-
-- Update `pstrace_add()` to now track all specified process state changes.
-- Modify any relevant files in the kernel where these changes occur.
 
 ## Part 3: Waiting to copy the tracing buffer into user space
 
