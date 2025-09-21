@@ -77,17 +77,18 @@ long pstrace_disable();
 
 In other words, your tracing system will either trace a **single** process or trace **all** processes. You should use a suitable data structure to keep track of what processes are being traced. Note that this system call simply __enables/disables__ the tracing - the actual writing to the ring buffer will happen in a subsequent function.
 
+**Tasks**
+
+- Implement `pstrace_enable()` and `pstrace_disable()`.
+- Modify any relevant files in the kernel to reflect the newly added system calls.
+  
 **Additional requirements**
 
 - Tracing a process includes tracing all threads in the same thread group.
 - If the pid does not exist, an appropriate error should be returned.
 - Do not modify the `task_struct` (for the entire assignment).
 - If tracing is already enabled, `pstrace_enable()` will **replace** the set of processes being traced with what is specified in the newer `pstrace_enable()` call.
-
-**Tasks**
-
-- Implement `pstrace_enable()` and `pstrace_disable()`.
-- Modify any relevant files in the kernel to reflect the newly added system calls.
+  
 
 **STEP 2. Set up the ring buffer**
 
