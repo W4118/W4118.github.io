@@ -126,7 +126,7 @@ You are free to modify the `pstrace_kernel` structure, and you will indeed need 
 
 **STEP 3. Recording one type of state change**
 
-For now, we want to focus on tracing only one type of state change: when a process that is running becomes blocked but interruptible. This will result in the process state changing from `TASK_RUNNING` to `TASK_INTERRUPTIBLE`. When a process blocks in this manner, you should call `pstrace_add()` to create a new entry that records the process's updated state `TASK_INTERRUPTIBLE` in the `state` field of a `struct ptrace`, and add this new entry to the global ring buffer. The interface of the function is:
+For now, we want to focus on tracing only one type of state change: when a process that is running becomes blocked but interruptible. This will result in the process state changing from `TASK_RUNNING` to `TASK_INTERRUPTIBLE`. When a process blocks in this manner, you should call `pstrace_add()` to create a new entry that records the process's updated state `TASK_INTERRUPTIBLE` in the `state` field of a `struct pstrace`, and add this new entry to the global ring buffer. The interface of the function is:
 
 ```c
 /* Add a record of a state change into the ring buffer. */
