@@ -88,6 +88,7 @@ In other words, your tracing system will either trace a **single** process or tr
 - If the pid does not exist, an appropriate error should be returned.
 - Do not modify the `task_struct` (for the entire assignment).
 - If tracing is already enabled, `pstrace_enable()` will **replace** the set of processes being traced with what is specified in the newer `pstrace_enable()` call.
+- Calling `pstrace_disable()` before the first `pstrace_enable()` call should be a noop.
   
 
 **STEP 2. Set up the ring buffer**
