@@ -117,7 +117,7 @@ struct pstrace {
 
 Note that we want our entry to record the **NEW** state of the process. Note also that these data structures may need to be spread across multiple header files, depending on whether they're part of the user space API.
 
-You are free to modify the `pstrace_kernel` structure, and you will indeed need to add additional fields to the structure. Note that in addition to the array for the ring buffer itself, `pstrace_kernel` has a counter, which should be initialized to zero and be incremented for each record that is added to the ring buffer. It is a count of how many trace records have ever been added to the ring buffer and **should never be reset**.
+You are free to modify the `pstrace_kernel` structure, and you will indeed need to add additional fields to the structure. Note that in addition to the array for the ring buffer itself, `pstrace_kernel` has a counter, which should be initialized to zero and be incremented for each record that is added to the ring buffer. It is a **count of how many trace records have ever been added** to the ring buffer and **should never be reset**.
 
 **Tasks**
 
