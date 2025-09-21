@@ -298,7 +298,7 @@ You should be able to observe how the second program turns from running to sleep
 
 
 **TODO:VERIFY**
-We have provided a sample program to showcase a traced process in `part4/sample_programs` for you to test the progress of homework 3. You may use this as a helper to see how your process behaves in comparison to the output.txt file. Note that it is possible to have a different output despite a correct solution as the output of your team's run is dependent on when exactly the traces begins, but you may still use this program to get an idea of whether you are correctly reporting your states.
+We have provided a sample program to showcase a traced process in `user/part4/sample_programs` for you to test the progress of homework 3. You may use this as a helper to see how your process behaves in comparison to the output.txt file. Note that it is possible to have a different output despite a correct solution as the output of your team's run is dependent on when exactly the traces begins, but you may still use this program to get an idea of whether you are correctly reporting your states.
 
 **Importantly, the output for your programs in this part must follow the same format as the sample output we provided.**
 **TODO:VERIFY^**
