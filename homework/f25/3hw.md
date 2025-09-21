@@ -112,6 +112,7 @@ struct pstrace {
 	long state;		/* NEW state of the process */
 	pid_t pid;		/* PID of the process; i.e. returned by getpid() */
 	pid_t tid;		/* TID of the thread; i.e. returned by gettid() */
+	int   cpu;		/* TODO VERIFY: CPU that this process last ran on before state change */ 
 };
 ```
 
