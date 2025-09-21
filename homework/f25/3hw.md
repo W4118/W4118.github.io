@@ -270,9 +270,9 @@ If all the records within the requested range have already been evicted from the
 - You should plan to use [Linux wait queues](https://embetronicx.com/tutorials/linux/device-drivers/waitqueue-in-linux-device-driver-tutorial/). A wait queue is a list of processes waiting for some event to occur. The functions that use wait queues are designed to either wake up a single process or all processes on a wait queue. All the processes on a wait queue should be waiting for the same event. If the desired functionality is for processes to wait for different events to occur, the typical approach is to use a separate wait queue for each event. The functions that use wait queues are not designed to search a wait queue to identify processes waiting for different events to occur.
 - You should think carefully about how and when you will copy the contents of the ring buffer in response to a `pstrace_get()` to provide the expected functionality. In particular, there may be an arbitrary amount of time that elapses between when a process is woken up and when the process is actually run to complete the system call and return the records to the calling process. Be sure to return the correct records requested when possible.
 - You should also think carefully about what happens if you are tracing a process that is waiting on a `pstrace_get()` call, to ensure that you do not deadlock your system. How does that process wake up? What trace records are generated as a result of waking up that process? What locks are held when you are recording trace records?
-- Another is that you have a `pstrace_get` call waiting for a certain counter but the target process exits before that counter is reached. **You do not need to handle this case.**
+- One possible edge-case is that you have a `pstrace_get` call waiting for a certain counter but the target process exits before that counter is reached. **You do not need to handle this case.**
 - Also make sure that you do not deadlock your system when handling wait queues and interrupts.
-
+  
 **Additional requirements**
 
 - If the buffer provided for copying into is not large enough to hold the records requested, you should return an error.
