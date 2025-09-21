@@ -311,7 +311,7 @@ We have provided a sample program to showcase a traced process in `part4/sample_
 
 Write answers to the following questions in the `user/part5.txt` text file, following the provided template **exactly**. Make sure to include any references you use in your `references.txt file`.
 
-For question 1, make sure that you are referencing the correct kernel version in bootlin (**[v6.8](https://elixir.bootlin.com/linux/v6.14/source)**). For reference, the URLs you answer with should be in the following format: https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c#L1234
+For question 1, make sure that you are referencing the correct kernel version in bootlin (**[v6.14](https://elixir.bootlin.com/linux/v6.14/source)**). For reference, the URLs you answer with should be in the following format: https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c#L1234
 
 > **IMPORTANT**: For each of the URLs you give, make sure the line numbers correspond to the line numbers on bootlin. In other words, they should be the line numbers **BEFORE** you made any changes to the kernel source code.
 
