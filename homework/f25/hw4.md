@@ -149,7 +149,7 @@ Once your scheduler works for both fibonacci and the state program from homework
 *   Consider how the scheduling policy for the `init_task` is assigned and how a task is assigned to a scheduling class by default. <!-- TODO:is saying the init task giving away too much here -->
 *   For a more responsive system, you may want to set the scheduler of kernel threads to be SCHED\_OVEN as well (otherwise, SCHED\_OVEN tasks can starve the SCHED\_NORMAL tasks to a degree). To do this, you can modify kernel/kthread.c and replace SCHED\_NORMAL with SCHED\_OVEN. It is strongly suggested that you do this to ensure that your VM is responsive enough for the test cases, but you should not do this until you are certain your scheduler works properly.
 
-Hints:
+### Hints:
 *   Check out the [debugging tips](#debugging-tips) provided below.
 *   At this point, excessive printk() or pr_info() logging may prevent your kernel from booting with Oven as the default scheduler. Hence, you may want to limit the logs in your oven\_sched\_class functions by only printing for a limited selection of tasks using if statements.
 *   One way to see the scheduling policy number for tasks is by using the following ps command. However, note that just because the policy number is 8 does not mean that the task is necessarily scheduled using Oven– you can confirm that tasks are scheduled using Oven through printk() or pr_info() logs. 
