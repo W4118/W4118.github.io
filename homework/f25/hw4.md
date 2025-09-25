@@ -13,7 +13,7 @@ All homework submissions are to be made via [Git][Git]. You must submit a detail
 Group programming problems are to be done in your assigned groups. We will let you know when the Git repository for your group has been set up on GitHub. It can be cloned using the following command. Replace `teamN` with your team number, e.g. `team0`. You can find your group number [here](https://docs.google.com/spreadsheets/d/1sWSEjtqSqSsl2dJ3R3YZKYlw4WG4GtfpHNECpqFJiks/edit?gid=260033287#gid=260033287).
 
 ```
-$ git clone git@github.com:W4118/f24-hmwk4-teamN.git
+$ git clone git@github.com:W4118/f25-hmwk4-teamN.git
 ```
 
 > **IMPORTANT**: You should clone the repository **directly in the terminal of your VM**, instead of cloning it on your local machine and then copying it into your VM. The filesystem in your VM is case-sensitive, but your local machine might use a case-insensitive filesystem (for instance, this is the default setting on macs). Cloning the repository to a case-insensitive filesystem might end up clobbering some kernel source code files. See [this post](https://unix.stackexchange.com/questions/753038/is-building-the-linux-kernel-on-a-case-insensitive-filesystem-possible) for some examples.
@@ -80,7 +80,7 @@ Ensure that the output of your eBPF script is synchronous. That is, it should pr
 
 Test your script by running sudo bpftrace trace.bt in one terminal. In a separate terminal, run a few commands and observe the trace metrics in your first terminal. Experiment with different task sizes. Submit your eBPF script as user/trace.bt.
 
-Now that you have an eBPF measurement tool, use it to measure the completion times for the the two task set workloads when running on the default CFS scheduler in Linux. What is the resulting average completion time for each workload? Write the average completion times of both workloads in your README. You may find this [shell script](https://www.cs.columbia.edu/~nieh/teaching/w4118_f24/homeworks/run_tasks.sh) helpful for running your tasks. You should perform your measurements for two different VM configurations, a single CPU VM and a four CPU VM. We are using the term CPU here to mean a core, so if your hardware has a single CPU but four cores, that should be sufficient for running a four CPU VM. If your hardware does not support four cores, you may instead run with a two CPU VM. Specify in your README the number of CPUs used with your VM for your measurements.
+Now that you have an eBPF measurement tool, use it to measure the completion times for the the two task set workloads when running on the default CFS scheduler in Linux. What is the resulting average completion time for each workload? Write the average completion times of both workloads in your README. You may find this [shell script](https://www.cs.columbia.edu/~nieh/teaching/w4118_f24/homeworks/run_tasks.sh) helpful for running your tasks. You should perform your measurements for two different VM configurations, a single CPU VM and a four CPU VM. We are using the term CPU here to mean a core, so if your hardware has a single CPU but four cores, that should be sufficient for running a four CPU VM. If your hardware does not support four cores, you may instead run with a two CPU VM. Specify in your README the number of CPUs used with your VM for your measurements. <!-- TODO: update shell script link to f25 -->
 
 **Hint:** You may find it useful to reference the bpftrace [GitHub project](https://github.com/iovisor/bpftrace), which contains a manual and a list of sample scripts. A useful example script to start with is [runqlat.bt](https://github.com/bpftrace/bpftrace/blob/aa041d9d85f9ec11235c39fdcb5833412ec27083/tools/runqlat.bt). <!-- TODO: make sure this is the right version of bpftrace -->
 
@@ -123,7 +123,7 @@ Part 2: Create your scheduler
 	* Implementing a scheduler and getting everything right is not easy. You should make your implementation as simple as possible. By the same token, you might find it helpful to first implement the case of the unweighted round-robin scheduler before introducing special, optimizied mode for the Fibonacci workload. 
 	* Avoid using complex data structures that may provide better theoretical runtime complexity but are harder to implement and debug. In general, lists are fine to use. 
 	* You should pay careful attention to how scheduling classes initialize their class-specific run queues and scheduling entities to insert them onto the run queues in [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c); incorrect initialization can easily cause your system to hang. To identify which parts need to be changed, look for references to existing Linux schedulers, particularly in the files mentioned below. Pay special attention to areas that explicitly reference the current default CFS scheduler (fair\_sched\_class).
-	* **Note** while the spec and the Linux kernel refer to default scheduler as the Completely Fair Scheduler (CFS), as of kernel version 6.6 the CFS was merged with the Earliest Virtual Deadline First (EEVDF) scheduler. If you're interested you can read more about these changes [here.](https://lwn.net/Articles/969062/)
+		* **Note** while the spec and the Linux kernel refer to default scheduler as the Completely Fair Scheduler (CFS), as of kernel version 6.6 the CFS was merged with the Earliest Virtual Deadline First (EEVDF) scheduler. If you're interested you can read more about these changes [here.](https://lwn.net/Articles/969062/)
 *   For implementing the oven\_sched\_class itself, a good place to start is the simple scheduling class for idle tasks, listed in [kernel/sched/idle.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/idle.c). This is the simplest of the scheduling classes. In particular, the functions implemented by this scheduling class are a good indication of the minimum set of functions you need to implement to have an operational scheduling class.
 *   Whether it is the scheduler's data structures or data structures, it is helpful to reference additional examples of scheduling classes, such as [kernel/sched/rt.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/rt.c) and [kernel/sched/fair.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/fair.c). You may find the former particularly useful because it has its own version of a round-robin scheduler, SCHED\_RR, though you will likely find many parts of the code too complex to use directly for your own scheduling class.
 *   Other interesting files that will help you understand how the Linux scheduler works are [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c), [kernel/sched/sched.h](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/sched.h), [include/linux/sched.h](https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h), and [include/asm-generic/vmlinux.lds.h](https://elixir.bootlin.com/linux/v6.14/source/include/asm-generic/vmlinux.lds.h). 
@@ -136,7 +136,7 @@ Part 2: Create your scheduler
 
 ### Hints:
 *   While developing and debugging your initial scheduling class implementation, it will be helpful to initially have SCHED\_NORMAL take priority over your SCHED\_OVEN policy so that bugs in your scheduling class are less likely to prevent other tasks from running. Once you have your scheduling class working, you can then switch the priority of these policies as required by the homework.
-*   Test your scheduler on a few runs of fibonacci and ensure it works before moving on. Set the weight to something other than the default and verify its behavior. After verifying that Fibonacci works, try running the [program from homework 3 that tests state changes](https://github.com/W4118/f24-hmwk3-sol/blob/main/user/part4/seven_states.c). The latter will exercise your scheduling code more throughly as it will involve scheduling processes that have a greater variety of state changes.
+*   Test your scheduler on a few runs of fibonacci and ensure it works before moving on. Set the weight to something other than the default and verify its behavior. After verifying that Fibonacci works, try running the [program from homework 3 that tests state changes](https://github.com/W4118/f24-hmwk3-sol/blob/main/user/part4/seven_states.c). The latter will exercise your scheduling code more throughly as it will involve scheduling processes that have a greater variety of state changes. <!-- TODO: update hw3 sol to f25 -->
 *   Check out the [debugging tips](#debugging-tips) provided below.
 
 ### Deliverables
@@ -156,7 +156,7 @@ Hints:
 ```
 ps -e --forest -o sched,policy,psr,pcpu,c,pid,user,cmd
 ```
-<!-- TODO:insert output here?? -->
+<!-- TODO:insert sample ps output here? -->
 
 ### Deliverables
 *   Modifications to the Linux source code 
@@ -206,9 +206,9 @@ Once you add idle load balancing, repeat the performance tests you conducted in 
 Part 6: Tail completion time
 ------
 	
-Thus far you have focused on optimizing the average completion time across all jobs. Another important metric to consider is tail completion time, which is the maximum completion time across 99% of all jobs. Tail completion time focuses on ensuring that the completion time of most jobs is no worse than some amount. Using tail completion time as the performance metric of interest, compare your optimized scheduling class versus the default Linux scheduler for the W4118 Inc. workloads. Which one does better? If the default Linux scheduler has better tail completion time, can you change how you use your OVEN scheduler (without modifying the OVEN scheduler code) to provide tail completion time comparable to the default Linux scheduler?
+Thus far you have focused on optimizing the average completion time across all jobs. Another important metric to consider is tail completion time, which is the maximum completion time across 99% of all jobs. Tail completion time focuses on ensuring that the completion time of most jobs is no worse than some amount. Using tail completion time as the performance metric of interest, compare your optimized scheduling class versus the default Linux scheduler for the W4118 Inc. workloads. Which one does better? If the default Linux scheduler has better tail completion time, can you change how you _use_ your OVEN scheduler (without modifying the OVEN scheduler code) to provide tail completion time comparable to the default Linux scheduler?
 
-Make any changes to fibonacci , then submit eBPF traces of the two task sets running on your scheduler as user/taskset1\_tail.txt and user/taskset2\_tail.txt. You only need to submit results in this case for the same multi-CPU VM configuration as you used previously, but do not need to submit single-CPU VM results for this case. Write the tail completion times for each workload in your README and compare against CFS.
+Make any changes to fibonacci, then submit eBPF traces of the two task sets running on your scheduler as user/taskset1\_tail.txt and user/taskset2\_tail.txt. You only need to submit results in this case for the same multi-CPU VM configuration as you used previously, but do not need to submit single-CPU VM results for this case. Write the tail completion times for each workload in your README and compare against CFS.
 
 ### Deliverables
 *   Changes to fibonacci.c
