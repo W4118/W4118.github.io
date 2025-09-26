@@ -247,7 +247,7 @@ You will now update the implementation of your `pstrace_get()` system call to su
  */
 long pstrace_get(struct pstrace *buf, long *counter);
 ```
-Maintin the functionality you programmed for `pstrace_get` in `Part 1`. That is, if `*counter == 0`, you must return the full buffer of valid entries in its current state immediately.
+Maintain the functionality you programmed for `pstrace_get` in `Part 1`. That is, if `*counter == 0`, you must return the full buffer of valid entries in its current state immediately and set `*counter` to the value of the buffer counter corresponding to the last record copied.
 
 Specifically, a positive value of `*counter` indicates a request for a full buffer starting at ring buffer counter `*counter`. That is, your system call should copy records into `@buf` in chronological order such that the first record is the record corresponding to ring buffer counter `*counter`, and the last record is the record corresponding to ring buffer counter `*counter + PSTRACE_BUF_SIZE - 1`.
 
