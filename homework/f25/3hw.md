@@ -110,7 +110,7 @@ struct pstrace {
 	long state;		/* NEW state of the process */
 	pid_t pid;		/* PID of the process; i.e. returned by getpid() */
 	pid_t tid;		/* TID of the thread; i.e. returned by gettid() */
-	int   cpu;		/* TODO VERIFY: CPU that this process last ran on before state change */ 
+	int   cpu;		/* The CPU that this process is on when the state change is recorded */ 
 };
 ```
 
@@ -247,6 +247,7 @@ You will now update the implementation of your `pstrace_get()` system call to su
  */
 long pstrace_get(struct pstrace *buf, long *counter);
 ```
+If `*counter == 0`, you must return the full buffer of valid entries in its current state immediately.
 
 Specifically, a positive value of `*counter` indicates a request for a full buffer starting at ring buffer counter `*counter`. That is, your system call should copy records into `@buf` in chronological order such that the first record is the record corresponding to ring buffer counter `*counter`, and the last record is the record corresponding to ring buffer counter `*counter + PSTRACE_BUF_SIZE - 1`.
 
