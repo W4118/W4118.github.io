@@ -303,7 +303,7 @@ We have provided a sample program to showcase a traced process in `user/part4/sa
 
 
 **Hints**
-- Consider how you may force a task to visit all states. Disk I/O is an example of a task going into the `TASK_UNINTERRUPTIBLE` state, but you must ensure that the target data for read is not cached in memory. For this, you may consider ([clearing memory caches](https://linuxconfig.org/clear-cache-on-linux))
+- Consider how you may force a task to visit all states. Disk I/O is an example of a task going into the `TASK_UNINTERRUPTIBLE` state, but you must ensure that the target data for read is not cached in memory. For this, you may consider ([clearing memory caches](https://linuxconfig.org/clear-cache-on-linux)).
 
 
 ## Part 5: Process lifecycle
