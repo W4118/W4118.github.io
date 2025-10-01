@@ -106,11 +106,11 @@ struct pstrace_kernel {
 
 /* The data structure used to record a state change */
 struct pstrace {
+	int   cpu;		/* The CPU that this process is on when the state change is recorded */ 
 	char comm[16];	/* Name of the process */
 	long state;		/* NEW state of the process */
 	pid_t pid;		/* PID of the process; i.e. returned by getpid() */
 	pid_t tid;		/* TID of the thread; i.e. returned by gettid() */
-	int   cpu;		/* The CPU that this process is on when the state change is recorded */ 
 };
 ```
 
