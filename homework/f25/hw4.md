@@ -42,8 +42,8 @@ Having completed the first half of your operating systems training, you and your
 
 Data privacy is important in modern computing, so instead of real customer programs, W4118 Inc. has provided you with a way to simulate the typical workloads submitted by end users using a Fibonacci calculator. The following links provide two task set workloads, each consisting of a list of jobs, with each line representing the N-th Fibonacci number to compute:
 
-1.  [TASK SET 1](https://www.cs.columbia.edu/~nieh/teaching/w4118_f24/homeworks/taskset1.txt) <!-- TODO: update these links to f25 -->
-2.  [TASK SET 2](https://www.cs.columbia.edu/~nieh/teaching/w4118_f24/homeworks/taskset2.txt)
+1.  [TASK SET 1](https://www.cs.columbia.edu/~nieh/teaching/w4118_f25/homeworks/taskset1.txt) 
+2.  [TASK SET 2](https://www.cs.columbia.edu/~nieh/teaching/w4118_f25/homeworks/taskset2.txt)
 
 **Note:** The Fibonacci calculator has been provided as user/fibonacci.c. It uses an inefficient algorithm by design to produce differing job lengths. You can modify the file, but **do not modify the `fib` function**.
 
@@ -80,7 +80,7 @@ Ensure that the output of your eBPF script is synchronous. That is, it should pr
 
 Test your script by running sudo bpftrace trace.bt in one terminal. In a separate terminal, run a few commands and observe the trace metrics in your first terminal. Experiment with different task sizes. Submit your eBPF script as user/trace.bt.
 
-Now that you have an eBPF measurement tool, use it to measure the completion times for the the two task set workloads when running on the default CFS scheduler in Linux. What is the resulting average completion time for each workload? Write the average completion times of both workloads in your README. You may find this [shell script](https://www.cs.columbia.edu/~nieh/teaching/w4118_f24/homeworks/run_tasks.sh) helpful for running your tasks. You should perform your measurements for two different VM configurations, a single CPU VM and a four CPU VM. We are using the term CPU here to mean a core, so if your hardware has a single CPU but four cores, that should be sufficient for running a four CPU VM. If your hardware does not support four cores, you may instead run with a two CPU VM. Specify in your README the number of CPUs used with your VM for your measurements. <!-- TODO: update shell script link to f25 -->
+Now that you have an eBPF measurement tool, use it to measure the completion times for the the two task set workloads when running on the default CFS scheduler in Linux. What is the resulting average completion time for each workload? Write the average completion times of both workloads in your README. You may find this [shell script](https://www.cs.columbia.edu/~nieh/teaching/w4118_f25/homeworks/run_tasks.sh) helpful for running your tasks. You should perform your measurements for two different VM configurations, a single CPU VM and a four CPU VM. We are using the term CPU here to mean a core, so if your hardware has a single CPU but four cores, that should be sufficient for running a four CPU VM. If your hardware does not support four cores, you may instead run with a two CPU VM. Specify in your README the number of CPUs used with your VM for your measurements. 
 
 **Hint:** You may find it useful to reference the bpftrace [GitHub project](https://github.com/iovisor/bpftrace), which contains a manual and a list of sample scripts. A useful example script to start with is [runqlat.bt](https://github.com/bpftrace/bpftrace/blob/aa041d9d85f9ec11235c39fdcb5833412ec27083/tools/runqlat.bt). <!-- TODO: make sure this is the right version of bpftrace -->
 
@@ -90,8 +90,8 @@ Now that you have an eBPF measurement tool, use it to measure the completion tim
 
 ### Deliverables
 *   trace.bt script in user/trace.bt
-*   Average completion times for both tasksets on a single-CPU VM and on a VM configured with either two or four CPUs, using the Oven scheduling policy, in your README 
-    * Make sure to specify whether you are using a two or four-CPU configuration for your multi-CPU measurement in your README
+*   Average completion times for both tasksets on a single-CPU VM and on a VM configured with either two or four CPUs, using the default CFS scheduling policy, in your README 
+   * Make sure to specify whether you are using a two or four-CPU configuration for your multi-CPU measurement in your README
 
 Oven Overview
 ------
@@ -136,7 +136,7 @@ Part 2: Create your scheduler
 
 ### Hints:
 *   While developing and debugging your initial scheduling class implementation, it will be helpful to initially have SCHED\_NORMAL take priority over your SCHED\_OVEN policy so that bugs in your scheduling class are less likely to prevent other tasks from running. Once you have your scheduling class working, you can then switch the priority of these policies as required by the homework.
-*   Test your scheduler on a few runs of fibonacci and ensure it works before moving on. Set the weight to something other than the default and verify its behavior. After verifying that Fibonacci works, try running the [program from homework 3 that tests state changes](https://github.com/W4118/f24-hmwk3-sol/blob/main/user/part4/seven_states.c). The latter will exercise your scheduling code more throughly as it will involve scheduling processes that have a greater variety of state changes. <!-- TODO: update hw3 sol to f25 -->
+*   Test your scheduler on a few runs of fibonacci and ensure it works before moving on. Set the weight to something other than the default and verify its behavior. After verifying that Fibonacci works, try running the [program from homework 3 that tests state changes](https://github.com/W4118/f25-hmwk3-sol/blob/main/user/part4/seven_states.c). The latter will exercise your scheduling code more throughly as it will involve scheduling processes that have a greater variety of state changes.
 *   Check out the [debugging tips](#debugging-tips) provided below.
 
 ### Deliverables
