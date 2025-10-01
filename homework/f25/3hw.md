@@ -73,7 +73,7 @@ long pstrace_enable(pid_t pid);
 long pstrace_disable();
 ```
 
-In other words, your tracing system will either trace a **single** process or trace **all** processes. You should use a suitable data structure to keep track of what processes are being traced. Note that this system call simply __enables/disables__ the tracing - the actual writing to the ring buffer will happen in a subsequent function.
+In other words, your tracing system call will either trace a **single** process or trace **all** processes. You should use a suitable data structure to keep track of what processes are being traced. Note that this system call simply __enables/disables__ the tracing - the actual writing to the ring buffer will happen in a subsequent function.
 
 **Tasks**
 
