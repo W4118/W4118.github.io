@@ -24,3 +24,4 @@ The guides above have been updated for the latest version of Linux used in this 
 
 - [Homework 1](./homework/f25/hw1.md)
 - [Homework 2](./homework/f25/hw2.md)
+- [Homework 3](./homework/f25/hw3.md)
