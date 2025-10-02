@@ -10,7 +10,7 @@ All homework submissions are to be made via [Git][Git]. You must submit a detail
 [file]: https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/references.txt
 [class-web-site]: https://www.cs.columbia.edu/~nieh/teaching/w4118/
 
-Group programming problems are to be done in your assigned groups. We will let you know when the Git repository for your group has been set up on GitHub. It can be cloned using the following command. Replace `teamN` with your team number, e.g. `team0`. You can find your group number [here](https://docs.google.com/spreadsheets/d/1V2ytwTpXo2rhVop9pYt46M74Bk4lOsXeB2vSqylVLMg/edit?gid=0#gid=0).
+Group programming problems are to be done in your assigned groups. We will let you know when the Git repository for your group has been set up on GitHub. It can be cloned using the following command. Replace `teamN` with your team number, e.g. `team0`. You can find your group number [here](https://docs.google.com/spreadsheets/d/1V2ytwTpXo2rhVop9pYt46M74Bk4lOsXeB2vSqylVLMg/edit?gid=690031232#gid=690031232).
 
 ```
 $ git clone git@github.com:W4118/f25-hmwk3-teamN.git
@@ -303,7 +303,7 @@ We have provided a sample program to showcase a traced process in `user/part4/sa
 
 
 **Hints**
-- Consider how you may force a task to visit all states. Disk I/O is an example of a task going into the `TASK_UNINTERRUPTIBLE` state, but you must ensure that the target data for read is not cached in memory. For this, you may consider ([clearing memory caches](https://linuxconfig.org/clear-cache-on-linux)).
+- Consider how you may force a task to visit all states. Disk I/O is an example of a task going into the `TASK_UNINTERRUPTIBLE` state, but you must ensure that the target data for `read` is not cached in memory. For this, you may consider ([clearing memory caches](https://linuxconfig.org/clear-cache-on-linux)).
 
 
 ## Part 5: Process lifecycle
