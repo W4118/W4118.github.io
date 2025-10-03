@@ -10,7 +10,7 @@ All homework submissions are to be made via [Git][Git]. You must submit a detail
 [file]: https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/references.txt
 [class-web-site]: https://www.cs.columbia.edu/~nieh/teaching/w4118/
 
-Group programming problems are to be done in your assigned groups. We will let you know when the Git repository for your group has been set up on GitHub. It can be cloned using the following command. Replace `teamN` with your team number, e.g. `team0`. You can find your group number [here](https://docs.google.com/spreadsheets/d/1sWSEjtqSqSsl2dJ3R3YZKYlw4WG4GtfpHNECpqFJiks/edit?gid=260033287#gid=260033287).
+Group programming problems are to be done in your assigned groups. We will let you know when the Git repository for your group has been set up on GitHub. It can be cloned using the following command. Replace `teamN` with your team number, e.g. `team0`. You can find your group number [here](https://docs.google.com/spreadsheets/d/1V2ytwTpXo2rhVop9pYt46M74Bk4lOsXeB2vSqylVLMg/edit?usp=sharing).
 
 ```
 $ git clone git@github.com:W4118/f25-hmwk4-teamN.git
@@ -106,7 +106,7 @@ W4118 Inc. has tasked you with creating a new scheduling policy that provides be
 6.  The new scheduling policy should operate alongside the existing Linux schedulers. The value of SCHED\_OVEN should be 8.
 7.  You should keep track of runtime statistics so commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) work with your scheduling class.
 
-The following sections provide more information on implementing a new scheduler. While there is no strict sequence of steps for implementing a scheduler, you might find it helpful to begin with Part 2 below. Note that it is equally valid to complete Part 3 and Part 4 in either order, meaning you are welcome to complete Part 4 before Part 3 and vice versa. 
+The following sections provide more information on implementing a new scheduler. While there is no strict sequence of steps for implementing a scheduler, you will likely find it helpful to start with Part 2 below. Note that Part 3 and Part 4 can be completed in either order.
 
 Part 2: Create your scheduler
 ------
@@ -120,7 +120,7 @@ Part 2: Create your scheduler
 ### Implementation:
 *   The Linux scheduler implements individual scheduling classes corresponding to different scheduling policies. For this assignment, you need to create a new scheduling class, oven\_sched\_class, for the OVEN policy, and implement the necessary functions in kernel/sched/oven.c.
 *   A good starting point is defining the essential data structures and macro(s) that you would need for Oven. 
-	* Implementing a scheduler and getting everything right is not easy. You should make your implementation as simple as possible. By the same token, you might find it helpful to first implement the case of the unweighted round-robin scheduler before introducing special, optimizied mode for the Fibonacci workload. 
+	* Implementing a scheduler and getting everything right is not easy. You should make your implementation as simple as possible. By the same token, you might find it helpful to first implement the case of the unweighted round-robin scheduler before introducing the special, optimizied mode for the Fibonacci workload. 
 	* Avoid using complex data structures that may provide better theoretical runtime complexity but are harder to implement and debug. In general, lists are fine to use. 
 	* You should pay careful attention to how scheduling classes initialize their class-specific run queues and scheduling entities to insert them onto the run queues in [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c); incorrect initialization can easily cause your system to hang. To identify which parts need to be changed, look for references to existing Linux schedulers, particularly in the files mentioned below. Pay special attention to areas that explicitly reference the current default CFS scheduler (fair\_sched\_class).
 		* **Note** while the spec and the Linux kernel refer to default scheduler as the Completely Fair Scheduler (CFS), as of kernel version 6.6 the CFS was merged with the Earliest Virtual Deadline First (EEVDF) scheduler. If you're interested you can read more about these changes [here.](https://lwn.net/Articles/969062/)
@@ -150,7 +150,6 @@ Once your scheduler works for both fibonacci and the state program from homework
 *   For a more responsive system, you may want to set the scheduler of kernel threads to be SCHED\_OVEN as well (otherwise, SCHED\_OVEN tasks can starve the SCHED\_NORMAL tasks to a degree). To do this, you can modify kernel/kthread.c and replace SCHED\_NORMAL with SCHED\_OVEN. It is strongly suggested that you do this to ensure that your VM is responsive enough for the test cases, but you should not do this until you are certain your scheduler works properly.
 
 ### Hints:
-*   Check out the [debugging tips](#debugging-tips) provided below.
 *   At this point, excessive printk() or pr_info() logging may prevent your kernel from booting with Oven as the default scheduler. Hence, you may want to limit the logs in your oven\_sched\_class functions by only printing for a limited selection of tasks using if statements.
 *   One way to see the scheduling policy number for tasks is by using the following ps command. However, note that just because the policy number is 8 does not mean that the task is necessarily scheduled using Oven– you can confirm that tasks are scheduled using Oven through printk() or pr_info() logs. 
 ```
@@ -201,7 +200,7 @@ Once you add idle load balancing, repeat the performance tests you conducted in 
 *   Modifications to the Linux source code and your Oven scheduler
 *   user/taskset1\_smp\_balance.txt and user/taskset2\_smp\_balance.txt
 *   Average completion times for both tasksets on a VM configured with either two or four CPUs, using the Oven scheduling policy with idle balancing in your README 
-*   Comparison between the Oven (with idle balancing) average completion time and CFS average completion time in your README 
+*   Comparison between Oven average completion time (with idle balancing) and CFS average completion time in your README 
 
 Part 6: Tail completion time
 ------
