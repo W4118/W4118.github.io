@@ -1,12 +1,13 @@
 # Kernel Debugging using QEMU and GDB
 
-This (very rough) guide will tell you how to setup kernel debugging using QEMU
-and GDB/LLDB. This is _not_ intended to be used to solve _all_ kernel debugging
--- if you can boot using your kernel normally and it can do most things fairly
-stably, you could probably still debug just fine using the old `printk` and
-`dmesg` combo.
+This (rough) guide will tell you how to setup kernel debugging using
+[QEMU](https://www.qemu.org/) and
+[GDB](https://www.sourceware.org/gdb/)/[LLDB](https://lldb.llvm.org/). This is
+_not_ intended to be used to solve _all_ kernel debugging -- if you can boot
+using your kernel normally and it can do most things fairly stably, you could
+probably still debug just fine using the old `printk` and `dmesg` combo.
 
-However there comes inevitably a time when you are unable to even boot your
+However there inevitably comes a time when you are unable to even boot your
 kernel and are unable to get any information even from serial ports, possibly
 because the issues occur in your system in an early enough or critical enough
 code path such that none of these methods even egress any information. Then
@@ -34,7 +35,12 @@ Before you start, I recommend you setup some sort of terminal multiplexer that
 will let you be able to run multiple processes at once and see all their
 consoles simultaneously. I recommend using `tmux` or `zellij` for terminal
 multiplexing; both should be available on `apt`, but I suppose the built-in one
-from VS Code also works.
+from VS Code also works. How they work is a topic of its own but definitely
+something worth learning.
+
+It is also assumed that at this point you have compiled your linux kernel and
+are right before the step where you'd normally run `sudo make install` and the
+rebooting into your kernel. With QEMU, you won't be doing either.
 
 For your first terminal, go into your `linux` directory, and then run:
 
@@ -42,7 +48,17 @@ For your first terminal, go into your `linux` directory, and then run:
 # both assumes you are currently in the `linux` directory
 # in your homework repo. Pick the one appropriate for you.
 
-# for arm
+# for arm:
+# ====================
+# generic ARM virtual machine type;
+# common ARM cpu;
+# 2G of RAM for a minimal OS;
+# kernel image that you made;
+# initramfs;
+# direct output to serial port; stabilize memory layout to ensure
+# debugging doesn't jump to random source locations;
+# disable GUI since we don't have any;
+# open serial port on :1234; start paused
 $ qemu-system-aarch64 \
   -M virt \
   -cpu cortex-a57 \
@@ -54,9 +70,17 @@ $ qemu-system-aarch64 \
   -s -S
 
 # for x86 (untested)
-$ qemu-system-x86 \
+# ====================
+# 2G of RAM for a minimal OS;
+# kernel image that you made;
+# initramfs;
+# direct output to serial port; stabilize memory layout to ensure
+# debugging doesn't jump to random source locations;
+# disable GUI since we don't have any;
+# open serial port on :1234; start paused
+$ qemu-system-x86_64 \
   -m 2G \
-  -kernel arch/x86/boot/Image \
+  -kernel arch/x86_64/boot/bzImage \
   -initrd /boot/initrd.img-6.14.0-cs4118 \
   -append "console=ttyS0 nokaslr" \
   -nographic \
@@ -66,7 +90,7 @@ $ qemu-system-x86 \
 This might not seem to do anything, which is expected; `-S` will pause the
 execution so that you can connect and resume at your leisure.
 
-In a separate window, run
+In a separate window, also go to your `linux` directory, and run
 
 ```sh
 $ gdb vmlinux -ex "target remote :1234"
@@ -81,7 +105,9 @@ Remote debugging using :1234
 
 ![](/images/gdb.png)
 
-Then you are officially in.
+Then you are officially in. At this point, the linux kernel is _paused_, pending
+input from the debugger. To let it continue running, you would input `c` for
+"continue", though you might want to set up some breakpoints first.
 
 ## Typical Workflow
 
@@ -99,21 +125,19 @@ debugger using a REPL.
 Now you can do stuff like setting a breakpoint to a function that you know the
 name of, and `continue`/`c` until the kernel reaches that point.
 
-### Breakpoints
-
-Adding breakpoint:
+Adding breakpoint by function name:
 
 ```
 break my_func
 ```
 
-Regex breakpoint:
+Regex breakpoint for a number of similar functions:
 
 ```
 rbreak kernel/sched/oven.c:.*_oven
 ```
 
-### Context
+Then you can print values of variables:
 
 ```
 print var  # prints variables visible in current scope
@@ -122,10 +146,10 @@ print var.field
 backtrace  # shows stack trace
 ```
 
-### Continue
+A few different ways to "continue" with execution:
 
 ```
-c  # continue
+c  # continue until next breakpoint
 s  # step, diving into functions if any
 n  # continue on current level, no function diving
 finish  # step out of current function
@@ -154,9 +178,9 @@ Setting up gdb to TUI mode and to auto-accept linux's gdb python scripts:
   add-auto-load-safe-path .
   ```
 
-### Beyond these...
-
-[gdb cheatsheet](https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf)
+And you can find out more via this
+[gdb cheatsheet](https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf), or read
+some [guides](https://kauffman77.github.io/tutorials/gdb.html).
 
 ## Alternative Debugger - LLDB
 
@@ -177,17 +201,18 @@ source code panel using `b`, or run to highlighted line with `<enter>`.
 
 Once you are done with the gui, `<esc>` will put you back to the command screen.
 
-You can find out more at https://lldb.llvm.org/use/tutorial.html.
+You can find out more at
+[the official tutorial](https://lldb.llvm.org/use/tutorial.html).
 
 ## Teardown
 
 ```sh
 $ killall qemu-system-aarch64
-# or -x86
+# or qemu-system-x86_64
 ```
 
 Will stop the running QEMU process. `lldb` will turn off QEMU for you when you
-exit.
+exit, `gdb` will only detach.
 
 ## Debugging with custom binary in Initramfs Image
 
@@ -196,14 +221,16 @@ doesn't let you do a whole lot. It has only a few binaries, and seems pretty
 restrictive overall, as is expected. However, what if you want to test your new
 syscalls?
 
-Fortunately, we can bring in custom binaries into
+Fortunately, we can bring in custom binaries into the RAM filesystem, including
+binaries that you built that can test your kernel in various ways.
 
 Before other things, you want to make sure to compile your binary with the
 `-static` flag as the initramfs environment won't have the usual dynamically
 linked libraries that we need. You can likely just reuse the `Makefile` and add
 the flag to `CFLAGS`.
 
-Then, in some random location:
+Then, navigate so that you start from the `linux` directory in your homework
+repo, which should be common ground for all students.
 
 ```sh
 # if you are currently in the linux directory inside your team homework repo:
@@ -223,6 +250,8 @@ $ sudo cpio -idm < ../initrd.img.cpio
 
 # create tmp dir and move desired binary here
 $ mkdir tmp
+# the next time you want to update the binaries or add more content, you can
+# start from this step here assuming you change working dir properly.
 $ cp ${BINARY_PATH} tmp/
 
 # (optional) make sure you are still in `initrd`
@@ -236,7 +265,8 @@ $ cd ../
 $ cd f25-hmwkN-teamM  # sub with your appropriate local version
 $ cd linux
 
-# run QEMU with revised command using the custom init image
+# run QEMU with revised command using the custom init image.
+# Note the change in the `-initrd` argument!
 $ qemu-system-aarch64 \
   -M virt \
   -cpu cortex-a57 \
