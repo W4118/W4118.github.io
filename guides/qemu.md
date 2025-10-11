@@ -232,6 +232,12 @@ the flag to `CFLAGS`.
 Then, navigate so that you start from the `linux` directory in your homework
 repo, which should be common ground for all students.
 
+In both sets of per-arch instructions below, the commands used assumes you have
+been following the working directory changes very closely. If you deviate, make
+sure you update your commands accordingly or they likely won't work.
+
+### ARM instructions
+
 ```sh
 # if you are currently in the linux directory inside your team homework repo:
 $ cd ../..
@@ -277,6 +283,67 @@ $ qemu-system-aarch64 \
   -nographic \
   -s -S
 ```
+
+### X86 instructions
+
+```sh
+# if you are currently in the linux directory inside your team homework repo:
+$ cd ../..
+
+# create a working dir for the temporary RAM-based filesystem that QEMU uses
+# for booting. Make it ouside your repo so we don't interfere unnecessarily.
+$ mkdir initrd
+
+# unpacks the version created normally using `make`
+$ unmkinitramfs /boot/initrd.img-6.14.0-cs4118 ./initrd
+
+# go into the working dir; ls should show three(?) dirs, early, early2 and main.
+$ cd initrd && ls
+$ cd main
+
+# `main` here is the, well... the *main* stage of x86's multi-stage booting, and
+# the only one that we really need to worry about. In here you should be able to
+# find all the linux root stuff like `bin` and `lib` and most importantly,
+# `init`.
+
+# create tmp dir and move desired binary here
+$ mkdir tmp
+# the next time you want to update the binaries or add more content, you can
+# start from this step here assuming you change working dir properly.
+$ cp ${BINARY_PATH} tmp/
+
+# (optional) make sure you are still in `main`
+$ pwd
+
+# bundle custom image file and place two level up -- one level is inside initrd.
+# this step might take a little while.
+$ find . | cpio -o -H newc | gzip -c > ../../custom.img
+
+# go to linux dir
+$ cd ../../
+$ cd f25-hmwkN-teamM  # sub with your appropriate local version
+$ cd linux
+
+# run QEMU with revised command using the custom init image.
+# Note the change in the `-initrd` argument!
+$ qemu-system-x86_64 \
+  -m 2G \
+  -kernel arch/x86_64/boot/bzImage \
+  -initrd ../../custom.img \
+  -append "console=ttyS0 nokaslr" \
+  -nographic \
+  -s -S
+```
+
+### Repacking
+
+Similar for both arch, once you have done the above once, for all subsequent
+changes you want to make to the init ram file system, you can just do the file
+change and the repacking step as long as you don't clean up the unpacked initrd
+directory. You can also simplify some of the steps with symlinks, which we won't
+talk about here.
+
+### Running
 
 You should now be able to set a breakpoint to a custom kernel function that you
 implemented and walk through it using your debugger of choice. Once you setup
