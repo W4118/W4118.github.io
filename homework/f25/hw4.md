@@ -141,6 +141,8 @@ In order to set up a minimal oven_sched_class, a good place to start is the simp
 ### Hints
 * Pay careful attention to how other scheduling classes initialize their class-specific run queues and scheduling entities.
 * Avoid using complex data structures that may provide better theoretical runtime complexity but are harder to implement and debug. In general, lists are fine to use. 
+*   While developing and debugging your initial scheduling class implementation, it will be helpful to initially have SCHED\_NORMAL take priority over your SCHED\_OVEN policy so that bugs in your scheduling class are less likely to prevent other tasks from running. Once you have your scheduling class working, you can then switch the priority of these policies as required by the homework.
+*   Check out the [debugging tips](#debugging-tips) provided below.
 
 ### Checkpoint
 
@@ -170,10 +172,7 @@ The goal of this section is to allow individual tasks, like `fibonacci`, to set 
 *    Ensure that runtime statistics are updated so that commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) work with your scheduling class.
 
 
-### Hints:
-* Implementing a scheduler and getting everything right is not easy. You should make your implementation as simple as possible. By the same token, you might find it helpful to first implement the case of the unweighted round-robin scheduler before introducing the special, optimizied mode for the Fibonacci workload. Part 4 includes more details about implementing priority-based scheduling. 
-*   While developing and debugging your initial scheduling class implementation, it will be helpful to initially have SCHED\_NORMAL take priority over your SCHED\_OVEN policy so that bugs in your scheduling class are less likely to prevent other tasks from running. Once you have your scheduling class working, you can then switch the priority of these policies as required by the homework.
-*   Check out the [debugging tips](#debugging-tips) provided below.
+**Hint:** Implementing a scheduler and getting everything right is not easy. You should make your implementation as simple as possible. By the same token, you might find it helpful to first implement the case of the unweighted round-robin scheduler before introducing the special, optimizied mode for the Fibonacci workload. Part 4 includes more details about implementing priority-based scheduling. 
 
 ### Checkpoint
 *	Test your scheduler on a few runs of `fibonacci`. Your `fibonacci` output should now look like this:
