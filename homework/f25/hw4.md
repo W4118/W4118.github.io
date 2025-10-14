@@ -173,7 +173,7 @@ The goal of this section is to allow individual tasks, like `fibonacci`, to set 
 *    Ensure that runtime statistics are updated so that commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) work with your scheduling class.
 
 
-**Hint:** Implementing a scheduler and getting everything right is not easy. You should make your implementation as simple as possible. By the same token, you might find it helpful to first implement the case of the unweighted round-robin scheduler before introducing the special, optimizied mode for the Fibonacci workload. Part 4 includes more details about implementing priority-based scheduling. 
+**Hint:** Implementing a scheduler and getting everything right is not easy. You should make your implementation as simple as possible. By the same token, you might find it helpful to first implement the case of the unweighted round-robin scheduler before introducing the special, optimized mode for the Fibonacci workload. Part 4 includes more details about implementing priority-based scheduling. 
 
 ### Checkpoints
 *	Test your scheduler on a few runs of `fibonacci`. Your `fibonacci` output should now look like this:
@@ -182,9 +182,9 @@ The goal of this section is to allow individual tasks, like `fibonacci`, to set 
 	$ echo $?
 	55
 	```
-*	Inspect programs, like `fibonacci`, that set their scheduling policy to Oven using `ps`. Ensure that your scheduling class functions are actually being used by adding printk or pr_info logs to a function like your class's enqueue\_task() and verify that it appears in dmesg output. Make sure that you do not submit your code with such debugging printk statements as they can cause issues if invoked too frequently.
-*	After verifying that Fibonacci works, try running the [program from homework 3 that tests state changes](https://github.com/W4118/f25-hmwk3-sol/blob/main/user/part4/seven_states.c). This will exercise your scheduling code more throughly as it will involve scheduling processes that have a greater variety of state changes.
 * Set the weight to something other than the default and verify its behavior. 
+*	After verifying that Fibonacci works, try running the [program from homework 3 that tests state changes](https://github.com/W4118/f25-hmwk3-sol/blob/main/user/part4/seven_states.c) with Oven as the scheduling policy. This will exercise your scheduling code more throughly as it will involve scheduling processes that have a greater variety of state changes.
+*	You can inspect programs that set their scheduling policy to Oven using `ps`. Ensure that your scheduling class functions are actually being used by adding printk or pr_info logs to a function like your class's enqueue\_task() and verify that it appears in dmesg output. Make sure that you do not submit your code with such debugging printk statements as they can cause issues if invoked too frequently.
 
 ### Deliverables
 *   Implementation of your scheduler in linux/kernel/sched/oven.c
