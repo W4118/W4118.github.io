@@ -80,7 +80,7 @@ Ensure that the output of your eBPF script is synchronous. That is, it should pr
 
 Test your script by running sudo bpftrace trace.bt in one terminal. In a separate terminal, run a few commands and observe the trace metrics in your first terminal. Experiment with different task sizes. Submit your eBPF script as user/trace.bt.
 
-Now that you have an eBPF measurement tool, use it to measure the completion times for the the two task set workloads when running on the default CFS scheduler in Linux. What is the resulting average completion time for each workload? Write the average completion times of both workloads in your README. You may find this [shell script](https://www.cs.columbia.edu/~nieh/teaching/w4118_f25/homeworks/run_tasks.sh) helpful for running your tasks. You should perform your measurements for two different VM configurations, a single CPU VM and a four CPU VM. We are using the term CPU here to mean a core, so if your hardware has a single CPU but four cores, that should be sufficient for running a four CPU VM. If your hardware does not support four cores, you may instead run with a two CPU VM. Specify in your README the number of CPUs used with your VM for your measurements. 
+Now that you have an eBPF measurement tool, use it to measure the completion times for the the two task set workloads when running on the default CFS (Completely Fair Scheduler) scheduler in Linux. What is the resulting average completion time for each workload? Write the average completion times of both workloads in your README. You may find this [shell script](https://www.cs.columbia.edu/~nieh/teaching/w4118_f25/homeworks/run_tasks.sh) helpful for running your tasks. You should perform your measurements for two different VM configurations, a single CPU VM and a four CPU VM. We are using the term CPU here to mean a core, so if your hardware has a single CPU but four cores, that should be sufficient for running a four CPU VM. If your hardware does not support four cores, you may instead run with a two CPU VM. Specify in your README the number of CPUs used with your VM for your measurements. 
 
 **Hint:** You may find it useful to reference the bpftrace [GitHub project](https://github.com/iovisor/bpftrace), which contains a manual and a list of sample scripts. A useful example script to start with is [runqlat.bt](https://github.com/bpftrace/bpftrace/blob/aa041d9d85f9ec11235c39fdcb5833412ec27083/tools/runqlat.bt). <!-- TODO: make sure this is the right version of bpftrace -->
 
@@ -270,7 +270,7 @@ Part 5: Add load-balancing features
 	
 So far, your scheduler will run a task only on the CPU that it was originally assigned. Let's change that now. For this part you will be implementing idle balancing, which is when a CPU will attempt to steal a task from another CPU when it doesn't have any tasks to run (i.e. when its runqueue is empty).
 
-Load balancing is a key feature of the default Linux scheduler (Completely Fair Scheduler). While CFS follows a rather complicated policy to balance tasks and works to move more than one task in a single go, your scheduler will have a simple policy in this regard.
+Load balancing is a key feature of the default Linux CFS scheduler. While CFS follows a rather complicated policy to balance tasks and works to move more than one task in a single go, your scheduler will have a simple policy in this regard.
 
 Idle balancing works as follows:
 
