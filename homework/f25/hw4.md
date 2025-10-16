@@ -118,7 +118,7 @@ Part 2: Prepare the Oven
 
 ### Part 2.1: Oven data structures 
 ------
-The goal of this section is to set up the Oven data structures and a skeleton scheduling class. In other words, you should define the following and ensure that your updated kernel boots: 
+The Linux scheduler implements individual scheduling classes corresponding to different scheduling policies. For this assignment, you need to create a new scheduling class, oven\_sched\_class, for the OVEN policy, and implement the necessary functions in kernel/sched/oven.c. The goal of this section is to set up the Oven data structures and a skeleton scheduling class. In other words, you should define the following and ensure that your updated kernel boots: 
 
 ```c
 #define  SCHED_OVEN  8
@@ -129,10 +129,8 @@ struct sched_oven_entity;
 
 struct sched_class oven_sched_class;
 ```
-The following files will help you understand how the Linux scheduler works: [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c), [kernel/sched/sched.h](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/sched.h), [include/linux/sched.h](https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h), and [include/asm-generic/vmlinux.lds.h](https://elixir.bootlin.com/linux/v6.14/source/include/asm-generic/vmlinux.lds.h). While there is a fair amount of code in these files, a key goal of this assignment is for you to understand how to abstract the scheduler code so that you learn in detail the parts of the scheduler that are crucial for this assignment and ignore the parts that are not. 
+In order to do so, you will need to examine the following files and make specific modifications: [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c), [kernel/sched/sched.h](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/sched.h), [include/linux/sched.h](https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h), and [include/asm-generic/vmlinux.lds.h](https://elixir.bootlin.com/linux/v6.14/source/include/asm-generic/vmlinux.lds.h). While there is a fair amount of code in these files, a key goal of this assignment is for you to understand how to abstract the scheduler code so that you learn in detail the parts of the scheduler that are crucial for this assignment and ignore the parts that are not. 
 * In particular, at this point you should have SCHED\_NORMAL take priority over your SCHED\_OVEN policy so that bugs in your scheduling class are less likely to prevent other tasks from running. Once you have your scheduling class working, you can then switch the priority of these policies in the later parts of the homework. 
-
-The Linux scheduler implements individual scheduling classes corresponding to different scheduling policies. For this assignment, you need to create a new scheduling class, oven\_sched\_class, for the OVEN policy, and implement the necessary functions in kernel/sched/oven.c.
 
 In order to set up a minimal oven_sched_class, a good place to start is the simple scheduling class for idle tasks, listed in [kernel/sched/idle.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/idle.c). This is the simplest of the scheduling classes. In particular, the functions implemented by this scheduling class are a good indication of the minimum set of functions you need to implement to have an operational scheduling class. You can return placeholder values in your scheduler class functions for now; the following section will revisit these functions. 
 
@@ -168,7 +166,7 @@ At this point, you should add printk or pr_info logs to the Oven function(s) you
 ------
 You will now add support for running multiple tasks in a round robin fashion. As mentioned before, each such task should get a time quantum of 1 tick. After this time quantum, another task should run if there are multiple tasks on the run queue. 
 
-Make the relevant changes to your Oven scheduling class. After you make your updates, you should be able to launch multiple `fibonacci` tasks using the shell script you wrote in Part 1. The execution may hang when you run the script, but it is important before moving on to ensure that each task has the opportunity to run and is picked to run in a round robin fashion.
+Make the relevant changes to your Oven scheduling class. After you make your updates, you should be able to launch multiple `fibonacci` tasks using the shell script you wrote in Part 1. The execution may hang when you run the script, but it is important before moving on to ensure that multiple task have the opportunity to run and are picked to run in a round robin fashion.
 
 ### Part 2.4: Scheduling multiple tasks that sleep
 ------
@@ -197,7 +195,6 @@ The goal of this part is to set Oven to be the default scheduler of your system.
 
 You will need to change different parts of the kernel code to allow your kernel to boot with your scheduling class as the default. 
 *   Consider how the scheduling policy for the `init_task` is assigned and how new tasks are assigned to a scheduling class by default.
-*   Consider how new tasks are assigned their scheduling policy. 
 *   For a more responsive system, you may want to set the scheduler of kernel threads to be SCHED\_OVEN as well (otherwise, SCHED\_OVEN tasks can starve the SCHED\_NORMAL tasks to a degree). To do this, you can modify kernel/kthread.c and replace SCHED\_NORMAL with SCHED\_OVEN. It is strongly suggested that you do this to ensure that your VM is responsive enough for the test cases, but you should not do this until you are certain your scheduler works properly.
 
 **Hint:** At this point, excessive printk() or pr_info() logging may prevent your kernel from booting with Oven as the default scheduler. Hence, you may want to limit the logs in your oven\_sched\_class functions by only printing for a limited selection of tasks using if-statements.
@@ -246,14 +243,14 @@ Trace through how the parameter(s) of the sched_setscheduler system call are ult
 
 You may want your scheduler to have a minimum valid weight well above the priority range normally used for sched_priority such that any weight assignment less than the minimum valid weight is instead forced to be the MAX_WEIGHT. The reason for this is that there are system programs that use sched_setscheduler with lower values for sched_priority. If they are scheduled using your scheduling class, you want to detect their invalid weight assignments and schedule them using your round-robin algorithm.
 
-You can verify that the correct value is set by adding selective printk or pr_info logs.
+You can verify that the correct value is set by adding selective printk or pr_info logs and running `fibonacci` with different weights.
 
 ### Part 4.2: Beat CFS
 ------
 
 In order to beat CFS, a good starting point is considering what makes the Fibonacci workload unique– those characteristics should guide your scheduler design because this assignment asks you to optimize your scheduler specifically for the Fibonacci workload. You should consider how you might modify the fibonacci program to set its OVEN weight. What weights and scheduling algorithm will optimize for average completion time?
 
-Make any changes to fibonacci and your scheduler. As you iterate on your scheduler, you can use your eBPF script from Part 1 to measure the performance of your optimized scheduler and compare it against the default scheduler. 
+Make any changes to fibonacci and your scheduler. As you iterate on your scheduler, you can use your eBPF script from Part 1 to measure the performance of your optimized scheduler and compare it against the default CFS scheduler. 
 
 After you have optimized your scheduler, submit eBPF traces of the two tasksets running on your scheduler. You should use the same two VM CPU configurations you used earlier to measure performance using CFS. Submit your eBPF traces for the two task sets and CPU configurations as user/taskset1\_average.txt, user/taskset1\_average\_smp.txt, user/taskset2\_average.txt, and user/taskset2\_average\_smp.txt. Write the average completion times for each workload in your README and briefly describe how your Oven scheduler compares against CFS. 
 
