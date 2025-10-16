@@ -118,7 +118,7 @@ Part 2: Prepare the Oven
 
 ### Part 2.1: Oven data structures 
 ------
-The Linux scheduler implements individual scheduling classes corresponding to different scheduling policies. For this assignment, you need to create a new scheduling class, oven\_sched\_class, for the OVEN policy, and implement the necessary functions in kernel/sched/oven.c. The goal of this section is to set up the Oven data structures and a skeleton scheduling class. In other words, you should define the following and ensure that your updated kernel boots: 
+The Linux scheduler implements individual scheduling classes corresponding to different scheduling policies. For this assignment, you need to create a new scheduling class, oven\_sched\_class, for the OVEN policy, and implement the necessary functions in kernel/sched/oven.c. The goal of this section is to set up the Oven data structures and a skeleton scheduling class. Initially, you will not use the Oven scheduler to run anything, but rather you just want to ensure that your modifications do not crash the kernel. In other words, you should define the following and ensure that your updated kernel boots: 
 
 ```c
 #define  SCHED_OVEN  8
@@ -154,13 +154,13 @@ Ensure that everything compiles and no previous functionality has been affected:
 
 ### Part 2.2: Scheduling 1 task
 ------
-The rest of Part 2 will build toward enabling individual tasks, like `fibonacci`, to set their scheduler class to Oven. You will first implement the default case of Oven, which is round robin, then optimize it in Part 4. It will be helpful to reference the way other scheduling classes implement their core functions: [kernel/sched/rt.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/rt.c) and [kernel/sched/fair.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/fair.c). You may find the former particularly useful because it has its own version of a round-robin scheduler, SCHED_RR, though you will likely find many parts of the code too complex to use directly for your own scheduling class. 
+The rest of Part 2 will build toward enabling individual tasks, like `fibonacci`, to set their scheduling class to Oven. You will first implement the default case of Oven, which is round robin, then optimize it in Part 4. It will be helpful to reference the way other scheduling classes implement their core functions: [kernel/sched/rt.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/rt.c) and [kernel/sched/fair.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/fair.c). You may find the former particularly useful because it has its own version of a round-robin scheduler, SCHED_RR, though you will likely find many parts of the code too complex to use directly for your own scheduling class. 
 
 This section focuses on enabling 1 task to set its scheduling class to Oven. There are two main components to this:
-* Add basic functionality to your oven scheduler class so that it is able to add 1 task to its run queue and pick that task to run. You should keep your run queue simple for this part.
-* Trace through the sched\_setscheduler system call that `fibonacci` uses to set its scheduler class. Modify the related functions to enable setting to the Oven scheduler class. 
+* Add basic functionality to your oven scheduling class so that it is able to add 1 task to its run queue and pick that task to run. You should keep your run queue simple for this part.
+* Trace through the sched\_setscheduler system call that `fibonacci` uses to set its scheduling class. Modify the related functions to enable setting to the Oven scheduling class. 
 
-At this point, you should add printk or pr_info logs to the Oven function(s) you implemented to ensure that they are properly called when you run `fibonacci`. It is fine if `fibonacci` hangs after computing the result instead of properly exiting at this stage– it will be addressed in the subsequent sections. Once you have reached this stage, you may want to think about how you can update the execution statistics for the task– this can help with debugging in the future through commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) or htop. Reference other schedulers to see how they update the execution statistics for their tasks. 
+At this point, you should add printk or pr_info logs to the Oven function(s) you implemented to ensure that they are properly called when you run `fibonacci`. It is fine if `fibonacci` hangs after computing the result instead of properly exiting at this stage– it will be addressed in the subsequent sections. In addition, you should implement functionality in your scheduling class to update the execution statistics for the task– this can help with debugging in the future through commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) or htop. Reference other schedulers to see how they update the execution statistics for their tasks. 
 
 ### Part 2.3: Scheduling multiple tasks
 ------
