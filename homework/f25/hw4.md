@@ -282,10 +282,13 @@ Load balancing is a key feature of the default Linux CFS scheduler. While CFS fo
 
 Idle balancing works as follows:
 
-*   Idle balance is when an idle CPU (i.e. a CPU with an empty runqueue) pulls one task from another CPU.
-*   Take a look at the CFS implementation to figure out where this is taking place and how it is called from kernel/sched/core.c.
-*   The CPU that you pull a task from should have at least two tasks on its runqueue. Which task you pull off is up to your scheduling algorithm.
-*   You should again ensure that the task you are stealing is eligible to be moved and allowed to run on the idle CPU.
+*   Idle balance is when an idle CPU (i.e. a CPU with an empty run queue) pulls one task from another CPU.
+*   Take a look at the CFS, RT, and DL implementations to figure out where this is taking place and how it is called from kernel/sched/core.c.
+*   The CPU that you pull a task from should have at least two tasks on its run queue. Which task you pull off is up to your scheduling algorithm.
+*   You should again ensure that the task you are stealing is eligible to be moved and allowed to run on the idle CPU. 
+*   If there is no eligible task, it is fine to not idle balance.
+
+You may need to manually grab run queue lock(s) in order to move a task from one run queue to another. Make sure your implementation works in a deadlock free manner. 
 
 Once you add idle load balancing, repeat the performance tests you conducted in the previous part and make notes on any observations. Again, be sure to include actual data. Submit the trace in user/taskset1\_smp\_balance.txt and user/taskset2\_smp\_balance.txt and note any differences to your previous scheduler in your README. You only need to submit results in this case for the same multi-CPU VM configuration as you used previously, but do not need to submit single-CPU VM results for this case. Write the updated average completion times for each workload in your README and compare against CFS.
 
