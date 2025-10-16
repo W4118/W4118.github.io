@@ -160,15 +160,19 @@ This section focuses on enabling 1 task to set its scheduling class to Oven. The
 * Add basic functionality to your oven scheduling class so that it is able to add 1 task to its run queue and pick that task to run. You should keep your run queue simple for this part.
 * Trace through the sched\_setscheduler system call that `fibonacci` uses to set its scheduling class. Modify the related functions to enable setting to the Oven scheduling class. 
 
-At this point, you should add printk or pr_info logs to the Oven function(s) you implemented to ensure that they are properly called when you run `fibonacci`. It is fine if `fibonacci` hangs after computing the result instead of properly exiting at this stage– it will be addressed in the subsequent sections. In addition, you should implement functionality in your scheduling class to update the execution statistics for the task– this can help with debugging in the future through commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) or htop. Reference other schedulers to see how they update the execution statistics for their tasks. 
+At this point, you should add printk or pr_info logs to the Oven function(s) you implemented to ensure that they are properly called when you run `fibonacci`. It is fine if `fibonacci` hangs after computing the result instead of properly exiting at this stage– it will be addressed in the subsequent sections. 
 
-### Part 2.3: Scheduling multiple tasks
+### Part 2.3: Scheduling statistics
+------
+Although you can run a single task using your Oven scheduling class, you may notice that standard user tools may not correctly show that the task is running and using up CPU time.  To fix this, you should implement functionality in your scheduling class to update the execution statistics for the task– this can help with debugging in the future through commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) or htop. Reference other schedulers to see how they update the execution statistics for their tasks. 
+
+### Part 2.4: Scheduling multiple tasks
 ------
 You will now add support for running multiple tasks in a round robin fashion. As mentioned before, each such task should get a time quantum of 1 tick. After this time quantum, another task should run if there are multiple tasks on the run queue. 
 
 Make the relevant changes to your Oven scheduling class. After you make your updates, you should be able to launch multiple `fibonacci` tasks using the shell script you wrote in Part 1. The execution may hang when you run the script, but it is important before moving on to ensure that multiple task have the opportunity to run and are picked to run in a round robin fashion.
 
-### Part 2.4: Scheduling multiple tasks that sleep
+### Part 2.5: Scheduling multiple tasks that sleep
 ------
 In this section, you will ensure that `fibonacci` tasks can consistently run to completion and sleep. One hint is to think about what happens to a task with respect to the run queue when it sleeps and support this functionality in your Oven scheduling class. 
 
@@ -185,19 +189,23 @@ You should add a `sleep(1)` call in your `fibonacci.c` file and ensure that the 
 
 Recall how we previously had SCHED\_NORMAL take priority over your SCHED\_OVEN policy. Now modify the kernel so that SCHED\_OVEN takes precedence over SCHED\_NORMAL, but remain below the SCHED\_RR and SCHED\_FIFO policies. Verify that your Oven scheduling class is correct by launching multiple `fibonacci` tasks using the shell script you wrote in Part 1 and conducting a stress test. You should also try running the [program from homework 3](https://github.com/W4118/f25-hmwk3-sol/blob/main/user/part4/seven_states.c) that tests state changes. This will exercise your scheduling code more thoroughly as it will involve scheduling processes that have a greater variety of state changes.
 
+### Part 2.6: Scheduling all tasks from a shell
+------
+To more rigorously test your scheduler, you should launch a shell in the Oven scheduling class and run various programs from that shell. Programs launched from that shell should inherit its scheduling parameters and therefore run using the Oven scheduling class. For example, as part of your kernel development, the actual kernel compilation using `make -j` should be able to run from that shell as well. This will exercise your scheduling code even more thoroughly as it will involve using the scheduler for more complex programs as part of your development process.
+
+**Hint:** At this point, excessive printk() or pr_info() logging may cause problems because of how often the scheduling functions are executed if they are being used to run many tasks. Hence, you may want to limit the logs in your oven\_sched\_class functions by only printing for a limited selection of tasks using if-statements.
+
 ### Deliverables
 *   Implementation of your scheduler in linux/kernel/sched/oven.c
 *   Modifications to the Linux source code 
 
 Part 3: Oven as the Default Scheduler
 ------
-The goal of this part is to set Oven to be the default scheduler of your system. You may also choose to first focus on optimizing Oven, as described in Part 4, then return to this section, or work on both at the same time. 
+The goal of this part is to set Oven to be the default scheduler of your system. You may also choose to first focus on optimizing Oven, as described in Part 4, then return to this section, or work on both at the same time by having different team members work on different parts. 
 
 You will need to change different parts of the kernel code to allow your kernel to boot with your scheduling class as the default. 
 *   Consider how the scheduling policy for the `init_task` is assigned and how new tasks are assigned to a scheduling class by default.
 *   For a more responsive system, you may want to set the scheduler of kernel threads to be SCHED\_OVEN as well (otherwise, SCHED\_OVEN tasks can starve the SCHED\_NORMAL tasks to a degree). To do this, you can modify kernel/kthread.c and replace SCHED\_NORMAL with SCHED\_OVEN. It is strongly suggested that you do this to ensure that your VM is responsive enough for the test cases, but you should not do this until you are certain your scheduler works properly.
-
-**Hint:** At this point, excessive printk() or pr_info() logging may prevent your kernel from booting with Oven as the default scheduler. Hence, you may want to limit the logs in your oven\_sched\_class functions by only printing for a limited selection of tasks using if-statements.
 
 ### Checkpoints
 *	You may want to write a test program that forks and examine the program's details through the `ps` command:
@@ -268,9 +276,9 @@ After you have optimized your scheduler, submit eBPF traces of the two tasksets 
 Part 5: Add load-balancing features
 ------
 	
-So far, your scheduler will run a task only on the CPU that it was originally assigned. Let's change that now. For this part you will be implementing idle balancing, which is when a CPU will attempt to steal a task from another CPU when it doesn't have any tasks to run (i.e. when its runqueue is empty).
+So far, your scheduler will run a task only on the CPU that it was originally assigned, which may also limit its performance especially compared to CFS. For this part you will be implementing idle balancing, which is when a CPU will attempt to steal a task from another CPU when it doesn't have any tasks to run (i.e. when its runqueue is empty).
 
-Load balancing is a key feature of the default Linux CFS scheduler. While CFS follows a rather complicated policy to balance tasks and works to move more than one task in a single go, your scheduler will have a simple policy in this regard.
+Load balancing is a key feature of the default Linux CFS scheduler. While CFS follows a rather complicated policy to balance tasks and works to move more than one task in a single go, your scheduler can have a simpler policy in this regard, though you will want to consider what is the best algorithm to use for load balancing to optimize for the Fibonacci workload.
 
 Idle balancing works as follows:
 
