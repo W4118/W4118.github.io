@@ -101,13 +101,11 @@ W4118 Inc. has tasked you with creating a new scheduling policy, Oven, that prov
 1.  Only tasks whose policy is set to SCHED\_OVEN should be considered for selection by your new scheduler.
 2.  Every task will have an assigned weight. Weights should be configured when a process calls the sched\_setscheduler system call, and passed as the `sched_priority` field of `struct sched_param`.
 3.  By default, tasks have a weight set to a MAX\_WEIGHT of 10000. Tasks with a weight equal to the MAX\_WEIGHT of 10000 should use an unweighted round-robin scheduling algorithm. Each such task should get a time quantum of 1 tick.
-4.  Tasks with a weight less than 10000 should be prioritzed over weights equal to MAX\_WEIGHT, and use your choice of scheduling algorithm and time quantum to optimize the overall average completion time metric for running the Fibonacci workload. Essentially, your scheduling class defaults to round-robin but should have a special mode that is optimized for running the Fibonnaci workload, where the optimized scheduling algorithm is up to you to decide.
+4.  Tasks with a weight less than 10000 should be prioritized over weights equal to MAX\_WEIGHT, and use your choice of scheduling algorithm and time quantum to optimize the overall average completion time metric for running the Fibonacci workload. Essentially, your scheduling class defaults to round-robin but should have a special mode that is optimized for running the Fibonacci workload, where the optimized scheduling algorithm is up to you to decide.
 5.  Tasks using the SCHED\_OVEN policy should take priority over tasks using the SCHED\_NORMAL policy, but _not_ over tasks using the SCHED\_RR or SCHED\_FIFO policies.
 6.  The new scheduling policy should operate alongside the existing Linux schedulers. The value of SCHED\_OVEN should be 8.
 7.  You should keep track of runtime statistics so commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) work with your scheduling class.
-8.  A CPU should attempt to steal a task from another CPU when it doesn't have any tasks to run. The specific conditions in which it should be able to steal a task are detailed in part 5.
-
-While you don’t have to work through the following sections in order, doing so will help with iterative development. The checkpoints are ungraded and meant to guide your progress. 
+8.  A CPU should attempt to steal a task from another CPU when it doesn't have any tasks to run. The specific conditions in which it should be able to steal a task are detailed in Part 5.
 
 Part 2: Prepare the Oven
 ------
@@ -118,11 +116,9 @@ Part 2: Prepare the Oven
 
 **Note:**  some of the information in the links may be outdated (e.g. the second source claims the scheduling classes have ".next" pointers to the scheduling class of next highest precedence, which is no longer accurate), so while they are helpful as a reference, your best "source of truth" is still the 6.14 kernel.
 
-The Linux scheduler implements individual scheduling classes corresponding to different scheduling policies. For this assignment, you need to create a new scheduling class, oven\_sched\_class, for the OVEN policy, and implement the necessary functions in kernel/sched/oven.c.
-
 ### Part 2.1: Oven data structures 
 ------
-The goal of this section is to set up the data structures and a skeleton class for Oven:
+The goal of this section is to set up the Oven data structures and a skeleton scheduling class. In other words, you should define the following and ensure that your updated kernel boots: 
 
 ```c
 #define  SCHED_OVEN  8
@@ -133,22 +129,22 @@ struct sched_oven_entity;
 
 struct sched_class oven_sched_class;
 ```
-Some relevant files that will help you understand how the Linux scheduler works are [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c), [kernel/sched/sched.h](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/sched.h), [include/linux/sched.h](https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h), and [include/asm-generic/vmlinux.lds.h](https://elixir.bootlin.com/linux/v6.14/source/include/asm-generic/vmlinux.lds.h). 
-* While there is a fair amount of code in these files, a key goal of this assignment is for you to understand how to abstract the scheduler code so that you learn in detail the parts of the scheduler that are crucial for this assignment and ignore the parts that are not. 
-* You may find it helpful to specifically focus on the code that involve the data structures of the existing scheduler classes for this part. 
+The following files will help you understand how the Linux scheduler works: [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c), [kernel/sched/sched.h](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/sched.h), [include/linux/sched.h](https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h), and [include/asm-generic/vmlinux.lds.h](https://elixir.bootlin.com/linux/v6.14/source/include/asm-generic/vmlinux.lds.h). While there is a fair amount of code in these files, a key goal of this assignment is for you to understand how to abstract the scheduler code so that you learn in detail the parts of the scheduler that are crucial for this assignment and ignore the parts that are not. 
+* In particular, at this point you should have SCHED\_NORMAL take priority over your SCHED\_OVEN policy so that bugs in your scheduling class are less likely to prevent other tasks from running. Once you have your scheduling class working, you can then switch the priority of these policies in the later parts of the homework. 
+
+The Linux scheduler implements individual scheduling classes corresponding to different scheduling policies. For this assignment, you need to create a new scheduling class, oven\_sched\_class, for the OVEN policy, and implement the necessary functions in kernel/sched/oven.c.
 
 In order to set up a minimal oven_sched_class, a good place to start is the simple scheduling class for idle tasks, listed in [kernel/sched/idle.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/idle.c). This is the simplest of the scheduling classes. In particular, the functions implemented by this scheduling class are a good indication of the minimum set of functions you need to implement to have an operational scheduling class. You can return placeholder values in your scheduler class functions for now; the following section will revisit these functions. 
 
 ### Hints
 * Pay careful attention to how other scheduling classes initialize their class-specific run queues and scheduling entities.
 * Avoid using complex data structures that may provide better theoretical runtime complexity but are harder to implement and debug. In general, lists are fine to use. 
-*   While developing and debugging your initial scheduling class implementation, it will be helpful to initially have SCHED\_NORMAL take priority over your SCHED\_OVEN policy so that bugs in your scheduling class are less likely to prevent other tasks from running. Once you have your scheduling class working, you can then switch the priority of these policies as required by the homework.
 *   Check out the [debugging tips](#debugging-tips) provided below.
 
 ### Checkpoints
 
 Ensure that everything compiles and no previous functionality has been affected:
-*	When you run `fibonacci`, your output should look like this:
+*	When you run `fibonacci`, your output should still look like this:
 	```
 	$ ./fibonacci 10
 	OVEN scheduling policy does not exist
@@ -158,22 +154,27 @@ Ensure that everything compiles and no previous functionality has been affected:
 	ps -e --forest -o sched,policy,psr,pcpu,c,pid,user,cmd
 	```
 
-### Part 2.2: Enable task scheduling with Oven
+### Part 2.2: Scheduling 1 task
 ------
-The goal of this section is to allow individual tasks, like `fibonacci`, to set their scheduler class to Oven. 
-* Examine the way other scheduling classes implement their core functions and interact with the rest of the kernel: [kernel/sched/rt.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/rt.c) and [kernel/sched/fair.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/fair.c). You may find the former particularly useful because it has its own version of a round-robin scheduler, SCHED_RR, though you will likely find many parts of the code too complex to use directly for your own scheduling class.
-  * **Note:** While the spec and the Linux kernel refer to the default scheduler as the Completely Fair Scheduler (CFS), as of kernel version 6.6 the CFS was merged with the Earliest Virtual Deadline First (EEVDF) scheduler. If you're interested, you can read more about these changes [here.](https://lwn.net/Articles/969062/)
-* 	You should pay careful attention to how scheduling classes initialize their class-specific run queues and scheduling entities to insert them onto the run queues in [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c); incorrect initialization can easily cause your system to hang. To identify which parts need to be changed, look for references to existing Linux schedulers, particularly in the files mentioned below. Pay special attention to areas that explicitly reference the current default CFS scheduler (fair\_sched\_class).
-*   As mentioned in the previous section, some interesting files that will help you understand how the Linux scheduler works are [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c), [kernel/sched/sched.h](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/sched.h), [include/linux/sched.h](https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h), and [include/asm-generic/vmlinux.lds.h](https://elixir.bootlin.com/linux/v6.14/source/include/asm-generic/vmlinux.lds.h). 
-*   Although Linux in theory allows you to define new scheduling classes, Linux makes assumptions in various places that the only scheduling classes are the ones that have already been defined. 
-	* Carefully review the code in [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c) that makes assumptions about the prioritization of scheduling classes, including sched\_init and \_\_pick\_next\_task. 
-	* In order to assign tasks to your scheduling class and and allow your scheduling class to be used to pick the next task to run, other functions may also need to be changed, such as ones related to sched\_setscheduler.
-*   Trace through how parameters of the sched\_setscheduler call can ultimately be used to set the weight of a task. Add support for dynamically setting a task’s weight in Oven. More details on priority-based scheduling can be found in Part 4.
-	*	You may want your scheduler to have a minimum valid weight well above the priority range normally used for `sched_priority` such that any weight assignment less than the minimum valid weight is instead forced to be the MAX\_WEIGHT. The reason for this is that there are system programs that use sched\_setscheduler with lower values for `sched_priority`. If they are scheduled using your scheduling class, you want to detect their invalid weight assignments and schedule them using your round-robin algorithm.
-*    Ensure that runtime statistics are updated so that commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) work with your scheduling class.
+The rest of Part 2 will build toward enabling individual tasks, like `fibonacci`, to set their scheduler class to Oven. You will first implement the default case of Oven, which is round robin, then optimize it in Part 4. It will be helpful to reference the way other scheduling classes implement their core functions: [kernel/sched/rt.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/rt.c) and [kernel/sched/fair.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/fair.c). You may find the former particularly useful because it has its own version of a round-robin scheduler, SCHED_RR, though you will likely find many parts of the code too complex to use directly for your own scheduling class. 
 
+This section focuses on enabling 1 task to set its scheduling class to Oven. There are two main components to this:
+* Add basic functionality to your oven scheduler class so that it is able to add 1 task to its run queue and pick that task to run. You should keep your run queue simple for this part.
+* Trace through the sched\_setscheduler system call that `fibonacci` uses to set its scheduler class. Modify the related functions to enable setting to the Oven scheduler class. 
 
-**Hint:** Implementing a scheduler and getting everything right is not easy. You should make your implementation as simple as possible. By the same token, you might find it helpful to first implement the case of the unweighted round-robin scheduler before introducing the special, optimized mode for the Fibonacci workload. Part 4 includes more details about implementing priority-based scheduling. 
+At this point, you should add printk or pr_info logs to the Oven function(s) you implemented to ensure that they are properly called when you run `fibonacci`. It is fine if `fibonacci` hangs after computing the result instead of properly exiting at this stage– it will be addressed in the subsequent sections. Once you have reached this stage, you may want to think about how you can update the execution statistics for the task– this can help with debugging in the future through commands like [top](https://man7.org/linux/man-pages/man1/top.1.html) or htop. Reference other schedulers to see how they update the execution statistics for their tasks. 
+
+### Part 2.3: Scheduling multiple tasks
+------
+You will now add support for running multiple tasks in a round robin fashion. As mentioned before, each such task should get a time quantum of 1 tick. After this time quantum, another task should run if there are multiple tasks on the run queue. 
+
+Make the relevant changes to your Oven scheduling class. After you make your updates, you should be able to launch multiple `fibonacci` tasks using the shell script you wrote in Part 1. The execution may hang when you run the script, but it is important before moving on to ensure that each task has the opportunity to run and is picked to run in a round robin fashion.
+
+### Part 2.4: Scheduling multiple tasks that sleep
+------
+In this section, you will ensure that `fibonacci` tasks can consistently run to completion and sleep. One hint is to think about what happens to a task with respect to the run queue when it sleeps and support this functionality in your Oven scheduling class. 
+
+You should add a `sleep(1)` call in your `fibonacci.c` file and ensure that the updated program consistently runs to completion. Again, you should use  printk or pr_info logs to verify that your Oven scheduling class functions are actually invoked and used in the manner that you intend. The `sleep` and debugging logs should only be added for testing purposes and should not be in your submission. In particular, debugging statements can cause issues if invoked too frequently.
 
 ### Checkpoints
 *	Test your scheduler on a few runs of `fibonacci`. Your `fibonacci` output should now look like this:
@@ -182,9 +183,9 @@ The goal of this section is to allow individual tasks, like `fibonacci`, to set 
 	$ echo $?
 	55
 	```
-* Set the weight to something other than the default and verify its behavior. 
-*	After verifying that Fibonacci works, try running the [program from homework 3 that tests state changes](https://github.com/W4118/f25-hmwk3-sol/blob/main/user/part4/seven_states.c) with Oven as the scheduling policy. This will exercise your scheduling code more throughly as it will involve scheduling processes that have a greater variety of state changes.
-*	You can inspect programs that set their scheduling policy to Oven using `ps`. Ensure that your scheduling class functions are actually being used by adding printk or pr_info logs to a function like your class's enqueue\_task() and verify that it appears in dmesg output. Make sure that you do not submit your code with such debugging printk statements as they can cause issues if invoked too frequently.
+*	Inspect your `fibonacci` program using the previously mentioned `ps` command– you may find it helpful to add an infinite loop at the end of your program to give you time to inspect it.
+
+Recall how we previously had SCHED\_NORMAL take priority over your SCHED\_OVEN policy. Now modify the kernel so that SCHED\_OVEN takes precedence over SCHED\_NORMAL, but remain below the SCHED\_RR and SCHED\_FIFO policies. Verify that your Oven scheduling class is correct by launching multiple `fibonacci` tasks using the shell script you wrote in Part 1 and conducting a stress test. You should also try running the [program from homework 3](https://github.com/W4118/f25-hmwk3-sol/blob/main/user/part4/seven_states.c) that tests state changes. This will exercise your scheduling code more thoroughly as it will involve scheduling processes that have a greater variety of state changes.
 
 ### Deliverables
 *   Implementation of your scheduler in linux/kernel/sched/oven.c
@@ -192,14 +193,14 @@ The goal of this section is to allow individual tasks, like `fibonacci`, to set 
 
 Part 3: Oven as the Default Scheduler
 ------
-The goal of this section is to set Oven to be the default scheduler of your system. You may also choose to first focus on optimizing Oven, as described in part 4, then return to this section, or work on both at the same time. 
+The goal of this part is to set Oven to be the default scheduler of your system. You may also choose to first focus on optimizing Oven, as described in Part 4, then return to this section, or work on both at the same time. 
 
-You will need to change different parts in the kernel code to allow your kernel to boot with your scheduling class as the default. 
-*   Consider how the scheduling policy for the `init_task` is assigned and how a task is assigned to a scheduling class by default.
+You will need to change different parts of the kernel code to allow your kernel to boot with your scheduling class as the default. 
+*   Consider how the scheduling policy for the `init_task` is assigned and how new tasks are assigned to a scheduling class by default.
 *   Consider how new tasks are assigned their scheduling policy. 
 *   For a more responsive system, you may want to set the scheduler of kernel threads to be SCHED\_OVEN as well (otherwise, SCHED\_OVEN tasks can starve the SCHED\_NORMAL tasks to a degree). To do this, you can modify kernel/kthread.c and replace SCHED\_NORMAL with SCHED\_OVEN. It is strongly suggested that you do this to ensure that your VM is responsive enough for the test cases, but you should not do this until you are certain your scheduler works properly.
 
-**Hint:** At this point, excessive printk() or pr_info() logging may prevent your kernel from booting with Oven as the default scheduler. Hence, you may want to limit the logs in your oven\_sched\_class functions by only printing for a limited selection of tasks using if statements.
+**Hint:** At this point, excessive printk() or pr_info() logging may prevent your kernel from booting with Oven as the default scheduler. Hence, you may want to limit the logs in your oven\_sched\_class functions by only printing for a limited selection of tasks using if-statements.
 
 ### Checkpoints
 *	You may want to write a test program that forks and examine the program's details through the `ps` command:
@@ -230,22 +231,35 @@ You will need to change different parts in the kernel code to allow your kernel 
 	  8 #8    0  0.0  0    6610 user                  |       \_ ./mytest
 	...
 	```
-*	You may want to write your own stress test program. 
+*	You may want to write your own stress test program and run it with Oven as the default scheduling policy. 
 
 ### Deliverables
 *   Modifications to the Linux source code 
 
-Part 4: Time to Cook- Optimize Oven
+Part 4: Time to Cook - Optimize Oven
 ------
-Recall your average completion time measurements from part 1, which used the CFS scheduler. Can you do better? In this section, you will optimize Oven, with the goal of beating CFS. 
+Recall your average completion time measurements from Part 1, which used the CFS scheduler. Can you do better? In this section, you will optimize Oven, with the goal of beating CFS. 
 
-You should consider how you might modify the fibonacci program to set its OVEN weight. What weights and scheduling algorithm will optimize for average completion time? Note that this assignment asks you to optimize your scheduler specifically for the Fibonacci workload. Hence, it may be helpful to first consider what makes the Fibonacci workload unique and how those characteristics might guide your scheduler design. 
+### Part 4.1: Enable custom weights
+------
+Trace through how the parameter(s) of the sched_setscheduler system call are ultimately used to set the weight of a task. Add support for dynamically setting a task’s weight in Oven.
 
-Make any changes to fibonacci and your scheduler, then submit eBPF traces of the two task sets running on your scheduler. You should use the same two VM CPU configurations you used earlier to measure performance using CFS. Submit your eBPF traces for the two task sets and CPU configurations as user/taskset1\_average.txt, user/taskset1\_average\_smp.txt, user/taskset2\_average.txt, and user/taskset2\_average\_smp.txt Write the average completion times for each workload in your README and compare against CFS. You should aim to submit the traces collected after setting Oven as the default scheduler.
+You may want your scheduler to have a minimum valid weight well above the priority range normally used for sched_priority such that any weight assignment less than the minimum valid weight is instead forced to be the MAX_WEIGHT. The reason for this is that there are system programs that use sched_setscheduler with lower values for sched_priority. If they are scheduled using your scheduling class, you want to detect their invalid weight assignments and schedule them using your round-robin algorithm.
+
+You can verify that the correct value is set by adding selective printk or pr_info logs.
+
+### Part 4.2: Beat CFS
+------
+
+In order to beat CFS, a good starting point is considering what makes the Fibonacci workload unique– those characteristics should guide your scheduler design because this assignment asks you to optimize your scheduler specifically for the Fibonacci workload. You should consider how you might modify the fibonacci program to set its OVEN weight. What weights and scheduling algorithm will optimize for average completion time?
+
+Make any changes to fibonacci and your scheduler. As you iterate on your scheduler, you can use your eBPF script from Part 1 to measure the performance of your optimized scheduler and compare it against the default scheduler. 
+
+After you have optimized your scheduler, submit eBPF traces of the two tasksets running on your scheduler. You should use the same two VM CPU configurations you used earlier to measure performance using CFS. Submit your eBPF traces for the two task sets and CPU configurations as user/taskset1\_average.txt, user/taskset1\_average\_smp.txt, user/taskset2\_average.txt, and user/taskset2\_average\_smp.txt. Write the average completion times for each workload in your README and briefly describe how your Oven scheduler compares against CFS. 
 
 **Hint:** Configuring the scheduling class and priority within the Fibonacci program will be too late (why is this the case?). You may want to use chrt while launching your Fibonacci tasks or write a small program to set the scheduler and weight before calling exec on Fibonacci.
 
-**Note:** When launching jobs from the task list, start tasks in the order they are listed, but do not wait for tasks to finish before launching the next one. Also, for all trace submissions in this section, filter out any process that is not fibonacci.
+**Note:** When launching jobs from the task list, start tasks in the order they are listed, but do not wait for tasks to finish before launching the next one. For all trace submissions in this section, filter out any process that is not fibonacci.
 
 ### Deliverables
 *   Changes to fibonacci.c
@@ -257,7 +271,7 @@ Make any changes to fibonacci and your scheduler, then submit eBPF traces of the
 Part 5: Add load-balancing features
 ------
 	
-So far, your scheduler will run a task only on the CPU that it was originally assigned. Let's change that now! For this part you will be implementing idle balancing, which is when a CPU will attempt to steal a task from another CPU when it doesn't have any tasks to run (i.e. when its runqueue is empty).
+So far, your scheduler will run a task only on the CPU that it was originally assigned. Let's change that now. For this part you will be implementing idle balancing, which is when a CPU will attempt to steal a task from another CPU when it doesn't have any tasks to run (i.e. when its runqueue is empty).
 
 Load balancing is a key feature of the default Linux scheduler (Completely Fair Scheduler). While CFS follows a rather complicated policy to balance tasks and works to move more than one task in a single go, your scheduler will have a simple policy in this regard.
 
@@ -271,7 +285,7 @@ Idle balancing works as follows:
 Once you add idle load balancing, repeat the performance tests you conducted in the previous part and make notes on any observations. Again, be sure to include actual data. Submit the trace in user/taskset1\_smp\_balance.txt and user/taskset2\_smp\_balance.txt and note any differences to your previous scheduler in your README. You only need to submit results in this case for the same multi-CPU VM configuration as you used previously, but do not need to submit single-CPU VM results for this case. Write the updated average completion times for each workload in your README and compare against CFS.
 
 ### Deliverables
-*   Modifications to the Linux source code and your Oven scheduler
+*   Modifications to the Linux source code/your scheduler
 *   user/taskset1\_smp\_balance.txt and user/taskset2\_smp\_balance.txt
 *   Average completion times for both tasksets on a VM configured with either two or four CPUs, using the Oven scheduling policy with idle balancing in your README 
 *   Comparison between Oven average completion time (with idle balancing) and CFS average completion time in your README 
@@ -281,18 +295,18 @@ Part 6: Tail Completion Time
 	
 Thus far you have focused on optimizing the average completion time across all jobs. Another important metric to consider is tail completion time, which is the maximum completion time across 99% of all jobs. Tail completion time focuses on ensuring that the completion time of most jobs is no worse than some amount. Using tail completion time as the performance metric of interest, compare your optimized scheduling class versus the default Linux scheduler for the W4118 Inc. workloads. Which one does better? If the default Linux scheduler has better tail completion time, can you change how you _use_ your OVEN scheduler (without modifying the OVEN scheduler code) to provide tail completion time comparable to the default Linux scheduler?
 
-Make any changes to fibonacci, then submit eBPF traces of the two task sets running on your scheduler as user/taskset1\_tail.txt and user/taskset2\_tail.txt. You only need to submit results in this case for the same multi-CPU VM configuration as you used previously, but do not need to submit single-CPU VM results for this case. Write the tail completion times for each workload in your README and compare against CFS.
+Modify fibonacci.c as needed and save the updated version in a new file named fibonacci_tail.c. As before, do not make any changes to the fib function. Submit eBPF traces of the two task sets running on your scheduler as user/taskset1\_tail.txt and user/taskset2\_tail.txt. You only need to submit results in this case for the same multi-CPU VM configuration as you used previously, but do not need to submit single-CPU VM results for this case. Write the tail completion times for each workload in your README and compare against CFS.
 
 ### Deliverables
-*   Changes to fibonacci.c
+*   Your fibonacci code optimized for tail completion in fibonacci_tail.c
 *   user/taskset1\_tail.txt and user/taskset2\_tail.txt
 *   Tail completion times for both tasksets on a VM configured with either two or four CPUs, using the Oven scheduling policy in your README 
 *   Comparison between your tail completion time and CFS tail completion time in your README 
 
 Part 7: Analysis and Investigation of Kernel Source Code
 ------
-	
-Write answers to the following questions in the user/part7.txt text file, following the provided template exactly. Make sure to include any references you use in your references.txt file.
+
+Write the answers to the following questions in the user/part7.txt text file, following the provided template exactly. Make sure to include any references you use in your references.txt file.
 
 1.  Give the exact URL on elixir.bootlin.com pointing to the file and line number of the function that initializes the idle tasks on CPUs other than the boot CPU for a multi-CPU system. What is the PID of the task that calls this function? Note: make sure you use v6.14.
 2.  Give the exact URL on elixir.bootlin.com pointing to the file and line number at which the TIF\_NEED\_RESCHED flag is set for the currently running task as a result of its time quantum expiring if the task is scheduled using SCHED\_RR. Select the file and line number most related to the SCHED\_RR (i.e. do not select a generic helper function that may be used outside of SCHED\_RR). Note: make sure you use v6.14.
@@ -317,7 +331,7 @@ The following are some debugging tips you may find useful as you create your new
 *   You may find it helpful to use ps, top, or htop to view information such as the CPU usage and scheduling policies of your tasks. These commands rely on execution time statistics reported by certain scheduler functions in the kernel. As a result, bugs in your scheduling class could cause these commands to report inaccurate information. This cuts two ways. First, it is possible that your scheduler is working properly in terms of selecting the right tasks to execute for the right amount of time, but your calculation of execution time statistics in the kernel is wrong, so these commands appear to report that your tasks are not running at all when in fact they are. Second, it is possible that your scheduler is not working properly such that these tools report that tasks are using your scheduling class when in fact they are not.
 	
 	As a result, you should not exclusively rely on these tools to determine if your scheduling class is working properly. For example, when you make your scheduling class the default scheduling class, the fact that user-level tools claim that all tasks are using your scheduling class may not necessarily mean that this is the case. Instead, to ensure that your scheduling class functions are actually being used, you might add a printk to a function like your class's enqueue\_task() and verify that it appears in dmesg output. Make sure that you do not submit your code with such debugging printk statements as they can cause issues if invoked too frequently.
-*   Check out the [debugging guide using QEMU and GDB](https://w4118.github.io/guides/qemu.html).
+*   Check out the [QEMU and GDB debugging guide](https://w4118.github.io/guides/qemu.html).
 
 Submission Checklist
 --------------------
@@ -329,6 +343,7 @@ Include the following in your main branch. Only include source code (ie \*.c,\*.
 *   references.txt file
 *   Implementation of your scheduler in linux/kernel/sched/oven.c
 *   Changes to fibonacci.c
+*   fibonacci_tail.c
 *   Implementation of trace.bt in user/trace.bt
 *   Output of running your scheduler on the workloads in user/taskset1\_average.txt, user/taskset2\_average.txt, user/taskset1\_average\_smp.txt, user/taskset2\_average\_smp.txt, user/taskset1\_smp\_balance.txt, user/taskset2\_smp\_balance.txt, user/taskset1\_tail.txt, and user/taskset2\_tail.txt.
 *   Answers to written questions in user/part7.txt
