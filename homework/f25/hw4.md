@@ -283,7 +283,7 @@ Load balancing is a key feature of the default Linux CFS scheduler. While CFS fo
 Idle balancing works as follows:
 
 *   Idle balance is when an idle CPU (i.e. a CPU with an empty run queue) pulls one task from another CPU.
-*   Take a look at the CFS, RT, and DL implementations to figure out where this is taking place and how it is called from kernel/sched/core.c.
+*   Take a look at the CFS, RT, and DL implementations to figure out where this is taking place and how it is called from kernel/sched/core.c. In particular, you may want to reference the way RT does idle balancing as it is simpler than CFS. 
 *   The CPU that you pull a task from should have at least two tasks on its run queue. Which task you pull off is up to your scheduling algorithm.
 *   You should again ensure that the task you are stealing is eligible to be moved and allowed to run on the idle CPU. 
 *   If there is no eligible task, it is fine to not idle balance.
