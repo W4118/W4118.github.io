@@ -160,7 +160,7 @@ This section focuses on enabling 1 task to set its scheduling class to Oven. The
 * Add basic functionality to your oven scheduling class so that it is able to add 1 task to its run queue and pick that task to run. You should keep your run queue simple for this part.
 * Trace through the sched\_setscheduler system call that `fibonacci` uses to set its scheduling class. Modify the related functions to enable setting to the Oven scheduling class. 
 
-At this point, you should add printk or pr_info logs to the Oven function(s) you implemented to ensure that they are properly called when you run `fibonacci`. It is fine if `fibonacci` hangs after computing the result instead of properly exiting at this stage– it will be addressed in the subsequent sections. 
+You should add printk or pr_info logs to the Oven function(s) you implemented to ensure that they are properly called when you run `fibonacci`. 
 
 ### Part 2.3: Scheduling statistics
 ------
@@ -170,7 +170,7 @@ Although you can run a single task using your Oven scheduling class, you may not
 ------
 You will now add support for running multiple tasks in a round robin fashion. As mentioned before, each such task should get a time quantum of 1 tick. After this time quantum, another task should run if there are multiple tasks on the run queue. 
 
-Make the relevant changes to your Oven scheduling class. After you make your updates, you should be able to launch multiple `fibonacci` tasks using the shell script you wrote in Part 1. The execution may hang when you run the script, but it is important before moving on to ensure that multiple task have the opportunity to run and are picked to run in a round robin fashion.
+Make the relevant changes to your Oven scheduling class. After you make your updates, you should be able to launch multiple `fibonacci` tasks using the shell script you wrote in Part 1. It is important before moving on to ensure that multiple task have the opportunity to run and are picked to run in a round robin fashion.
 
 ### Part 2.5: Scheduling multiple tasks that sleep
 ------
