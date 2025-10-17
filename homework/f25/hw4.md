@@ -64,7 +64,7 @@ sudo apt install bpftrace
 ```
 
 
-Instead of searching through source code, you can run bpftrace -l to see what available tracepoints there are in the kernel.
+Instead of searching through source code, you can run `bpftrace -l` to see what available tracepoints there are in the kernel.
 
 Write a bpftrace script named trace.bt to trace how much time a task spends on the run queue, and how much time has elapsed until the task completed. Your profiler should run until stopped with Ctrl-C. While tracing, your script should, at tasks' exits, print out a table of the task name, task PID, milliseconds spent on the run queue (not including time spent running), and milliseconds until task completion. Note that task PID here is the actual pid field in a task\_struct, not what is returned by getpid. The output should be comma-delimited and follows the format:
 
