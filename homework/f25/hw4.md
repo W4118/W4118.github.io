@@ -1,6 +1,6 @@
 # W4118 Fall 2025 - Homework 4
 
-> <span style="color:red">**DUE: Wednesday 11/8/2025 at 11:59pm ET**</span>
+> <span style="color:red">**DUE: Wednesday 11/5/2025 at 11:59pm ET**</span>
 
 ## General Instructions
 
