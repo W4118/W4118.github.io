@@ -355,13 +355,13 @@ Modify: 2025-11-17 19:07:06.094968851 -0500
 Change: 2025-11-17 19:07:06.094968851 -0500
  Birth: -
 
-### big_txt.txt's data_block_range change from [14-15] to [14-22]
+$ # big_txt.txt's data_block_range change from [14-15] to [14-22]
 ```
 
 The harder case is because files are limited to contiguous allocation of data blocks, you should move the existing blocks along with the new block to another position so that there is enough space for the contiguous region of blocks.
 
 ```console
-# reformat the disk img
+$ # reformat the disk img
 $ stat /mnt/ez/hello.txt
   File: /mnt/ez/hello.txt
   Size: 13        	Blocks: 8          IO Block: 4096   regular file
@@ -382,7 +382,7 @@ Modify: 2025-11-17 19:10:09.428618497 -0500
 Change: 2025-11-17 19:10:09.428618497 -0500
  Birth: -
 
-### hello.txt's data_block_range change from [3-3] to [16-17]
+$ # hello.txt's data_block_range change from [3-3] to [16-17]
 ```
 
 You should also be able to edit files with the nano editor, although it will complain about `fsync()` not being implemented. Fix this problem.
