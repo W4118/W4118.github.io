@@ -4,7 +4,7 @@
 
 ## General Instructions
 
-All homework submissions are to be made via [Git][Git]. You must submit a detailed list of references as part of your homework submission indicating clearly what sources you referenced for each homework problem. You do not need to cite the course textbooks and instructional staff. All other sources must be cited. Please edit and include this [file][https://nieh.net/teaching/w4118_f25/homeworks/references.txt] in the top-level directory of your homework submission in the `main` branch of your team repo. **Be aware that commits pushed after the deadline will not be considered.** Refer to the homework policy section on the [class website][https://www.cs.columbia.edu/~nieh/teaching/w4118/] for further details.
+All homework submissions are to be made via [Git][Git]. You must submit a detailed list of references as part of your homework submission indicating clearly what sources you referenced for each homework problem. You do not need to cite the course textbooks and instructional staff. All other sources must be cited. Please edit and include this [file][file] in the top-level directory of your homework submission in the `main` branch of your team repo. **Be aware that commits pushed after the deadline will not be considered.** Refer to the homework policy section on the [class website][class-web-site] for further details.
 
 [Git]: https://git-scm.com/
 [file]: https://www.cs.columbia.edu/~nieh/teaching/w4118/homeworks/references.txt
