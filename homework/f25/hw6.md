@@ -174,9 +174,26 @@ Now extend the formatting utility program to create a subdirectory called `subdi
 
 Create and format a new disk using your modified program. Use the reference EZFS kernel module provided to verify that the new files and directory were created correctly. You can use the `stat` command to see the size, inode number, and other properties. Note that the primary purpose of the reference EZFS kernel module is to provide a way to check that your formatting utility program operates correctly. It does not necessarily implement all of the functionality that you will provide in your own EZFS implementation.
 
+Some Hints:
+- As you modify your disk formatter, be mindful that you might not be formatting a fresh disk. Overwriting a disk you already formatted with an older version of your program might corrupt your disk.
+- `hexdump` can be a useful tool for inspecting contents at the byte level.
+
 ## Part 4: Initializing and mounting the filesystem
 
-Now that you understand how to manually add files to your file system via your formatting utility, you will now write a file system to allow you to use standard file commands mount the file system, list directories, read files, modify existing files, create new files, delete files, and even create and remove directories. The rest of this assignment is structured to guide you toward incrementally implementing your file system functionality, which you will do by implementing `ez_ops.h` and `myez.c` in your team repo. In some cases, you may find that what you implemented is correct enough to get some piece of functionality working, but may not be completely correct such that some later functionality that depends on it ends up not working. Keep that in mind during your debugging. Also keep in mind that your implemented file system functionality should be compatible with the formatting utility, not the other way around; other than Part 3, you should not change the formatting utility, and certainly should not change it because your file system implementation is not working. Here are some resources that might be useful, though keep in mind that some of the information contained therein may be out of date:
+### 4.1: Overview
+Now that you understand how to manually add files to your file system via your formatting utility, the following parts will have you write a file system to allow you to use standard file commands. The rest of this assignment is structured to guide you toward incrementally implementing your file system functionality, which you will do by implementing `ez_ops.h` and `myez.c` in your team repo.
+
+The parts are structured as follows:
+* part 4: mount the file system
+* part 5,6: list directories
+* part 7: read files
+* part 8: modify existing files 
+* part 9: create new files
+* part 10: delete files
+* part 11: create and remove directories
+* part 12: compile and run executables
+
+In some cases, you may find that what you implemented for a given part is correct enough to get some piece of functionality working, but may not be completely correct such that some later functionality that depends on it ends up not working. Keep that in mind during your debugging. Also keep in mind that your implemented file system functionality should be compatible with the formatting utility, not the other way around; other than Part 3, you should not change the formatting utility, and certainly should not change it because your file system implementation is not working. Here are some resources that might be useful, though keep in mind that some of the information contained therein may be out of date:
 
 - LKD chapter 13
 - LKD chapter 14: pages 289 - 294
@@ -195,7 +212,9 @@ Note that the VFS has evolved over the years and some functions exist primarily 
 
 [ramfs]: https://elixir.bootlin.com/linux/v6.14/source/fs/ramfs
 
-This part of the assignment focuses on writing the code that initializes the file system and enables mounting disks. Create the basic functionality for your file system to work as a kernel module so that it can be loaded and unloaded from the kernel. Then make the mount and umount commands work cleanly. We won't be reading any files or directories at this time.
+### 4.2: Initializing and mounting 
+
+This part of the assignment focuses on writing the code that registers the file system and enables mounting disks. Create the basic functionality for your file system to work as a kernel module so that it can be loaded and unloaded from the kernel. Then make the mount and umount commands work cleanly. We won't be reading any files or directories at this time.
 
 The name attribute of your `struct file_system_type` MUST BE **myezfs**. _Failure to provide the correct naming of your file system will result in an automatic zero on your grade_.
 
