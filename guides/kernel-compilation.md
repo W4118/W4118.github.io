@@ -151,6 +151,10 @@ Just make sure your desired changes are reflected in the output.
 
 ## Building the kernel
 
+Before you start the build, consider running the
+[optimization step](#optimizing-your-kernel-compilation-time). It could
+**greatly** reduce your first-time compilation time.
+
 To build the kernel, run the following as a **non-root user**:
 
 ```
