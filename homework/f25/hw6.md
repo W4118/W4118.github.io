@@ -214,14 +214,20 @@ Note that the VFS has evolved over the years and some functions exist primarily 
 
 ### 4.2: Initializing and mounting 
 
-This part of the assignment focuses on writing the code that registers the file system and enables mounting disks. Create the basic functionality for your file system to work as a kernel module so that it can be loaded and unloaded from the kernel. Then make the mount and umount commands work cleanly. We won't be reading any files or directories at this time.
+This part of the assignment focuses on writing the code that registers the file system and enables mounting disks. 
+
+Create the basic functionality for your file system to work as a kernel module so that it can be loaded and unloaded from the kernel. After your module is installed, it should be visible (but not usable yet) as a file system on your VM. Look at [`man 5 filesystems` for info about where file systems are listed. This should be a good time for you to consider whether your device should be `nodev` or `bdev`.
+
+Having registered your `myezfs` file system (nice job!), you'll now need to implement minimal functionality for being able to correctly mount and unmount the disk you just created. We won't be implementing any FS operations yet, but we have to initialize some pointers required by the kernel so that it doesn't crash. Besides looking at other file systems as inspirations, we recommend tracing the mount and unmount system calls for what is initialized and which fields are used.
+
+On mounting, read the EZFS superblock and inodes and assign them to an instance of `struct ezfs_sb_buffer_heads` that you'll create. Store this struct in the `s_fs_info` member of the VFS superblock. This way, we can always find the EZFS superblock and inodes by following the trail of pointers from the VFS superblock. This will become very useful later on. [EZFS fill_super][fill_super] shows the relationship between these structs after the the superblock is read from disk and its in-memory representation is initialized.
 
 The name attribute of your `struct file_system_type` MUST BE **myezfs**. _Failure to provide the correct naming of your file system will result in an automatic zero on your grade_.
 
 Some Hints:
 
+- While just getting `mount` and `umount` to not crash your kernel is technically enough to get you onto the following parts, we strongly recommend you spend enough time getting confident in your `fs_context` and `super_block` setups. Not only is it difficult to test that your initialization is correct, but a mistake here *can* cause tricky bugs later on.
 - Use `sb_set_blocksize()` to ensure that the block layer reads blocks of the correct size.
-- Read the EZFS superblock and inodes. Assign them to an instance of `struct ezfs_sb_buffer_heads`. Store this struct in the `s_fs_info` member of the VFS superblock. This way, we can always find the EZFS superblock and inodes by following the trail of pointers from the VFS superblock. [EZFS fill_super][fill_super] shows the relationship between these structs after the the superblock is read from disk and its in-memory representation is initialized.
 - You will have to fill out some additional members of the VFS superblock structure, such as the magic number and pointer to the ops struct.
 - Use `iget_locked()` to create a new VFS inode for the root directory. Read the kernel source to learn what this function does for you and get some hints on how you're supposed to use it. The only metadata you need to set is the mode. Make the root directory `drwxrwxrwx` for now.
 - After creating an inode for the root directory, you need to create a dentry associated with it. Make the VFS superblock point to the dentry.
