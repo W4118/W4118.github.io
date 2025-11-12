@@ -216,25 +216,26 @@ Note that the VFS has evolved over the years and some functions exist primarily 
 
 This part of the assignment focuses on writing the code that registers the file system and enables mounting disks. 
 
-Create the basic functionality for your file system to work as a kernel module so that it can be loaded and unloaded from the kernel. After your module is installed, it should be visible (but not usable yet) as a file system on your VM. Look at [`man 5 filesystems` for info about where file systems are listed. This should be a good time for you to consider whether your device should be `nodev` or `bdev`.
+Create the basic functionality for your file system to work as a kernel module so that it can be loaded and unloaded from the kernel. After your module is installed, it should be visible (but not usable yet) as a file system on your VM. Look at `man 5 filesystems` for info about where file systems are listed. This should be a good time for you to consider whether your device should be `nodev` or `bdev`.
 
-Having registered your `myezfs` file system (nice job!), you'll now need to implement minimal functionality for being able to correctly mount and unmount the disk you just created. We won't be implementing any FS operations yet, but we have to initialize some pointers required by the kernel so that it doesn't crash. Besides looking at other file systems as inspirations, we recommend tracing the mount and unmount system calls for what is initialized and which fields are used.
+Having registered your `myezfs` file system (nice job!), you'll now need to implement minimal functionality for being able to correctly mount and unmount the disk you just created. We won't be implementing any FS operations yet, but we have to initialize some pointers required by the kernel so that mounting and unmounting doesn't crash it. Besides looking at other file systems as inspirations, we recommend tracing the system calls for [mount][mount-syscall] and [unmount][unmount-syscall] for what is initialized and which fields are used.
 
-On mounting, read the EZFS superblock and inodes and assign them to an instance of `struct ezfs_sb_buffer_heads` that you'll create. Store this struct in the `s_fs_info` member of the VFS superblock. This way, we can always find the EZFS superblock and inodes by following the trail of pointers from the VFS superblock. This will become very useful later on. [EZFS fill_super][fill_super] shows the relationship between these structs after the the superblock is read from disk and its in-memory representation is initialized.
+On mounting, you'll need to fill the in-memory kernel superblock data structure. This requires reading and having general access to the on-disk superblock. You'll do this by reading the EZFS superblock and inodes and assigning them to an instance of `struct ezfs_sb_buffer_heads` (defined in `ezfs.h`) that you'll create. Store this struct in the `s_fs_info` member of the VFS superblock. This way, we can always find the EZFS superblock and inodes by following the trail of pointers from the VFS superblock. This will become very useful later on. [EZFS fill_super][fill_super] shows the relationship between these structs after the the superblock is read from disk and its in-memory representation is initialized.
 
 The name attribute of your `struct file_system_type` MUST BE **myezfs**. _Failure to provide the correct naming of your file system will result in an automatic zero on your grade_.
 
 Some Hints:
 
-- While just getting `mount` and `umount` to not crash your kernel is technically enough to get you onto the following parts, we strongly recommend you spend enough time getting confident in your `fs_context` and `super_block` setups. Not only is it difficult to test that your initialization is correct, but a mistake here *can* cause tricky bugs later on.
 - Use `sb_set_blocksize()` to ensure that the block layer reads blocks of the correct size.
 - You will have to fill out some additional members of the VFS superblock structure, such as the magic number and pointer to the ops struct.
 - Use `iget_locked()` to create a new VFS inode for the root directory. Read the kernel source to learn what this function does for you and get some hints on how you're supposed to use it. The only metadata you need to set is the mode. Make the root directory `drwxrwxrwx` for now.
-- After creating an inode for the root directory, you need to create a dentry associated with it. Make the VFS superblock point to the dentry.
+- After creating an inode for the root directory, you need to create a dentry associated with it. Make the VFS superblock point to the dentry. Look at how other filesystems use `d_make_root` for this purpose.
 - Make sure to handle errors by returning an appropriate error code. For example, what if someone asks you to mount a filesystem that isn't EZFS?
 - Remember to take care of any `buffer_heads` and dynamically allocated pointers.
 
 [fill_super]: https://www.cs.columbia.edu/~nieh/teaching/w4118_f23/homeworks/hmwk6/ezfs-superblock.pdf
+[mount-syscall]: https://elixir.bootlin.com/linux/v6.14/source/fs/namespace.c#L4088
+[unmount-syscall]: https://elixir.bootlin.com/linux/v6.14/source/fs/namespace.c#L2077
 
 ## Part 5: Listing the contents of the root directory
 
@@ -251,10 +252,7 @@ hello.txt  subdir
 ls: cannot access '/mnt/ez/subdir': No such file or directory
 ```
 
-The VFS framework will call the iterate_shared member of the struct file_operations. Inside your iterate_shared implementation, use `dir_emit()` to provide VFS with the contents of the requested directory. VFS will continue to call `iterate_shared` until your implementation returns without calling `dir_emit()`. Make sure you implement `iterate_shared`, not `iterate`, as the latter is an older interface. For now, you can pass in `DT_UNKNOWN` as the type argument for `dir_emit()`. We will revisit this in the next part. You can use the `ctx->pos` variable as a cursor to the directory entry that you are about to emit. Note that iterating through a directory using `dir_emit()` will list each directory entry contained in the directory, but what should be done to cause the `.` and `..` to appear in the listing? Some file systems accomplish this by actually storing separate entries for `.` and `..` so that they will appear just like any other entry, but other file systems do not, such as the proc file system. Look at how the proc file system achieves this [behavior][proc], and use a similar approach for your EZFS.
-
-[proc]: https://elixir.bootlin.com/linux/v6.14/source/fs/proc/generic.c
-
+Let's take a look at which system calls are behind this functionality.
 The following is an excerpt from the output of `strace ls /usr/bin > /dev/null`:
 
 ```
@@ -269,9 +267,38 @@ getdents64(3, /* 0 entries */, 32768)   = 0
 close(3)                                = 0
 ```
 
-The `ls` program first opens the /usr/bin directory file. Then, it calls `getdents64()` three times to retrieve the list of 1,273 files in `/usr/bin`. Finally, `ls` closes the directory file. Each call to `getdents64()` will result in one call to `iterate_dir()`, which in turn will call your `iterate_shared` implementation. Consequently, your `iterate_shared` implementation should call `dir_emit()` until the given buffer is full.
+In the example above, the `ls` program first opens the /usr/bin directory file, getting `fd` 3 back (why 3?). Then, it calls `getdents64()` three times to retrieve the list of 1,273 files in `/usr/bin`. Finally, `ls` closes the directory file. 
 
-Running `ls -l` might print error messages because the `ls` program is unable to `stat` the files. This is the expected behavior for this part.
+Currently, in your myezfs implementation, `ls`-ing your root directory should look something like this:
+
+```console
+# ls /mnt/ez
+ls: cannot open directory '/mnt/ez': Not a directory
+```
+
+If we run the same command under `strace`, we see why that happens:
+
+```console
+# strace ls /mnt/ez
+[...]
+openat(AT_FDCWD, "/mnt/ez", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOTDIR (Not a directory)
+[...]
+```
+
+openat is called to create a file descriptor for `"/mnt/ez"`. However, it fails as it was given an `O_DIRECTORY` flag but could not determine that `"/mnt/ez"` was a directory. For right now, we can fix this by adding a no-op `lookup` member to `struct inode_operations`. We will come back to this member function, but for right now this will do.
+
+
+With a file descriptor provided by our newly working openat, we can lookup the entries in our root directory.
+When `getdents64` is called, the VFS framework will call the `iterate_shared` member of the `struct file_operations`. Inside your iterate_shared implementation, use `dir_emit()` to provide VFS with the contents of the requested directory. VFS will continue to call `iterate_shared` until your implementation returns without calling `dir_emit()`. Each call to `getdents64()` will result in one call to `iterate_dir()`, which in turn will call your `iterate_shared` implementation. Consequently, your `iterate_shared` implementation should call `dir_emit()` until the given buffer is full. For now, you can pass in `DT_UNKNOWN` as the type argument for `dir_emit()`. We will revisit this in the next part. You can use the `ctx->pos` variable as a cursor to the directory entry that you are about to emit. 
+
+Note that iterating through a directory using `dir_emit()` will list each directory entry contained in the directory, but what should be done to cause the `.` and `..` to appear in the listing? Some file systems accomplish this by actually storing separate entries for `.` and `..` so that they will appear just like any other entry, but other file systems do not, such as the proc file system. Look at how the proc file system achieves this [behavior][proc], and use a similar approach for your EZFS.
+
+[proc]: https://elixir.bootlin.com/linux/v6.14/source/fs/proc/generic.c
+
+
+Hints:
+* Make sure you implement `iterate_shared`, not `iterate`, as the latter is an older interface.
+* Running `ls -l` might print error messages because the `ls` program is unable to `stat` the files. This is the expected behavior for this part.
 
 ## Part 6: Accessing subdirectories
 
