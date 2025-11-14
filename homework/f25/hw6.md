@@ -285,10 +285,14 @@ openat(AT_FDCWD, "/mnt/ez", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOT
 [...]
 ```
 
-openat is called to create a file descriptor for `"/mnt/ez"`. However, it fails as it was given an `O_DIRECTORY` flag but could not determine that `"/mnt/ez"` was a directory. For right now, we can fix this by adding a no-op `lookup` member to `struct inode_operations`. We will come back to this member function, but for right now this will do.
+openat is called to create a file descriptor for `"/mnt/ez"`. However, it fails, retrning `ENOTDIR` as it was given an `O_DIRECTORY` flag but could not determine that `"/mnt/ez"` was a directory. 
+TODO, one of the following (or something else):
+- For right now, we can fix this by adding a no-op `lookup` member to `struct inode_operations`. We will come back to this member function, but for right now this will do.
+- Traverse the [openat systemcall][openat-syscall] to find which missing member definition in your ezfs is causing `ENOTDIR` to be returned. For now, adding a no-op member for that definition will do.
 
+[openat-syscall]: https://elixir.bootlin.com/linux/v6.14/source/fs/open.c#L1454
 
-With a file descriptor provided by our newly working openat, we can lookup the entries in our root directory.
+With our newly working openat returning a file descriptor, we can lookup the entries in our root directory.
 When `getdents64` is called, the VFS framework will call the `iterate_shared` member of the `struct file_operations`. Inside your iterate_shared implementation, use `dir_emit()` to provide VFS with the contents of the requested directory. VFS will continue to call `iterate_shared` until your implementation returns without calling `dir_emit()`. Each call to `getdents64()` will result in one call to `iterate_dir()`, which in turn will call your `iterate_shared` implementation. Consequently, your `iterate_shared` implementation should call `dir_emit()` until the given buffer is full. For now, you can pass in `DT_UNKNOWN` as the type argument for `dir_emit()`. We will revisit this in the next part. You can use the `ctx->pos` variable as a cursor to the directory entry that you are about to emit. 
 
 Note that iterating through a directory using `dir_emit()` will list each directory entry contained in the directory, but what should be done to cause the `.` and `..` to appear in the listing? Some file systems accomplish this by actually storing separate entries for `.` and `..` so that they will appear just like any other entry, but other file systems do not, such as the proc file system. Look at how the proc file system achieves this [behavior][proc], and use a similar approach for your EZFS.
