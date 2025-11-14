@@ -2,6 +2,8 @@
 
 > <span style="color:red">**DUE: Wednesday 11/19/2025 at 11:59pm ET**</span>
 
+> Modified: Fri Nov 14, 12:00pm (part 1, question 3)
+
 ## General Instructions
 
 All homework submissions are to be made via [Git][Git]. You must submit a detailed list of references as part of your homework submission indicating clearly what sources you referenced for each homework problem. You do not need to cite the course textbooks and instructional staff. All other sources must be cited. Please edit and include this [file][file] in the top-level directory of your homework submission in the `main` branch of your team repo. **Be aware that commits pushed after the deadline will not be considered.** Refer to the homework policy section on the [class website][class-web-site] for further details.
@@ -151,7 +153,19 @@ You should modify the kernel code at the appropriate location to call a hook fun
 void page_fault_happened(struct mm_struct *mm, unsigned long vaddr);	
 ```
 
-When a page fault occurs in the target pid (first argument of `shadowpt_open`), and the shared memory is actively mapped, you should update the shared memory at index `vaddr % size` with the given address, so `shared_memory[vaddr % size] = vaddr`. You should be able to see this modification in your userspace program. Make sure to use an appropriate locking mechanism to prevent multiple page faults from causing simultaneous writes.
+When a page fault occurs in the target process (first argument of `shadowpt_open`), and the shared memory region is currently mapped, you should record the faulting virtual address in the shared memory ring buffer. Treat the shared memory as an array of unsigned long entries with total byte length size. Compute the slot index as
+
+```c
+index = (vaddr % size) / sizeof(unsigned long);
+```
+
+and then store the address with
+
+```c
+shared_memory[index] = vaddr;
+```
+
+You should be able to see this modification in your userspace program. Make sure to use an appropriate locking mechanism to prevent multiple page faults from causing simultaneous writes. You should overwrite any entries for a given index if one is already present.
 
 To test this mechanism, spawn two programs: one which periodically `mmap`s a new memory region and writes to it, and another which tracks the first program's page faults and periodically prints them. You should also see an output if the target program reads an invalid address and segfaults.
 
