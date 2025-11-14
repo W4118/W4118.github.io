@@ -299,6 +299,7 @@ Note that iterating through a directory using `dir_emit()` will list each direct
 
 [proc]: https://elixir.bootlin.com/linux/v6.14/source/fs/proc/generic.c
 
+Now with `ls` displaying all your directory contents, implement the `lookup` member so that you stop getting the `ENOENT: No such file or directory` errors.
 
 Hints:
 * Make sure you implement `iterate_shared`, not `iterate`, as the latter is an older interface.
