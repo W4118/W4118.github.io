@@ -245,8 +245,12 @@ Now you can add support for listing the root directory. You should be able to ru
 
 ```console
 # ls /mnt/ez
+ls: cannot access '/mnt/ez/hello.txt': No such file or directory # ok for now
+ls: cannot access '/mnt/ez/subdir': No such file or directory    # ok for now
 hello.txt  subdir
 # ls -a /mnt/ez
+ls: cannot access '/mnt/ez/hello.txt': No such file or directory # ok for now
+ls: cannot access '/mnt/ez/subdir': No such file or directory    # ok for now
 .  ..  hello.txt  subdir
 # ls /mnt/ez/subdir
 ls: cannot access '/mnt/ez/subdir': No such file or directory
@@ -299,8 +303,6 @@ Note that iterating through a directory using `dir_emit()` will list each direct
 
 [proc]: https://elixir.bootlin.com/linux/v6.14/source/fs/proc/generic.c
 
-Now with `ls` displaying all your directory contents, implement the `lookup` member so that you stop getting the `ENOENT: No such file or directory` errors.
-
 Hints:
 * Make sure you implement `iterate_shared`, not `iterate`, as the latter is an older interface.
 * Running `ls -l` might print error messages because the `ls` program is unable to `stat` the files. This is the expected behavior for this part.
@@ -311,23 +313,23 @@ Add support for looking up filepaths. You should be able to `cd` into directorie
 
 ```console
 # ls /mnt/ez/subdir
-    names.txt
+big_img.jpeg  big_txt.txt  names.txt
 # cd /mnt/ez/subdir
 # stat names.txt
     File: names.txt
-    Size: 0           Blocks: 0      IO Block: 4096   regular empty file
+    Size: 38           Blocks: 8      IO Block: 4096   regular empty file
 Device: 7,12	Inode: 4           Links: 1
-Access: (0000/----------)  Uid: (0 /    root)   Gid: (0 /    root)
-Access: 2017-03-30 02:42:27.629345430 -0400
-Modify: 2017-03-30 02:42:27.629345430 -0400
-Change: 2017-03-30 02:42:27.629345430 -0400
+Access: (0666/-rw-rw-rw-)  Uid: (0 /    root)   Gid: (0 /    root)
+Access: 2025-11-11 11:12:27.629345430 -0500
+Modify: 2025-11-11 11:12:27.629345430 -0500
+Change: 2025-11-11 11:12:27.629345430 -0500
     Birth: -
 # stat does_not_exist.txt
 stat: cannot stat 'does_not_exist.txt': No such file or directory
 # ls -l ..
-total 0
----------- 1 root root 0 Apr  3 23:31 hello.txt
-d--------- 1 root root 0 Dec 31  1969 subdir
+total 8
+-rw-rw-rw- 1 root root    0 Nov 11 11:12 hello.txt
+drwxrwxrwx 2 root root 4096 Nov 11 11:12 subdir
 ```
 
 VFS does most of the heavy lifting when looking up a filepath. To avoid repeated work when looking up similar paths, the kernel maintains a cache called the dentry cache. Learn how the dentry cache works by reading the materials given earlier. A given path is split up into parts and each part is looked up in the dentry cache. If a part isn't in the dentry cache, the VFS will call the file system-specific `lookup` function of `inode_operations` to ask the file system to add it. For example, given a filepath such as `/a/b/c/d/e/f.txt`, once the kernel knows the inode of c, it will ask for the inode associated with the name d in the directory c. If there is no matching dentry in the cache, the lookup function will be called to retrieve the inode for d from the filesystem. Before you add things to the dentry cache, you are responsible for determining whether the given parent directory contains an entry with the given name.
@@ -335,7 +337,7 @@ VFS does most of the heavy lifting when looking up a filepath. To avoid repeated
 Make sure your code returns correct metadata for all files and directories. These include size, link count, timestamps, permissions, owner, and group.
 
 - Test by using `ls -l` and `stat`.
-- You should also pass the correct type to `dir_emit()` in `ezfs_iterate()`. Check out this [StackOverflow post][readdir] for why it matters. **Hint:** you should use `S_DT()`.
+- You should also pass the correct type to `dir_emit()` in your `iterate_shared` member. Check out this [StackOverflow post][readdir] for why it matters. **Hint:** you should use `S_DT()`.
 
 [readdir]: https://stackoverflow.com/questions/47078417/readdir-returning-dirent-with-d-type-dt-unknown-for-directories-and
 
