@@ -290,9 +290,7 @@ openat(AT_FDCWD, "/mnt/ez", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = -1 ENOT
 ```
 
 openat is called to create a file descriptor for `"/mnt/ez"`. However, it fails, retrning `ENOTDIR` as it was given an `O_DIRECTORY` flag but could not determine that `"/mnt/ez"` was a directory. 
-TODO, one of the following (or something else):
-- For right now, we can fix this by adding a no-op `lookup` member to `struct inode_operations`. We will come back to this member function, but for right now this will do.
-- Traverse the [openat systemcall][openat-syscall] to find which missing member definition in your ezfs is causing `ENOTDIR` to be returned. For now, adding a no-op member for that definition will do.
+Traverse the [openat systemcall][openat-syscall] to find which missing member definition in your ezfs is causing `ENOTDIR` to be returned. For now, adding a no-op member for that definition will do.
 
 [openat-syscall]: https://elixir.bootlin.com/linux/v6.14/source/fs/open.c#L1454
 
