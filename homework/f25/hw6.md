@@ -373,6 +373,8 @@ At this point, you should stress test your EZFS implementation. The rest of this
 
 ## Part 8: Writing to existing files
 
+### 8.1: Writing in memory
+
 So far, we've only been reading what's already on the filesystem. Implement functions for modifying the filesystem contents. Again, you should implement `write_iter` instead of `write`. In this part, you should also handle writes that shrink files (i.e. the `truncate` syscall should be supported).
 
 Read `generic_file_write_iter`, try to understand how it helps us to write iteratively, and find out how it interacts with `address_space_operations`. Do we need to worry about changing the length of the file ourselves? How about time accounting and `inode->i_blocks`? It seems that only `write_begin` and `write_end` are called in `generic_file_write_iter`. When is `writepages` called? What's the benefit of doing so? Referring to BFS's [`file.c`][file.c], implement `ezfs_writepages` and `ezfs_write_begin`. We recommend you first make sure your write functionality works for a file that requires no more than one data block for its contents. Test for writing the contents of files:
@@ -444,17 +446,23 @@ $ # hello.txt's data_block_range change from [3-3] to [16-17]
 
 You should also be able to edit files with the nano editor, although it will complain about `fsync()` not being implemented. Fix this problem.
 
-Ensure that changes to the VFS inode are written back to disk. You should do this by implementing `ezfs_write_inode()`. Of course, VFS needs to be informed that the VFS inode is out of sync with the EZFS inode. Test this by unmounting and remounting. Writing to the buffer head only changes the contents in memory. It does not cause those changes to be written back to disk. Be sure to take the appropriate measures so that your modifications are written to disk.
-
 If there is not enough space in your file system to write what you need to write, you should return an appropriate error, specifically [`ENOSPC`][ENOSPC]. Keep in mind that there may be multiple reasons why there is not enough space.
 
 [ENOSPC]: https://elixir.bootlin.com/linux/v6.14/source/include/uapi/asm-generic/errno-base.h#L32
 
-Until you introduced writing files, you were not really modifying your file system. Now that the file system is being modified, you should take care to make sure that concurrent file operations are being handled properly, if you have not done so already. For example, if two files are being modified at the same time, you want to make sure that you do not accidentally assign the same free data block to both files, which would obviously be an error. Make sure that your EZFS operations work properly when multiple processes or threads are performing those operations at any given time. Keep in mind that buffer head operations such as sb_bread may block if they need to go to disk. You may find it helpful to review how synchronization is handled in [BFS][BFS].
+Now that your file system is being modified, you should take care to make sure that concurrent file operations are being handled properly. For example, if two files are being modified at the same time, you want to make sure that you do not accidentally assign the same free data block to both files, which would obviously be an error. Make sure that your EZFS operations work properly when multiple processes or threads are performing those operations at any given time. Keep in mind that buffer head operations such as sb_bread may block if they need to go to disk. You may find it helpful to review how synchronization is handled in [BFS][BFS].
 
 [BFS]: https://elixir.bootlin.com/linux/v6.14/source/fs/bfs
 
 Once you can write multi-block files, you should also ensure you can seek to different positions of a file to write data. For example, you should be able to write to the first block of a file, seek 100 blocks ahead and then write to that block of the file. After writing such a file, what should you see when you read the file? Supporting seeking and writing may require additional implementation effort. Note that there is also a `zero_blocks` bit vector in the EZFS superblock in `ezfs.h`; if helpful, you may use that for your implementation.
+
+### 8.2: Writing to disk
+
+While working on the previous subsection, you might have noticed that all your writes don't seem to persist to disk. To verify, try unmounting and remounting a modified disk. You'll get a view of the file system as you had never made any changes. Now you'll take the appropriate measures so that your modifications are written to disk. 
+
+Ensure that changes to the VFS inode are written back to disk. You should do this by implementing the `.write_inode` member of your `struct super_operations`. Of course, VFS needs to be informed that the VFS inode is out of sync with the EZFS inode. Upon modifying an in-memory inode, you should signal to the kernel that it requires peristing to disk. If successful, the kernel will later call your `.write_inode` implementation on that inode.
+
+When writing, you also need to signal to the kernel which blocks need to be persisted. This includes data blocks and your superblock.
 
 ## Part 9: Creating new files
 
