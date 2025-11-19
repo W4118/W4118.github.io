@@ -34,14 +34,14 @@ You should do this first so that this file is present in any code you submit for
 
 For all programming problems, you should submit your source code as well as a single README file documenting your files and code for each part. Please do NOT submit kernel images. The README should explain any way in which your solution differs from what was assigned, and any assumptions you made.
 
-For this assignment, the README should explicitly state which parts of the file system assignment were completed successfully and which parts are not functional. **It should also state explicitly how each group member contributed to the submission and how many hours each member spent on the homework.**
+For this assignment, the README should explicitly state which parts of the filesystem assignment were completed successfully and which parts are not functional. **It should also state explicitly how each group member contributed to the submission and how many hours each member spent on the homework.**
 
 Finally, since this is the last assignment of the semester, EACH group member should indicate at the top of the README five important pieces of information:
 
 1. The number of hours spent on this assignment
 2. A rank ordering of the difficulty of the homework assignments
 3. A rank ordering of how much you learned on each homework assignment
-4. The extent to which you agree that this assignment has significantly improved your understanding of file systems (1=strongly disagree, 2=disagree, 3=neutral, 4=agree, 5=strongly agree)
+4. The extent to which you agree that this assignment has significantly improved your understanding of filesystems (1=strongly disagree, 2=disagree, 3=neutral, 4=agree, 5=strongly agree)
 5. Any comments about your educational experience doing this assignment.
 
 The format should be EXACTLY as shown below for each group member:
@@ -54,19 +54,19 @@ The format should be EXACTLY as shown below for each group member:
     comments: any comments here
 ```
 
-This would indicate that student with UNI abc123 spent 15 hrs on this assignment, hmwk1 was the easiest and hmwk3 was the hardest, learned the least on hmwk1 and most on hmwk6, and strongly agree that this assignment significantly improved abc123's understanding of file systems. The README should be placed in the top level directory of the main branch of your team repo. **5% of the grading points for this assignment will be allocated to grading your README.**
+This would indicate that student with UNI abc123 spent 15 hrs on this assignment, hmwk1 was the easiest and hmwk3 was the hardest, learned the least on hmwk1 and most on hmwk6, and strongly agree that this assignment significantly improved abc123's understanding of filesystems. The README should be placed in the top level directory of the main branch of your team repo. **5% of the grading points for this assignment will be allocated to grading your README.**
 
 ### Programming Problems:
 
-In this assignment, you will write your own disk-based file system, EZFS. You may find it helpful to first review the [EZFS paper][ezfspaper], but keep in mind that some of the description in that paper is dated and does not apply to the 6.14 Linux kernel implementation you will do for this assignment. In particular, you should not use buffer heads for this assignment because buffer heads have been deprecated.  Instead, you will take advantage of iomaps, modern 64-bit systems including x86 and arm64, and the use of page-size blocks for EZFS to simplify your implementation.
+In this assignment, you will write your own disk-based filesystem, EZFS. You may find it helpful to first review the [EZFS paper][ezfspaper], but keep in mind that some of the description in that paper is dated and does not apply to the 6.14 Linux kernel implementation you will do for this assignment. In particular, you should not use buffer heads for this assignment because buffer heads have been deprecated.  Instead, you will take advantage of iomaps, modern 64-bit systems including x86 and arm64, and the use of page-size blocks for EZFS to simplify your implementation.  Your filesystem only has to work on 64-bit systems.
 
-You will learn how to use a loop device to turn a regular file into a block storage device, then format that device into an EZFS file system. Then you will use EZFS to access the file system. EZFS will be built as a kernel module that you can load into the **stock Ubuntu 25.04** kernel in your VM. You do not need to use the 4118 kernel you built for previous homework assignments and there is no need to build the entire Linux kernel tree for this assignment.
+You will learn how to use a loop device to turn a regular file into a block storage device, then format that device into an EZFS filesystem. Then you will use EZFS to access the filesystem. EZFS will be built as a kernel module that you can load into the **stock Ubuntu 25.04** kernel in your VM. You do not need to use the 4118 kernel you built for previous homework assignments and there is no need to build the entire Linux kernel tree for this assignment.
 
 [ezfspaper]: https://www.cs.columbia.edu/~nieh/pubs/sigcse2025_ezfs.pdf
 
 ## Part 1: Formatting and mounting a disk
 
-A loop device is a pseudo-device that makes a file accessible as a block device. Files of this kind are often used for CD ISO images. Mounting a file containing a file system via such a loop mount makes the files within that file system accessible. You will do this with EZFS, but to first gain some experience with a loop device, the following gives you a sample session for creating a loop device and building and mounting an ext2 file system on it. This session starts from the home directory of a user o_o. You should read man pages and search the Internet so you can understand what is going on at each step.
+A loop device is a pseudo-device that makes a file accessible as a block device. Files of this kind are often used for CD ISO images. Mounting a file containing a filesystem via such a loop mount makes the files within that filesystem accessible. You will do this with EZFS, but to first gain some experience with a loop device, the following gives you a sample session for creating a loop device and building and mounting an ext2 filesystem on it. This session starts from the home directory of a user o_o. You should read man pages and search the Internet so you can understand what is going on at each step.
 
 ```console
 $ sudo su
@@ -166,9 +166,9 @@ where ARCH is either `x86` or `arm`. Now you can create some new files, edit hel
 
 ## Part 3: Changing the formatting program
 
-The formatting utility creates the new file system's root directory and places `hello.txt` in that directory. You can think of the formatting utility as statically creating the file system on a disk. You will first create directories and files by modifying the formatting utility, as this will help you later to figure out what EZFS must do to perform these file system operations.
+The formatting utility creates the new filesystem's root directory and places `hello.txt` in that directory. You can think of the formatting utility as statically creating the filesystem on a disk. You will first create directories and files by modifying the formatting utility, as this will help you later to figure out what EZFS must do to perform these filesystem operations.
 
-Start by reviewing the EZFS [specification][specification], then read the formatting utility source code `format_disk_as_ezfs.c`. Make sure you understand the on-disk format and what each line contributes toward creating the file system. **A key simplifying concept in EZFS is how file data is stored, specifically directories are limited to one block in size and regular files may use multiple blocks but the blocks used for storing the data for a given file must be contiguous.**
+Start by reviewing the EZFS [specification][specification], then read the formatting utility source code `format_disk_as_ezfs.c`. Make sure you understand the on-disk format and what each line contributes toward creating the filesystem. **A key simplifying concept in EZFS is how file data is stored, specifically directories are limited to one block in size and regular files may use multiple blocks but the blocks used for storing the data for a given file must be contiguous.**
 
 [specification]: https://w4118.github.io/homework/f25/ezfs-spec.pdf
 
@@ -183,10 +183,10 @@ Some Hints:
 ## Part 4: Initializing and mounting the filesystem
 
 ### 4.1: Overview
-Now that you understand how to manually add files to your file system via your formatting utility, the following parts will have you write a file system to allow you to use standard file commands. The rest of this assignment is structured to guide you toward incrementally implementing your file system functionality, which you will do by implementing `ez_ops.h` and `myez.c` in your team repo.
+Now that you understand how to manually add files to your filesystem via your formatting utility, the following parts will have you write a filesystem to allow you to use standard file commands. The rest of this assignment is structured to guide you toward incrementally implementing your filesystem functionality, which you will do by implementing `ez_ops.h` and `myez.c` in your team repo.
 
 The parts are structured as follows:
-* part 4: mount the file system
+* part 4: mount the filesystem
 * part 5,6: list directories
 * part 7: read files
 * part 8: modify existing files 
@@ -195,7 +195,7 @@ The parts are structured as follows:
 * part 11: create and remove directories
 * part 12: compile and run executables
 
-In some cases, you may find that what you implemented for a given part is correct enough to get some piece of functionality working, but may not be completely correct such that some later functionality that depends on it ends up not working. Keep that in mind during your debugging. Also keep in mind that your implemented file system functionality should be compatible with the formatting utility, not the other way around; other than Part 3, you should not change the formatting utility, and certainly should not change it because your file system implementation is not working. Here are some resources that might be useful, though keep in mind that some of the information contained therein may be out of date:
+In some cases, you may find that what you implemented for a given part is correct enough to get some piece of functionality working, but may not be completely correct such that some later functionality that depends on it ends up not working. Keep that in mind during your debugging. Also keep in mind that your implemented filesystem functionality should be compatible with the formatting utility, not the other way around; other than Part 3, you should not change the formatting utility, and certainly should not change it because your filesystem implementation is not working. Here are some resources that might be useful, though keep in mind that some of the information contained therein may be out of date:
 
 - LKD chapter 13
 - LKD chapter 14: pages 289 - 294
@@ -212,21 +212,24 @@ In some cases, you may find that what you implemented for a given part is correc
 [documentation]: https://elixir.bootlin.com/linux/v6.14/source/Documentation/filesystems/vfs.rst
 [vfs_tutorial]: https://lwn.net/Articles/57369/
 
-Note that the VFS has evolved over the years and some functions exist primarily for backwards compatibility with older file system implementations. **In your implementation, you should make sure to use the newer VFS interface functions discussed in class whenever possible.** This includes using filesystem contexts and iomaps, not older deprecated interfaces like buffer heads.  As always, the best source of correct information is the source code, especially other file system implementations, some of which were described in class, including [ramfs][ramfs]. Other file system implementations are also good references to see what functions you have to implement and which ones you do not have to implement, or can implement by leveraging functions already provided by the VFS.
+Note that the VFS has evolved over the years and some functions exist primarily for backwards compatibility with older filesystem implementations. **In your implementation, you should make sure to use the newer VFS interface functions discussed in class whenever possible.** This includes using filesystem contexts and iomaps, not older deprecated interfaces like buffer heads.  As always, the best source of correct information is the source code, especially other filesystem implementations, some of which were described in class, including [ramfs][ramfs] for a basic filesystem implementation. Other filesystem implementations are also good references to see what functions you have to implement and which ones you do not have to implement, or can implement by leveraging functions already provided by the VFS.  In particular, [bfs][bfs] is useful to see an older filesystem that uses contiguous allocation, [minix][minix] is useful to see a more complete but not too complex older filesystem, and [zonefs][zonefs] is useful to see a more complex filesystem that uses newer VFS interfaces including iomaps.  Note that some of these filesystems may use older VFS interfaces that you should not use.
 
 [ramfs]: https://elixir.bootlin.com/linux/v6.14/source/fs/ramfs
+[bfs]: https://elixir.bootlin.com/linux/v6.14/source/fs/bfs
+[zonefs]: https://elixir.bootlin.com/linux/v6.14/source/fs/zonefs
+[minix]: https://elixir.bootlin.com/linux/v6.14/source/fs/minix
 
 ### 4.2: Initializing and mounting 
 
-This part of the assignment focuses on writing the code that registers the file system and enables mounting disks. 
+This part of the assignment focuses on writing the code that registers the filesystem and enables mounting disks. 
 
-Create the basic functionality for your file system to work as a kernel module so that it can be loaded and unloaded from the kernel. After your module is installed, it should be visible (but not usable yet) as a file system on your VM. Look at `man 5 filesystems` for info about where file systems are listed. This should be a good time for you to consider whether your device should be `nodev` or `bdev`.
+Create the basic functionality for your filesystem to work as a kernel module so that it can be loaded and unloaded from the kernel. After your module is installed, it should be visible (but not usable yet) as a filesystem on your VM. Look at `man 5 filesystems` for info about where filesystems are listed. This should be a good time for you to consider whether your device should be `nodev` or `bdev`.
 
-Having registered your `myezfs` file system (nice job!), you'll now need to implement minimal functionality for being able to correctly mount and unmount the disk you just created. We won't be implementing any FS operations yet, but we have to initialize some pointers required by the kernel so that mounting and unmounting doesn't crash it. Besides looking at other file systems as inspirations, we recommend tracing the system calls for [mount][mount-syscall] and [unmount][unmount-syscall] for what is initialized and which fields are used. Specifically, pay attention to the role of fs_context-related operation(s).
+Having registered your `myezfs` filesystem (nice job!), you'll now need to implement minimal functionality for being able to correctly mount and unmount the disk you just created. We won't be implementing any FS operations yet, but we have to initialize some pointers required by the kernel so that mounting and unmounting doesn't crash it. Besides looking at other filesystems as inspirations, we recommend tracing the system calls for [mount][mount-syscall] and [unmount][unmount-syscall] for what is initialized and which fields are used. Specifically, pay attention to the role of fs_context-related operation(s).
 
 On mounting, you'll need to fill the in-memory kernel superblock data structure. This requires reading and having general access to the on-disk superblock. You'll do this by reading the EZFS superblock and inodes and assigning them to an instance of `struct struct ezfs_sb_pages` (defined in `ezfs.h`) that you'll create. Store this struct in the `s_fs_info` member of the VFS superblock. This way, we can always find the EZFS superblock and inodes by following the trail of pointers from the VFS superblock. This will become very useful later on. [The diagram][fill_super] in the Page Cache + iomaps Overview shows the relationship between these structs after the the superblock is read from disk and its in-memory representation is initialized.
 
-The name attribute of your `struct file_system_type` MUST BE **myezfs**. _Failure to provide the correct naming of your file system will result in an automatic zero on your grade_.
+The name attribute of your `struct file_system_type` MUST BE **myezfs**. _Failure to provide the correct naming of your filesystem will result in an automatic zero on your grade_.
 
 Some Hints:
 
@@ -299,7 +302,7 @@ For right now, we can fix this by adding a no-op `lookup` member to `struct inod
 With our newly working openat returning a file descriptor, we can lookup the entries in our root directory.
 When `getdents64` is called, the VFS framework will call the `iterate_shared` member of the `struct file_operations`. Inside your iterate_shared implementation, use `dir_emit()` to provide VFS with the contents of the requested directory. VFS will continue to call `iterate_shared` until your implementation returns without calling `dir_emit()`. Each call to `getdents64()` will result in one call to `iterate_dir()`, which in turn will call your `iterate_shared` implementation. Consequently, your `iterate_shared` implementation should call `dir_emit()` until the given buffer is full. For now, you can pass in `DT_UNKNOWN` as the type argument for `dir_emit()`. We will revisit this in the next part. You can use the `ctx->pos` variable as a cursor to the directory entry that you are about to emit. 
 
-Note that iterating through a directory using `dir_emit()` will list each directory entry contained in the directory, but what should be done to cause the `.` and `..` to appear in the listing? Some file systems accomplish this by actually storing separate entries for `.` and `..` so that they will appear just like any other entry, but other file systems do not, such as the proc file system. Look at how the proc file system achieves this [behavior][proc], and use a similar approach for your EZFS.
+Note that iterating through a directory using `dir_emit()` will list each directory entry contained in the directory, but what should be done to cause the `.` and `..` to appear in the listing? Some filesystems accomplish this by actually storing separate entries for `.` and `..` so that they will appear just like any other entry, but other filesystems do not, such as the proc filesystem. Look at how the proc filesystem achieves this [behavior][proc], and use a similar approach for your EZFS.
 
 [proc]: https://elixir.bootlin.com/linux/v6.14/source/fs/proc/generic.c
 
@@ -332,7 +335,7 @@ total 8
 drwxrwxrwx 2 root root 4096 Nov 11 11:12 subdir
 ```
 
-VFS does most of the heavy lifting when looking up a filepath. To avoid repeated work when looking up similar paths, the kernel maintains a cache called the dentry cache. Learn how the dentry cache works by reading the materials given earlier. A given path is split up into parts and each part is looked up in the dentry cache. If a part isn't in the dentry cache, the VFS will call the file system-specific `lookup` function of `inode_operations` to ask the file system to add it. For example, given a filepath such as `/a/b/c/d/e/f.txt`, once the kernel knows the inode of c, it will ask for the inode associated with the name d in the directory c. If there is no matching dentry in the cache, the lookup function will be called to retrieve the inode for d from the filesystem. Before you add things to the dentry cache, you are responsible for determining whether the given parent directory contains an entry with the given name.
+VFS does most of the heavy lifting when looking up a filepath. To avoid repeated work when looking up similar paths, the kernel maintains a cache called the dentry cache. Learn how the dentry cache works by reading the materials given earlier. A given path is split up into parts and each part is looked up in the dentry cache. If a part isn't in the dentry cache, the VFS will call the filesystem-specific `lookup` function of `inode_operations` to ask the filesystem to add it. For example, given a filepath such as `/a/b/c/d/e/f.txt`, once the kernel knows the inode of c, it will ask for the inode associated with the name d in the directory c. If there is no matching dentry in the cache, the lookup function will be called to retrieve the inode for d from the filesystem. Before you add things to the dentry cache, you are responsible for determining whether the given parent directory contains an entry with the given name.
 
 Make sure your code returns correct metadata for all files and directories. These include size, link count, timestamps, permissions, owner, and group.
 
@@ -342,7 +345,7 @@ Make sure your code returns correct metadata for all files and directories. Thes
 [readdir]: https://stackoverflow.com/questions/47078417/readdir-returning-dirent-with-d-type-dt-unknown-for-directories-and
 
 ## Part 7: Reading the contents of regular files
-Add support for reading the contents of files. There are a number of ways to do this, but you should take advantage of generic functions that are already available as part of the VFS to implement `read_iter`, not `read`. For example, `generic_file_read_iter` handles complex logic to read ahead so that file blocks can be cached in memory by the time they are actually needed to avoid blocking on slow I/O devices. However, generic file system functions are unaware of file system-specific functionality for deciding what data blocks are actually associated with each file, so the job of the file system is to provide that information through appropriate functions that will be called by the generic functions. For this assignment, you will be using iomaps for file I/O operations, meaning you will supply the association between data blocks and files through iomaps. 
+Add support for reading the contents of files. There are a number of ways to do this, but you should take advantage of generic functions that are already available as part of the VFS to implement `read_iter`, not `read`. For example, `generic_file_read_iter` handles complex logic to read ahead so that file blocks can be cached in memory by the time they are actually needed to avoid blocking on slow I/O devices. However, generic filesystem functions are unaware of filesystem-specific functionality for deciding what data blocks are actually associated with each file, so the job of the filesystem is to provide that information through appropriate functions that will be called by the generic functions. For this assignment, you will be using iomaps for file I/O operations, meaning you will supply the association between data blocks and files through iomaps. 
 
 Some Hints 
 - You should read `generic_file_read_iter` to understand how it interacts with `address_space_operations` to see what functions need to be implemented. What is `read_folio` and how is it used? How does zonefs use iomaps to implement read functionality?
@@ -383,7 +386,7 @@ At this point, you should stress test your EZFS implementation. The rest of this
 
 ### 8.1: Writing in memory
 
-So far, we've only been reading what's already on the filesystem. Implement functions for modifying the filesystem contents. Again, you should implement `write_iter` instead of `write`. In order to implement `write_iter`, read through the code for `iomap_file_buffered_write` and examine how it is used by zonefs, xfs, and other file systems. Try to understand how it helps us to write iteratively, and find out how it interacts with `iomap_ops`. As you consider the different cases of writing to a file in the context of EZFS, add additional functionality to `iomap_begin` with that in mind. Fundamentally, `iomap_begin` identifies the data blocks that correspond to the file region being written to. Make sure to also update `iomap_end` to support the write functionality.
+So far, we've only been reading what's already on the filesystem. Implement functions for modifying the filesystem contents. Again, you should implement `write_iter` instead of `write`. In order to implement `write_iter`, read through the code for `iomap_file_buffered_write` and examine how it is used by zonefs, xfs, and other filesystems. Try to understand how it helps us to write iteratively, and find out how it interacts with `iomap_ops`. As you consider the different cases of writing to a file in the context of EZFS, add additional functionality to `iomap_begin` with that in mind. Fundamentally, `iomap_begin` identifies the data blocks that correspond to the file region being written to. Make sure to also update `iomap_end` to support the write functionality.
 
 In this part, you should also handle writes that shrink files (i.e. the `truncate` syscall should be supported). 
 
@@ -454,11 +457,11 @@ $ # hello.txt's data_block_range change from [3-3] to [16-17]
 
 You should also be able to edit files with the nano editor, although it will complain about `fsync()` not being implemented. Fix this problem.
 
-If there is not enough space in your file system to write what you need to write, you should return an appropriate error, specifically [`ENOSPC`][ENOSPC]. Keep in mind that there may be multiple reasons why there is not enough space.
+If there is not enough space in your filesystem to write what you need to write, you should return an appropriate error, specifically [`ENOSPC`][ENOSPC]. Keep in mind that there may be multiple reasons why there is not enough space.
 
 [ENOSPC]: https://elixir.bootlin.com/linux/v6.14/source/include/uapi/asm-generic/errno-base.h#L32
 
-Now that your file system is being modified, you should take care to make sure that concurrent file operations are being handled properly. For example, if two files are being modified at the same time, you want to make sure that you do not accidentally assign the same free data block to both files, which would obviously be an error. Make sure that your EZFS operations work properly when multiple processes or threads are performing those operations at any given time. Keep in mind that page cache operations such as read_mapping_page may block if they need to go to disk. While we are not using buffer heads for this assignment, you may find it helpful to review how synchronization is handled in [BFS][BFS].
+Now that your filesystem is being modified, you should take care to make sure that concurrent file operations are being handled properly. For example, if two files are being modified at the same time, you want to make sure that you do not accidentally assign the same free data block to both files, which would obviously be an error. Make sure that your EZFS operations work properly when multiple processes or threads are performing those operations at any given time. Keep in mind that page cache operations such as read_mapping_page may block if they need to go to disk. While we are not using buffer heads for this assignment, you may find it helpful to review how synchronization is handled in [BFS][BFS].
 
 [BFS]: https://elixir.bootlin.com/linux/v6.14/source/fs/bfs
 
@@ -466,7 +469,7 @@ Once you can write multi-block files, you should also ensure you can seek to dif
 
 ### 8.2: Writing to disk
 
-While working on the previous subsection, you might have noticed that all your writes don't seem to persist to disk. To verify, try unmounting and remounting a modified disk. You'll get a view of the file system as you had never made any changes. Now you'll take the appropriate measures so that your modifications are written to disk. 
+While working on the previous subsection, you might have noticed that all your writes don't seem to persist to disk. To verify, try unmounting and remounting a modified disk. You'll get a view of the filesystem as you had never made any changes. Now you'll take the appropriate measures so that your modifications are written to disk. 
 
 Ensure that changes to the VFS inode are written back to disk. You should do this by implementing the `.write_inode` member of your `struct super_operations`. Of course, VFS needs to be informed that the VFS inode is out of sync with the EZFS inode. Upon modifying an in-memory inode, you should signal to the kernel that it requires peristing to disk. If successful, the kernel will later call your `.write_inode` implementation on that inode.
 
@@ -602,7 +605,7 @@ $ ./a.out
 Hello, World!
 ```
 
-At this point, you should make sure that whatever robustness tests you did earlier continue to pass with your completed file system, and your tests should include having multiple processes or threads perform various file system operations concurrently. In addition, you should try running various programs manipulating the files in your file system. You should also make sure you test by unmounting and remounting to make sure all your programs manipulating files work correctly with the file data actually written to disk and not just file data in the page cache. In your README, note which applications you have used, which ones worked, and which ones do not. What are some file operations supported on your default Linux file system that are not supported by EZFS? Which of these affect the functionality of the programs you ran?
+At this point, you should make sure that whatever robustness tests you did earlier continue to pass with your completed filesystem, and your tests should include having multiple processes or threads perform various filesystem operations concurrently. In addition, you should try running various programs manipulating the files in your filesystem. You should also make sure you test by unmounting and remounting to make sure all your programs manipulating files work correctly with the file data actually written to disk and not just file data in the page cache. In your README, note which applications you have used, which ones worked, and which ones do not. What are some file operations supported on your default Linux filesystem that are not supported by EZFS? Which of these affect the functionality of the programs you ran?
 
 ## Submission Checklist
 
