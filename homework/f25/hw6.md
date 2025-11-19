@@ -488,9 +488,9 @@ $ stat world.txt
   Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
 Device: 7,12	Inode: 7           Links: 1
 Access: (0664/-rw-rw-r--)  Uid: ( 1000/     o_o)   Gid: ( 1000/     o_o)
-Access: 2022-11-16 16:51:03.287875291 -0500
-Modify: 2022-11-16 16:51:03.287875291 -0500
-Change: 2022-11-16 16:51:03.287875291 -0500
+Access: 2025-11-17 19:51:03.287875291 -0500
+Modify: 2025-11-17 19:51:03.287875291 -0500
+Change: 2025-11-17 19:51:03.287875291 -0500
  Birth: -
 $ cat > subdir/favorite_memes.txt
 doge
@@ -538,43 +538,43 @@ Here's a sample session:
 ```console
 $ ls -alF
 total 16
-drwxrwxrwx 3 o_o  o_o  4096 Nov 16 17:22 ./
-drwxr-xr-x 3 root root 4096 Nov 16 17:23 ../
--rw-rw-rw- 1 o_o  o_o    13 Nov 16 17:22 hello.txt
-drwxrwxrwx 2 o_o  o_o  4096 Nov 16 17:22 subdir/
+drwxrwxrwx 3 o_o  o_o  4096 Nov 17 20:22 ./
+drwxr-xr-x 3 root root 4096 Nov 17 20:23 ../
+-rw-rw-rw- 1 o_o  o_o    13 Nov 17 20:22 hello.txt
+drwxrwxrwx 2 o_o  o_o  4096 Nov 17 20:22 subdir/
 $ mkdir bigtime
 $ ls -alF
 total 20
-drwxrwxrwx 4 o_o  o_o  4096 Nov 16 17:23 ./
-drwxr-xr-x 3 root root 4096 Nov 16 17:23 ../
-drwxr-xr-x 2 o_o  o_o  4096 Nov 16 17:23 bigtime/
--rw-rw-rw- 1 o_o  o_o    13 Nov 16 17:22 hello.txt
-drwxrwxrwx 2 o_o  o_o  4096 Nov 16 17:22 subdir/
+drwxrwxrwx 4 o_o  o_o  4096 Nov 17 20:23 ./
+drwxr-xr-x 3 root root 4096 Nov 17 20:23 ../
+drwxr-xr-x 2 o_o  o_o  4096 Nov 17 20:23 bigtime/
+-rw-rw-rw- 1 o_o  o_o    13 Nov 17 20:22 hello.txt
+drwxrwxrwx 2 o_o  o_o  4096 Nov 17 20:22 subdir/
 $ cd bigtime
 $ touch tommie
 $ ls -alF
 total 8
-drwxr-xr-x 2 o_o o_o 4096 Nov 16 17:24 ./
-drwxrwxrwx 4 o_o o_o 4096 Nov 16 17:23 ../
--rw-r--r-- 1 o_o o_o    0 Nov 16 17:24 tommie
+drwxr-xr-x 2 o_o o_o 4096 Nov 17 20:24 ./
+drwxrwxrwx 4 o_o o_o 4096 Nov 17 20:23 ../
+-rw-r--r-- 1 o_o o_o    0 Nov 17 20:24 tommie
 $ cd ..
 $ rmdir bigtime
 rmdir: failed to remove 'bigtime': Directory not empty
 $ ls -alF
 total 20
-drwxrwxrwx 4 o_o  o_o  4096 Nov 16 17:23 ./
-drwxr-xr-x 3 root root 4096 Nov 16 17:23 ../
-drwxr-xr-x 2 o_o  o_o  4096 Nov 16 17:24 bigtime/
--rw-rw-rw- 1 o_o  o_o    13 Nov 16 17:22 hello.txt
-drwxrwxrwx 2 o_o  o_o  4096 Nov 16 17:22 subdir/
+drwxrwxrwx 4 o_o  o_o  4096 Nov 17 20:23 ./
+drwxr-xr-x 3 root root 4096 Nov 17 20:23 ../
+drwxr-xr-x 2 o_o  o_o  4096 Nov 17 20:24 bigtime/
+-rw-rw-rw- 1 o_o  o_o    13 Nov 17 20:22 hello.txt
+drwxrwxrwx 2 o_o  o_o  4096 Nov 17 20:22 subdir/
 $ rm bigtime/tommie
 $ rmdir bigtime
 $ ls -alF
 total 16
-drwxrwxrwx 3 o_o  o_o  4096 Nov 16 17:25 ./
-drwxr-xr-x 3 root root 4096 Nov 16 17:23 ../
--rw-rw-rw- 1 o_o  o_o    13 Nov 16 17:22 hello.txt
-drwxrwxrwx 2 o_o  o_o  4096 Nov 16 17:22 subdir/
+drwxrwxrwx 3 o_o  o_o  4096 Nov 17 20:25 ./
+drwxr-xr-x 3 root root 4096 Nov 17 20:23 ../
+-rw-rw-rw- 1 o_o  o_o    13 Nov 17 20:22 hello.txt
+drwxrwxrwx 2 o_o  o_o  4096 Nov 17 20:22 subdir/
 ```
 
 ## Part 12: Compile and run executable files
@@ -608,7 +608,7 @@ At this point, you should make sure that whatever robustness tests you did earli
 
 Include the following in your main branch. Only include source code (ie \*.c,\*.h) and text files, do **not** include compiled objects.
 
-- `.armpls` file for teams with M1/M2 CPUs
+- `.armpls` file for teams developing on arm CPUs
 - `README` file with additional course evaluation information
 - `references.txt` file
 - Implementation of `format_disk_as_ezfs.c`
