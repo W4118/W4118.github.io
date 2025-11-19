@@ -200,13 +200,13 @@ In some cases, you may find that what you implemented for a given part is correc
 - LKD chapter 13
 - LKD chapter 14: pages 289 - 294
 - LKD chapter 16: pages 326 - 331
-- [Page cache overview slides][slides1]: "Block Devices" - "Block Devices (continued)"
+- [Block device overview slides][slides1]
 - [Page cache + iomap overview slides][slides2]
 - [Linux Kernel Internals chapter 3 (Virtual Filesystem)][lki]
 - [Documentation/filesystems/vfs.rst][documentation]
 - [Linux VFS tutorial at lwn.net][vfs_tutorial]
 
-[slides1]: https://www.cs.columbia.edu/~nieh/teaching/w4118_f23/homeworks/hmwk6/page-cache-overview.pdf
+[slides1]: https://w4118.github.io/homework/f25/f25-page-cache-overview.pdf
 [slides2]: https://docs.google.com/presentation/d/1_CKUdVg1mhUtbtH3vOLneLH27kzq_auk/edit?usp=sharing&ouid=109402832591562892559&rtpof=true&sd=true 
 [lki]: https://tldp.org/LDP/lki/lki-3.html
 [documentation]: https://elixir.bootlin.com/linux/v6.14/source/Documentation/filesystems/vfs.rst
