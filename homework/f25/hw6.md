@@ -212,9 +212,7 @@ In some cases, you may find that what you implemented for a given part is correc
 [documentation]: https://elixir.bootlin.com/linux/v6.14/source/Documentation/filesystems/vfs.rst
 [vfs_tutorial]: https://lwn.net/Articles/57369/
 
-In particular, you should not use buffer heads for this assignment because buffer heads are considered deprecated. 
-
-Note that the VFS has evolved over the years and some functions exist primarily for backwards compatibility with older file system implementations. **In your implementation, you should make sure to use the newer VFS interface functions discussed in class whenever possible.** As always, the best source of correct information is the source code, especially other file system implementations, some of which were described in class, including [ramfs][ramfs]. Other file system implementations are also good references to see what functions you have to implement and which ones you do not have to implement, or can implement by leveraging functions already provided by the VFS.
+Note that the VFS has evolved over the years and some functions exist primarily for backwards compatibility with older file system implementations. **In your implementation, you should make sure to use the newer VFS interface functions discussed in class whenever possible.** This includes using filesystem contexts and iomaps, not older deprecated interfaces like buffer heads.  As always, the best source of correct information is the source code, especially other file system implementations, some of which were described in class, including [ramfs][ramfs]. Other file system implementations are also good references to see what functions you have to implement and which ones you do not have to implement, or can implement by leveraging functions already provided by the VFS.
 
 [ramfs]: https://elixir.bootlin.com/linux/v6.14/source/fs/ramfs
 
