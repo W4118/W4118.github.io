@@ -170,7 +170,7 @@ The formatting utility creates the new filesystem's root directory and places `h
 
 Start by reviewing the EZFS [specification][specification], then read the formatting utility source code `format_disk_as_ezfs.c`. Make sure you understand the on-disk format and what each line contributes toward creating the filesystem. **A key simplifying concept in EZFS is how file data is stored, specifically directories are limited to one block in size and regular files may use multiple blocks but the blocks used for storing the data for a given file must be contiguous.**
 
-[specification]: https://w4118.github.io/homework/f25/ezfs-spec.pdf
+[specification]: https://w4118.github.io/homework/f25/f25-ezfs-spec.pdf
 
 Now extend the formatting utility program to create a subdirectory called `subdir`. The directory should contain `names.txt` that lists the names of your team members, `big_img.jpeg`, and `big_txt.txt`. The latter two files are in your repo subdirectory `big_files`. `names.txt` should be stored in disk block number 5, `big_img.jpeg` in disk block numbers 6-13, and `big_txt.txt` in disk block numbers 14-15. Be sure to set the directories' link counts correctly.
 
