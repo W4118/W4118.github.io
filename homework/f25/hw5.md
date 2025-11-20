@@ -622,5 +622,5 @@ Include the following in your main branch. Only include source code (ie \*.c,\*.
 *   README file
 *   references.txt file
 *   Implementation of system calls and additional functions added to linux/kernel/shadowpt.c
-*   Implementation of your inspector and target programs in user/part5
+*   Implementation of your inspector and target programs in user/part4
 *   Answers to written questions in user/part5.txt
