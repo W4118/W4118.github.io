@@ -320,7 +320,7 @@ big_img.jpeg  big_txt.txt  names.txt
 # cd /mnt/ez/subdir
 # stat names.txt
     File: names.txt
-    Size: 38           Blocks: 8      IO Block: 4096   regular empty file
+    Size: 38           Blocks: 8      IO Block: 4096   regular file
 Device: 7,12	Inode: 4           Links: 1
 Access: (0666/-rw-rw-rw-)  Uid: (0 /    root)   Gid: (0 /    root)
 Access: 2025-11-11 11:12:27.629345430 -0500
