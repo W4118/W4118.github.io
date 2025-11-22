@@ -2,6 +2,8 @@
 
 > <span style="color:red">**DUE: Monday 12/8/2025 at 11:59pm ET**</span>
 
+> Modified: Sat Nov 22, 2:00pm (part 2: reference kernel modules)
+
 ## General Instructions
 
 All homework submissions are to be made via [Git][Git]. You must submit a detailed list of references as part of your homework submission indicating clearly what sources you referenced for each homework problem. You do not need to cite the course textbooks and instructional staff. All other sources must be cited. Please edit and include this [file][file] in the top-level directory of your homework submission in the `main` branch of your team repo. **Be aware that commits pushed after the deadline will not be considered.** Refer to the homework policy section on the [class website][class-web-site] for further details.
@@ -154,15 +156,15 @@ Now format the disk as EZFS. The skeleton code for a formatting utility program 
 # ./format_disk_as_ezfs /dev/loop12 1000
 ```
 
-We have provided you with reference kernel modules that implement EZFS which are designed to work with your stock Ubuntu 25.04 kernel (6.14.0-34-generic). x86 and arm kernel modules are in `ref/ez-x86.ko` and `ref/ez-arm.ko`, respectively. You should familiarize yourself with writing and using Linux kernel modules. You can use the reference kernel module to explore your newly created EZFS by mounting the disk and loading the kernel module:
+We have provided you with reference kernel modules that implement EZFS which are designed to work with your stock Ubuntu 25.04 kernel (6.14.0-35-generic & 6.14.0-36-generic). x86 and arm kernel modules are in `ref/ez_x86_6_14_0_35_generic.ko`, `ref/ez_x86_6_14_0_36_generic.ko` and `ref/ez_arm_6_14_0_35_generic.ko`, `ref/ez_arm_6_14_0_36_generic.ko`, respectively. You should familiarize yourself with writing and using Linux kernel modules. You can use the reference kernel module to explore your newly created EZFS by mounting the disk and loading the kernel module:
 
 ```console
 # mkdir /mnt/ez
-# insmod ez-ARCH.ko
+# insmod ez_ARCH_VERSION.ko
 # mount -t ezfs /dev/loop12 /mnt/ez
 ```
 
-where ARCH is either `x86` or `arm`. Now you can create some new files, edit hello.txt, etc. If your kernel name is slightly different (e.g. `6.14.0-49-generic`), you may get a versioning error when you try to load the kernel module. In that case, you can try forcibly inserting the module with `insmod -f`.
+where ARCH is either `x86` or `arm` and VERSION is either `6_14_0_35_generic` or `6_14_0_36_generic`. Now you can create some new files, edit hello.txt, etc. If your kernel name is slightly different, you may get a versioning error when you try to load the kernel module. In that case, you can try forcibly inserting the module with `insmod -f`.
 
 ## Part 3: Changing the formatting program
 
