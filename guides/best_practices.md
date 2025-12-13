@@ -57,7 +57,7 @@ feel free to switch teams between homeworks.
 Direct emails might not be promptly responded to if, for instance, you ask about
 something that is not normally taken care of by the specific TA you contacted.
 TAs don't all have the same context to everything within the course. Make sure
-to email the mailing list for the fastest response by the most TA best suited
+to email the mailing list for the fastest response by the TA best suited
 to handle your request.
 
 ### Take the Attendance Quiz Diligently
@@ -122,25 +122,26 @@ get a 0._
 
 ### Start Early
 
-Not much to say about this. I assure you the two weeks allocated are never an
+Not much to say about this. We assure you the two weeks allocated are never an
 excess.
 
 ### Teamwork makes the dream work
 
-These assignments cannot be completed alone in 2 weeks. It's simply not possible.
-Fortunately, you have one or two teammates who are (hopefully) just as eager to get it
-done as you are.
+For the case of the team assignments, they cannot be completed alone in 2 weeks. 
+It's simply not possible. Fortunately, you have one or two teammates who are 
+(hopefully) just as eager to get it done as you are.
 
-Typically the first part of the assignment can only be done by one person, but
-we tried to design them so that you can parallelize right
-after that first bit. Give out tasks to each other and keep in frequent contact.
+Typically, the first part of the assignment must be done prior to any other parts.
+And while we've seen some groups successfully pair-program their way through the 
+assignments, we've done our best to design them such you can parallelize right 
+after first part. Give out tasks to each other and keep in frequent contact.
 
 However, by the end of the assignment you shouldn't have any "blind spots" which
 you don't know how they work because someone else worked on it. Much of the
 material in the homeworks is directly relevant to the exams, so you want to have a
 good grasp of how every aspect of your implementation works.
 
-Also, in general we found that working together in-person is much more productive,
+Also, in general we've found that working together in-person is much more productive,
 especially at the start and the end. A big part of the assignments is understanding
 the technical concepts in the Linux Kernel, and subtle differences in assumptions
 about how the kernel works and your teammates' implementation can lead to huge bugs
@@ -161,7 +162,9 @@ often. For instance, you can always make a lot of local commits, many of which
 not necessarily working or even compiling, as long as you make sure that when
 you _do_ push to main, you have something that is sound.
 
-Aditionally, the 5 commit rule is real and is actively enforced, and the "my code was pushed under my teammate's account" excuse doesn't really work unfortunately. Make sure to get those commits in!
+Aditionally, the 5 commit rule is real and is actively enforced, and the
+"my code was pushed under my teammate's account" is not a valid excuse.
+Make sure to get those commits in!
 
 ### Push, don't just commit
 
@@ -185,7 +188,7 @@ takes seconds; rebuilding your environment takes hours.
 
 ### Keep `main` Functional
 
-Most homeworks are a group effort, and as a general recommendtation, try to make
+Most homeworks are a group effort, and as a general recommendation, try to make
 it so that if you push something to `main`, that commit is properly tested _or_
 you make any issue within known to your teammates -- it should at the very least
 _compile_.
