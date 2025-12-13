@@ -90,10 +90,10 @@ When you share your AI chat history, we also much prefer that you submit the
 full log as is, instead of pasting the URLs to the chats, which can go all sorts
 of wrong and takes more time to verify.
 
-Unfortunately, a few students get caught every year for un-cited LLM usage,
+Unfortunately, a few students get caught every semester for un-cited LLM usage,
 which is never fun to deal with and typically gets escalated to
-[CSSI](https://cssi.columbia.edu/content/learn-about-policies)
-and beyond. Even worse, when this happens, the whole team typically gets a 0
+[CSSI](https://cssi.columbia.edu/content/learn-about-policies),
+which never ends well. Even worse, when this happens, the whole team typically gets a 0
 for that assignment, even if they didn't know about the plagiarism. You should
 be encouraging your teammates to properly cite everything.
 
@@ -125,14 +125,14 @@ get a 0._
 Not much to say about this. I assure you the two weeks allocated are never an
 excess.
 
-### Teamwork makes the team work
+### Teamwork makes the dream work
 
 These assignments cannot be completed alone in 2 weeks. It's simply not possible.
-Fortunately, you have two teammates who are (hopefully) just as eager to get it
+Fortunately, you have one or two teammates who are (hopefully) just as eager to get it
 done as you are.
 
 Typically the first part of the assignment can only be done by one person, but
-we tried to design the specification so that you can try and parallelize right
+we tried to design them so that you can parallelize right
 after that first bit. Give out tasks to each other and keep in frequent contact.
 
 However, by the end of the assignment you shouldn't have any "blind spots" which
@@ -145,7 +145,7 @@ especially at the start and the end. A big part of the assignments is understand
 the technical concepts in the Linux Kernel, and subtle differences in assumptions
 about how the kernel works and your teammates' implementation can lead to huge bugs
 down the line. We encourage you to pick one or more office hour slots you can all
-attend, and use that as your weekly homework meeting.
+attend, and use them as your regular OS homework meeting.
 
 ### Make Lots of Small Commits
 
@@ -160,6 +160,8 @@ This is not saying not to write lots of code at once -- rather, just commit more
 often. For instance, you can always make a lot of local commits, many of which
 not necessarily working or even compiling, as long as you make sure that when
 you _do_ push to main, you have something that is sound.
+
+Aditionally, the 5 commit rule is real and is actively enforced, and the "my code was pushed under my teammate's account" excuse doesn't really work unfortunately. Make sure to get those commits in!
 
 ### Push, don't just commit
 
@@ -211,13 +213,13 @@ their homework.
 
 The biggest difference between the good grades and the best grades is the amount
 of testing programs they wrote. Typically the assignment will ask you to write a
-simple testing program to get you started, but you should always write many, many
+simple test program to get you started, but you should always write many, many
 more.
 
 We will not release the homework rubrics until after the deadline, however the
 items are always fairly predictable by looking at the specification. Our tests are
 NOT "_does your kernel still work if we enable this obscure flag you have never
-heard of?_" In fact, with some creativity you can (and should) try and guess what
+heard of?_" In fact, with some creativity you definitely can (and should) try and guess what
 we might test for, and write those tests yourself ahead of time!
 
 ### Maintain an Automated Test Suite
