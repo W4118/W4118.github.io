@@ -127,9 +127,10 @@ excess.
 
 ### Teamwork makes the dream work
 
-For the case of the team assignments, they cannot be completed alone in 2 weeks. 
-It's simply not possible. Fortunately, you have one or two teammates who are 
-(hopefully) just as eager to get it done as you are.
+For the case of the team assignments, you will be much better off if you have good
+teammates to work with.  Trying to complete them alone in two weeks is very hard.  
+You should have one or two teammates who are (hopefully) just as eager to get it 
+done as you are.
 
 Typically, the first part of the assignment must be done prior to any other parts.
 And while we've seen some groups successfully pair-program their way through the 
