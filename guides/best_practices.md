@@ -1,12 +1,11 @@
 # Best Practices for W4118
 
-On behalf of the teaching staff, welcome to OS1! Although this course can
-be tough at times, by the end of the semester you will have an extremely
-in-depth knowledge of the principles underlying every single device around
-you, from your everyday laptop and smartphone to your smart thermostat and
-Google's server farms. This course will teach you some of the most valuable
-skills and knowledge that you will certainly use for the rest of your
-software engineering career.
+On behalf of the teaching staff, welcome to OS1! Although this course can be
+tough at times, by the end of the semester you will have an extremely in-depth
+knowledge of the principles underlying every single device around you, from your
+everyday laptop and smartphone to your smart thermostat and Google's server
+farms. This course will teach you some of the most valuable skills and knowledge
+that you will certainly use for the rest of your software engineering career.
 
 As TAs of the course, we see lots of mistakes all the time, and they are a
 perfectly normal part of the learning process.
@@ -23,20 +22,21 @@ You can use this as a global checklist or list of best practices.
 
 ### Show up to office hours
 
-Us TAs are here to help! Last year, we were exactly where you are now, and
-we chose to be TAs this year because we find the material fascinating, the
+Us TAs are here to help! Last year, we were exactly where you are now, and we
+chose to be TAs this year because we find the material fascinating, the
 homeworks engaging, and we want you to enjoy the course to its full potential.
 If you are facing an issue, we have certainly encountered it before, or helped
 another student who has. And more generally, we found that just working on the
 homework assignments during office hours allows you to ask us small questions
 along the way, and is very effective at preventing you from getting stuck.
 
-You will also overhear other student's questions and TA discussions, which will almost
-certainly contain useful information. We have also found that, even outside of
-office hours, the OH room serves as a great working space for OS assignments, as
-you will often find other OS students working there.
+You will also overhear other student's questions and TA discussions, which will
+almost certainly contain useful information. We have also found that, even
+outside of office hours, the OH room serves as a great working space for OS
+assignments, as you will often find other OS students working there.
 
-Overall, please don't be shy! We are students just like you, and we are here to help :)
+Overall, please don't be shy! We are students just like you, and we are here to
+help :)
 
 ### Look for Teammates in Office Hours You Frequent
 
@@ -47,18 +47,18 @@ If someone else shows up in the same office hours you do, then they
 
 ...probably.
 
-Homework 2 onwards will be done in teams of 3, so you should start
-scouting early for potential teammates. A good team can easily make or break your
-submission, so be sure to be on the lookout. And if you don't feel the chemistry,
-feel free to switch teams between homeworks.
+Homework 2 onwards will be done in teams of 3, so you should start scouting
+early for potential teammates. A good team can easily make or break your
+submission, so be sure to be on the lookout. And if you don't feel the
+chemistry, feel free to switch teams between homeworks.
 
 ### Email the w4118 List For Course Related Requests
 
 Direct emails might not be promptly responded to if, for instance, you ask about
 something that is not normally taken care of by the specific TA you contacted.
 TAs don't all have the same context to everything within the course. Make sure
-to email the mailing list for the fastest response by the TA best suited
-to handle your request.
+to email the mailing list for the fastest response by the TA best suited to
+handle your request.
 
 ### Take the Attendance Quiz Diligently
 
@@ -92,10 +92,10 @@ of wrong and takes more time to verify.
 
 Unfortunately, a few students get caught every semester for un-cited LLM usage,
 which is never fun to deal with and typically gets escalated to
-[CSSI](https://cssi.columbia.edu/content/learn-about-policies),
-which never ends well. Even worse, when this happens, the whole team typically gets a 0
-for that assignment, even if they didn't know about the plagiarism. You should
-be encouraging your teammates to properly cite everything.
+[CSSI](https://cssi.columbia.edu/content/learn-about-policies), which never ends
+well. Even worse, when this happens, the whole team typically gets a 0 for that
+assignment, even if they didn't know about the plagiarism. You should be
+encouraging your teammates to properly cite everything.
 
 ### Edstem
 
@@ -105,8 +105,8 @@ it anonymously (Edstem allows this), so that more people can potentially benefit
 from it. More often than not, the "particular weird thing" that you are facing
 is not unique and others are suffering from it too.
 
-We have found that students often leave comments on each others Edstem posts
-if they have encountered a similar issue before, or to ask useful follow-up
+We have found that students often leave comments on each others Edstem posts if
+they have encountered a similar issue before, or to ask useful follow-up
 questions. Remember, there's no such thing as a stupid question!
 
 ## Development
@@ -127,24 +127,29 @@ excess.
 
 ### Teamwork makes the dream work
 
-For the case of the team assignments, you will be much better off if you have good teammates to work with.  Trying to complete them alone in two weeks is very hard.  You should have one or two teammates who are (hopefully) just as eager to get it done as you are.
+For the case of the team assignments, you will be much better off if you have
+good teammates to work with. Trying to complete them alone in two weeks is very
+hard. You should have one or two teammates who are (hopefully) just as eager to
+get it done as you are.
 
-Typically, the first part of the assignment must be done prior to any other parts.
-And while we've seen some groups successfully pair-program their way through the 
-assignments, we've done our best to design them such you can parallelize right 
-after first part. Give out tasks to each other and keep in frequent contact.
+Typically, the first part of the assignment must be done prior to any other
+parts. And while we've seen some groups successfully pair-program their way
+through the assignments, we've done our best to design them such you can
+parallelize right after first part. Give out tasks to each other and keep in
+frequent contact.
 
 However, by the end of the assignment you shouldn't have any "blind spots" which
 you don't know how they work because someone else worked on it. Much of the
-material in the homeworks is directly relevant to the exams, so you want to have a
-good grasp of how every aspect of your implementation works.
+material in the homeworks is directly relevant to the exams, so you want to have
+a good grasp of how every aspect of your implementation works.
 
-Also, in general we've found that working together in-person is much more productive,
-especially at the start and the end. A big part of the assignments is understanding
-the technical concepts in the Linux Kernel, and subtle differences in assumptions
-about how the kernel works and your teammates' implementation can lead to huge bugs
-down the line. We encourage you to pick one or more office hour slots you can all
-attend, and use them as your regular OS homework meeting.
+Also, in general we've found that working together in-person is much more
+productive, especially at the start and the end. A big part of the assignments
+is understanding the technical concepts in the Linux Kernel, and subtle
+differences in assumptions about how the kernel works and your teammates'
+implementation can lead to huge bugs down the line. We encourage you to pick one
+or more office hour slots you can all attend, and use them as your regular OS
+homework meeting.
 
 ### Make Lots of Small Commits
 
@@ -160,14 +165,14 @@ often. For instance, you can always make a lot of local commits, many of which
 not necessarily working or even compiling, as long as you make sure that when
 you _do_ push to main, you have something that is sound.
 
-Aditionally, the 5 commit rule is real and is actively enforced, and the
-"my code was pushed under my teammate's account" is not a valid excuse.
-Make sure to get those commits in!
+Aditionally, the 5 commit rule is real and is actively enforced, and the "my
+code was pushed under my teammate's account" is not a valid excuse. Make sure to
+get those commits in!
 
 ### Push, don't just commit
 
-Every year, we get a handful of emails saying something along the lines of
-"I committed the code but forgot to push! Could you please let me push these
+Every year, we get a handful of emails saying something along the lines of "I
+committed the code but forgot to push! Could you please let me push these
 commits after the deadline?" And unfortunately we aren't able to do so, because
 it is easy to back-date git commits and change their date before pushing. So
 please don't be that person, and always push right after committing.
@@ -179,10 +184,10 @@ VMware snapshot that doesn't have that commit, therefore losing it forever.
 ### Snapshot early, snapshot often
 
 Since you are modifying and tearing apart the guts of the kernel, you will
-certainly encounter quite a few scenarios where for whatever reason, your
-kernel is simply unable to boot no matter what you try. You **will** panic
-the kernel. You **will** brick your environment. Reverting to a snapshot
-takes seconds; rebuilding your environment takes hours.
+certainly encounter quite a few scenarios where for whatever reason, your kernel
+is simply unable to boot no matter what you try. You **will** panic the kernel.
+You **will** brick your environment. Reverting to a snapshot takes seconds;
+rebuilding your environment takes hours.
 
 ### Keep `main` Functional
 
@@ -218,10 +223,11 @@ simple test program to get you started, but you should always write many, many
 more.
 
 We will not release the homework rubrics until after the deadline, however the
-items are always fairly predictable by looking at the specification. Our tests are
-NOT "_does your kernel still work if we enable this obscure flag you have never
-heard of?_" In fact, with some creativity you definitely can (and should) try and guess what
-we might test for, and write those tests yourself ahead of time!
+items are always fairly predictable by looking at the specification. Our tests
+are NOT "_does your kernel still work if we enable this obscure flag you have
+never heard of?_" In fact, with some creativity you definitely can (and should)
+try and guess what we might test for, and write those tests yourself ahead of
+time!
 
 ### Maintain an Automated Test Suite
 
