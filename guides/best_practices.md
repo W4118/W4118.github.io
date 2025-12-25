@@ -90,8 +90,8 @@ When you share your AI chat history, we also much prefer that you submit the
 full log as is, instead of pasting the URLs to the chats, which can go all sorts
 of wrong and takes more time to verify.
 
-Unfortunately, a few students get caught every semester for un-cited LLM usage,
-which is never fun to deal with and typically gets escalated to
+Unfortunately, a few students get caught every semester for un-cited LLM usage.
+This is never fun to deal with and typically gets escalated to
 [CSSI](https://cssi.columbia.edu/content/learn-about-policies), which never ends
 well. Even worse, when this happens, the whole team typically gets a 0 for that
 assignment, even if they didn't know about the plagiarism. You should be
@@ -134,8 +134,8 @@ get it done as you are.
 
 Typically, the first part of the assignment must be done prior to any other
 parts. And while we've seen some groups successfully pair-program their way
-through the assignments, we've done our best to design them such you can
-parallelize right after first part. Give out tasks to each other and keep in
+through the assignments, we've done our best to design them such that you can
+parallelize right after the first part. Give out tasks to each other and keep in
 frequent contact.
 
 However, by the end of the assignment you shouldn't have any "blind spots" which
@@ -165,7 +165,7 @@ often. For instance, you can always make a lot of local commits, many of which
 not necessarily working or even compiling, as long as you make sure that when
 you _do_ push to main, you have something that is sound.
 
-Aditionally, the 5 commit rule is real and is actively enforced, and the "my
+Aditionally, the 5 commit rule is real and is actively enforced, and "my
 code was pushed under my teammate's account" is not a valid excuse. Make sure to
 get those commits in!
 
@@ -174,8 +174,9 @@ get those commits in!
 Every year, we get a handful of emails saying something along the lines of "I
 committed the code but forgot to push! Could you please let me push these
 commits after the deadline?" And unfortunately we aren't able to do so, because
-it is easy to back-date git commits and change their date before pushing. So
-please don't be that person, and always push right after committing.
+it is easy to back-date git commits, and we can't prove whether you actually wrote
+the code before the deadline. So please don't be that person, and always push
+right after committing.
 
 This also helps in the very unfortunate scenario where you committed, didn't
 push, and corrupted your kernel to the point where you need to restore from a
@@ -211,9 +212,8 @@ homeworks require thorough testing to get right, and regression is always a
 risk. If you have a sudden realization in the final hour before the deadline
 that you made a mistake, slow down, stop, hold the thought.
 
-Almost every semester we have students who make bad last minute pushes that
-don't compile, that mess something up, or otherwise cause more harm than good to
-their homework.
+Almost every homework we have students who make bad last minute pushes that
+don't compile, that mess something up, or otherwise cause more harm than good.
 
 ### Test, test, test!
 
@@ -224,7 +224,7 @@ more.
 
 We will not release the homework rubrics until after the deadline, however the
 items are always fairly predictable by looking at the specification. Our tests
-are NOT "_does your kernel still work if we enable this obscure flag you have
+are NOT "_does your kernel still work if we use this random value you have
 never heard of?_" In fact, with some creativity you definitely can (and should)
 try and guess what we might test for, and write those tests yourself ahead of
 time!
