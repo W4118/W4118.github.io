@@ -30,11 +30,3 @@ or may not work the way they're supposed to** -- use them at your own risk!
 - [Linux kernel debugging](https://columbia-os.github.io/dev-guides/kernel-debugging.html)
 - [GRUB bootloader configuration](https://columbia-os.github.io/dev-guides/bootloader-config.html)
 
-## Homework prompts
-
-- [Homework 1](./homework/f25/hw1.md)
-- [Homework 2](./homework/f25/hw2.md)
-- [Homework 3](./homework/f25/hw3.md)
-- [Homework 4](./homework/f25/hw4.md)
-- [Homework 5](./homework/f25/hw5.md)
-- [Homework 6](./homework/f25/hw6.md)
