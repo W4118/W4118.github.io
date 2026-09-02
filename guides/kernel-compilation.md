@@ -25,13 +25,13 @@ this guide should be run in that directory.
 
 You should verify the version of the kernel. The first 6 lines of Linux’s
 top-level `Makefile` will show you the version. For this class, we will be using
-Linux 6.14.0:
+Linux 7.0.0:
 
 ```
 $ head -n 6 Makefile
 # SPDX-License-Identifier: GPL-2.0
-VERSION = 6
-PATCHLEVEL = 14
+VERSION = 7
+PATCHLEVEL = 0
 SUBLEVEL = 0
 EXTRAVERSION =
 NAME = Baby Opossum Posse
@@ -53,7 +53,7 @@ To create your kernel `.config`, use the following steps:
 2. Create a config file based on the config file of your current kernel. Make
    sure that you're running the stock Ubuntu kernel before you do this step. You
    don't want to copy a bad config! You can verify this by running `uname -r`.
-   You should get something like `6.14.0-29-generic`.
+   You should get something like `7.0.0-29-generic`.
 
    The config file that was used to build your current kernel is located in the
    `/boot/` directory. The following command copies over that file, and updates
@@ -99,8 +99,8 @@ To create your kernel `.config`, use the following steps:
    - `CONFIG_LOCALVERSION`: This setting gives your custom kernel a unique name
      to distinguish it from other kernels present in your system. The local
      version will be appended to your kernel version to form your kernel name.
-     For example, if we build a 6.14.0 kernel with the local version set to
-     `-cs4118`, it will be named `6.14.0-cs4118`. For your pristine kernel
+     For example, if we build a 7.0.0 kernel with the local version set to
+     `-cs4118`, it will be named `7.0.0-cs4118`. For your pristine kernel
      build, set this to `-cs4118`.
 
      In menuconfig, this can be found under `General setup`, in the
@@ -144,7 +144,7 @@ SYSTEM_REVOCATION_KEYS "debian/canonical-revoked-certs.pem" -> ""
 
 If you used `scripts/config`, you can do a diff against the stock config file in
 the `/boot/` directory. For instance, run
-`scripts/diffconfig /boot/config-6.14.0-29-generic .config`. If you do this,
+`scripts/diffconfig /boot/config-7.0.0-29-generic .config`. If you do this,
 you'll probabably see some extra changes besides the three lines listed above.
 That's okay, because `make olddefconfig` also updates some of the other configs.
 Just make sure your desired changes are reflected in the output.
@@ -199,9 +199,9 @@ before doing the `clean` and `install` steps (you still only need to install
 Verify that you have the following 3 files in `/boot/`:
 
 ```
-initrd.img-6.14.0-cs4118
-System.map-6.14.0-cs4118
-vmlinuz-6.14.0-cs4118
+initrd.img-7.0.0-cs4118
+System.map-7.0.0-cs4118
+vmlinuz-7.0.0-cs4118
 ```
 
 > [!NOTE] If you run out of disk space when building, you can resize your VM
@@ -249,8 +249,8 @@ Now verify that you’re running your own custom kernel by running:
 $ uname -r
 ```
 
-Instead of `6.14.0-29-generic`, you should now see your kernel version string,
-`6.14.0-cs4118`!
+Instead of `7.0.0-29-generic`, you should now see your kernel version string,
+`7.0.0-cs4118`!
 
 ## Optimizing your kernel compilation time
 
@@ -261,7 +261,7 @@ instructions:
 
 1. Back up your `.config` to something like `.config.[UNI]-from-lts`. Make sure
    to keep your `CONFIG_LOCALVERSION` the same; that is, your kernel should
-   still be named 6.14.0-cs4118.
+   still be named 7.0.0-cs4118.
 
 2. Run `make localmodconfig` in your kernel source tree. This will take your
    current `.config` and turn off all modules that you are not using. It will

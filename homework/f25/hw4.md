@@ -20,7 +20,7 @@ $ git clone git@github.com:W4118/f25-hmwk4-teamN.git
 
 This repository will be accessible to all members of your team, and all team members are expected to make local commits and push changes or contributions to GitHub equally. You should become familiar with team-based shared repository Git commands such as [git-pull][git-pull], [git-merge][git-merge], [git-fetch][git-fetch]. For more information, see [this guide](../guides/git.md).
 
-There should be at least five commits **per member** in the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://www.kernel.org/doc/html/v6.14/process/coding-style.html). You **must** check your commits with the `run_checkpatch.sh` script provided as part of your team repository. Errors from the script in your submission will cause a deduction of points. (Note that the script only checks the changes up to your latest commit. Changes in the working tree or staging area will not be checked.)
+There should be at least five commits **per member** in the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://www.kernel.org/doc/html/v7.0/process/coding-style.html). You **must** check your commits with the `run_checkpatch.sh` script provided as part of your team repository. Errors from the script in your submission will cause a deduction of points. (Note that the script only checks the changes up to your latest commit. Changes in the working tree or staging area will not be checked.)
 
 For students on Arm computers (e.g. macs with M1/M2/M3 CPU): if you want your submission to be built/tested for Arm, you must create and submit a file called `.armpls` in the top-level directory of your repo; feel free to use the following one-liner:
 
@@ -114,7 +114,7 @@ Part 2: Prepare the Oven
 *   [Medium Article](https://deepdives.medium.com/digging-into-linux-scheduler-47a32ad5a0a8)
 *   [Scheduler deep dive](https://helix979.github.io/jkoo/post/os-scheduler/)
 
-**Note:**  some of the information in the links may be outdated (e.g. the second source claims the scheduling classes have ".next" pointers to the scheduling class of next highest precedence, which is no longer accurate), so while they are helpful as a reference, your best "source of truth" is still the 6.14 kernel.
+**Note:**  some of the information in the links may be outdated (e.g. the second source claims the scheduling classes have ".next" pointers to the scheduling class of next highest precedence, which is no longer accurate), so while they are helpful as a reference, your best "source of truth" is still the 7.0 kernel.
 
 ### Part 2.1: Oven data structures 
 ------
@@ -129,10 +129,10 @@ struct sched_oven_entity;
 
 struct sched_class oven_sched_class;
 ```
-You will need to examine the following files and make specific modifications: [kernel/sched/core.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c), [kernel/sched/sched.h](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/sched.h), [include/linux/sched.h](https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h), and [include/asm-generic/vmlinux.lds.h](https://elixir.bootlin.com/linux/v6.14/source/include/asm-generic/vmlinux.lds.h). While there is a fair amount of code in these files, a key goal of this assignment is for you to understand how to abstract the scheduler code so that you learn in detail the parts of the scheduler that are crucial for this assignment and ignore the parts that are not. 
+You will need to examine the following files and make specific modifications: [kernel/sched/core.c](https://elixir.bootlin.com/linux/v7.0/source/kernel/sched/core.c), [kernel/sched/sched.h](https://elixir.bootlin.com/linux/v7.0/source/kernel/sched/sched.h), [include/linux/sched.h](https://elixir.bootlin.com/linux/v7.0/source/include/linux/sched.h), and [include/asm-generic/vmlinux.lds.h](https://elixir.bootlin.com/linux/v7.0/source/include/asm-generic/vmlinux.lds.h). While there is a fair amount of code in these files, a key goal of this assignment is for you to understand how to abstract the scheduler code so that you learn in detail the parts of the scheduler that are crucial for this assignment and ignore the parts that are not. 
 * In particular, at this point you should have SCHED\_NORMAL take priority over your SCHED\_OVEN policy so that bugs in your scheduling class are less likely to prevent other tasks from running. Once you have your scheduling class working, you can then switch the priority of these policies in the later parts of the homework. 
 
-In order to set up a minimal oven_sched_class, a good place to start is the simple scheduling class for idle tasks, listed in [kernel/sched/idle.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/idle.c). This is the simplest of the scheduling classes. In particular, the functions implemented by this scheduling class are a good indication of the minimum set of functions you need to implement to have an operational scheduling class. You can return placeholder values in your scheduler class functions for now; the following section will revisit these functions. As an alternative, you can also look at the simple scheduling class for for stop tasks, listed in [kernel/sched/stop_task.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/stop_task.c).
+In order to set up a minimal oven_sched_class, a good place to start is the simple scheduling class for idle tasks, listed in [kernel/sched/idle.c](https://elixir.bootlin.com/linux/v7.0/source/kernel/sched/idle.c). This is the simplest of the scheduling classes. In particular, the functions implemented by this scheduling class are a good indication of the minimum set of functions you need to implement to have an operational scheduling class. You can return placeholder values in your scheduler class functions for now; the following section will revisit these functions. As an alternative, you can also look at the simple scheduling class for for stop tasks, listed in [kernel/sched/stop_task.c](https://elixir.bootlin.com/linux/v7.0/source/kernel/sched/stop_task.c).
 
 ### Hints
 * Pay careful attention to how other scheduling classes initialize their class-specific run queues and scheduling entities.
@@ -154,7 +154,7 @@ Ensure that everything compiles and no previous functionality has been affected:
 
 ### Part 2.2: Scheduling 1 task
 ------
-The rest of Part 2 will build toward enabling individual tasks, like `fibonacci`, to set their scheduling class to Oven. You will first implement the default case of Oven, which is round robin, then optimize it in Part 4. It will be helpful to reference the way other scheduling classes implement their core functions: [kernel/sched/rt.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/rt.c) and [kernel/sched/fair.c](https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/fair.c). You may find the former particularly useful because it has its own version of a round-robin scheduler, SCHED_RR, though you will likely find many parts of the code too complex to use directly for your own scheduling class. 
+The rest of Part 2 will build toward enabling individual tasks, like `fibonacci`, to set their scheduling class to Oven. You will first implement the default case of Oven, which is round robin, then optimize it in Part 4. It will be helpful to reference the way other scheduling classes implement their core functions: [kernel/sched/rt.c](https://elixir.bootlin.com/linux/v7.0/source/kernel/sched/rt.c) and [kernel/sched/fair.c](https://elixir.bootlin.com/linux/v7.0/source/kernel/sched/fair.c). You may find the former particularly useful because it has its own version of a round-robin scheduler, SCHED_RR, though you will likely find many parts of the code too complex to use directly for your own scheduling class. 
 
 This section focuses on enabling 1 task to set its scheduling class to Oven. There are two main components to this:
 * Add basic functionality to your oven scheduling class so that it is able to add 1 task to its run queue and pick that task to run. You should keep your run queue simple for this part.
@@ -316,9 +316,9 @@ Part 7: Analysis and Investigation of Kernel Source Code
 
 Write the answers to the following questions in the user/part7.txt text file, following the provided template exactly. Make sure to include any references you use in your references.txt file.
 
-1.  Give the exact URL on elixir.bootlin.com pointing to the file and line number of the function that initializes the idle tasks on CPUs other than the boot CPU for a multi-CPU system. What is the PID of the task that calls this function? Note: make sure you use v6.14.
-2.  Give the exact URL on elixir.bootlin.com pointing to the file and line number at which the TIF\_NEED\_RESCHED flag is set for the currently running task as a result of its time quantum expiring if the task is scheduled using SCHED\_RR. Select the file and line number most related to the SCHED\_RR (i.e. do not select a generic helper function that may be used outside of SCHED\_RR). Note: make sure you use v6.14.
-3.  Give the exact URL on elixir.bootlin.com pointing to the files and line numbers at which a timer interrupt occurring for a process running in user mode, whose time quantum has expired, results in schedule being called. Select the line of the call to schedule. This location is different for ARM64 and x86 - provide the answer for both. Note: make sure you use v6.14.
+1.  Give the exact URL on elixir.bootlin.com pointing to the file and line number of the function that initializes the idle tasks on CPUs other than the boot CPU for a multi-CPU system. What is the PID of the task that calls this function? Note: make sure you use v7.0.
+2.  Give the exact URL on elixir.bootlin.com pointing to the file and line number at which the TIF\_NEED\_RESCHED flag is set for the currently running task as a result of its time quantum expiring if the task is scheduled using SCHED\_RR. Select the file and line number most related to the SCHED\_RR (i.e. do not select a generic helper function that may be used outside of SCHED\_RR). Note: make sure you use v7.0.
+3.  Give the exact URL on elixir.bootlin.com pointing to the files and line numbers at which a timer interrupt occurring for a process running in user mode, whose time quantum has expired, results in schedule being called. Select the line of the call to schedule. This location is different for ARM64 and x86 - provide the answer for both. Note: make sure you use v7.0.
 4.  What is the default time period for a tick? Write your answer in milliseconds. Hint: You may need to look in the kernel configuration files to find this answer.
 
 ## Debugging Tips
@@ -332,7 +332,7 @@ The following are some debugging tips you may find useful as you create your new
 	3.  Under "Device", click on your new Serial Port.
 	4.  Click on "Use output file", and specify the file on your host machine to which your would like to dump the kernel log.
 	5.  Turn on your VM, move to your kernel in the GRUB menu, and press e.
-	6.  Move toward the bottom until you find a line that looks like (linux   /boot/vmlinuz-6.14-cs4118...).
+	6.  Move toward the bottom until you find a line that looks like (linux   /boot/vmlinuz-7.0.0-cs4118...).
 	7.  At the end of this line, replace quiet with console=ttyS0 (try console=ttyS1 if this doesn't work).
 	8.  Hit F10 to boot your kernel. The kernel log should be written to the file on your host machine you specified earlier.
 	9.  If neither ttyS0 nor ttyS1 work, you may need to remove the virtual printer hardware in your VMware VM settings.

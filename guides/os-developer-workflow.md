@@ -364,7 +364,7 @@ cd <path-to-homework-assignment>/kernel && vim
 
 This is the final step: Function GOTOs and efficiently browing code.
 
-[Cscope](http://cscope.sourceforge.net/) is a code browser that works in your terminal and within vim. It is far more powerful than a standard grepper (such as the one at [elixir](http://elixir.free-electrons.com/linux/v3.10/)). For example, Cscope can answer:
+[Cscope](http://cscope.sourceforge.net/) is a code browser that works in your terminal and within vim. It is far more powerful than a standard grepper (such as the one at [elixir](http://elixir.free-electrons.com/linux/v7.0/)). For example, Cscope can answer:
 
 - Where is this variable used?
 - What is the value of this preprocessor symbol?

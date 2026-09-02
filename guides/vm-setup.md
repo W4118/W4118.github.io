@@ -32,7 +32,7 @@ Create a VM
 
 Create a new virtual machine in VMware using the Ubuntu ISO image you just downloaded. For example, on VMware Fusion, this can be done by selecting `New` from the `File` menu. Select the `Install from disc or image` option and choose the relevant ISO file.
 
-For the OS for the VM, choose `Ubuntu 64-bit ...` if available. Depending on your platform, it may not be an option yet. In that case, choose `Other Linux 6.x kernel 64-bit ...`. On some systems, you may need to click on `Go Back` after uploading your ISO file to set the OS.
+For the OS for the VM, choose `Ubuntu 64-bit ...` if available. Depending on your platform, it may not be an option yet. In that case, choose `Other Linux 7.x kernel 64-bit ...`. On some systems, you may need to click on `Go Back` after uploading your ISO file to set the OS.
 
 For the boot firmware, choose `Legacy BIOS`. If you are using an M1/M2/M3 Mac, this option may not be available.
 
@@ -41,7 +41,7 @@ The default settings for memory and storage are probably too small. Customize yo
 - **Name**: (your choice; whatever name you want for saving the VM so you can open it again later in VMware)
 - **CPU**: 2 processor cores minimum; 4 or more cores highly recommended, provided that your host machine has 4 or more cores
 - **RAM**: 6 GB or more highly recommended, provided that your host machine has 
-8 GB of RAM or more. Ubuntu 25.04 with linux 6.14 has been known to go into 
+8 GB of RAM or more. Ubuntu 25.04 with linux 7.0 has been known to go into 
 memory deadlock with 4GB of RAM.
 - **Hard disk**: 64 GB minimum, 128 GB or more recommended
 
