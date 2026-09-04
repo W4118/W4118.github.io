@@ -1,6 +1,6 @@
 # GCP VM Setup
 
-Follow the [Google Cloud Linux VM tutorial](https://cloud.google.com/compute/docs/quickstart-linux) to create a project and VM.
+Follow the [Google Cloud Linux VM tutorial](https://cloud.google.com/compute/docs/quickstart-linux) to first just create a project that will contain your VM. Use the specifications below for the specific VM.
 
 ## 1. Create the VM
 
