@@ -180,7 +180,7 @@ right after committing.
 
 This also helps in the very unfortunate scenario where you committed, didn't
 push, and corrupted your kernel to the point where you need to restore from a
-VMware snapshot that doesn't have that commit, therefore losing it forever.
+snapshot that doesn't have that commit, therefore losing it forever.
 
 ### Snapshot early, snapshot often
 

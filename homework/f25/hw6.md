@@ -24,7 +24,7 @@ This repository will be accessible to all members of your team, and all team mem
 [git-merge]: https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-merge.html
 [git-fetch]: https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-fetch.html
 
-There should be at least five commits **per member** in the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://www.kernel.org/doc/html/v6.14/process/coding-style.html). You **must** check your commits with the `run_checkpatch.sh` script provided as part of your team repository. Errors from the script in your submission will cause a deduction of points. (Note that the script only checks the changes up to your latest commit. Changes in the working tree or staging area will not be checked.)
+There should be at least five commits **per member** in the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Follow the [Linux kernel coding style](https://www.kernel.org/doc/html/v7.0/process/coding-style.html). You **must** check your commits with the `run_checkpatch.sh` script provided as part of your team repository. Errors from the script in your submission will cause a deduction of points. (Note that the script only checks the changes up to your latest commit. Changes in the working tree or staging area will not be checked.)
 
 For students on Arm computers (e.g. macs with M1/M2/M3 CPU): if you want your submission to be built/tested for Arm, you must create and submit a file called `.armpls` in the top-level directory of your repo; feel free to use the following one-liner:
 
@@ -60,7 +60,7 @@ This would indicate that student with UNI abc123 spent 15 hrs on this assignment
 
 ### Programming Problems:
 
-In this assignment, you will write your own disk-based filesystem, EZFS. You may find it helpful to first review the [EZFS paper][ezfspaper], but keep in mind that some of the description in that paper is dated and does not apply to the 6.14 Linux kernel implementation you will do for this assignment. In particular, you should not use buffer heads for this assignment because buffer heads have been deprecated.  Instead, you will take advantage of iomaps, modern 64-bit systems including x86 and arm64, and the use of page-size blocks for EZFS to simplify your implementation.  Your filesystem only has to work on 64-bit systems.
+In this assignment, you will write your own disk-based filesystem, EZFS. You may find it helpful to first review the [EZFS paper][ezfspaper], but keep in mind that some of the description in that paper is dated and does not apply to the 7.0 Linux kernel implementation you will do for this assignment. In particular, you should not use buffer heads for this assignment because buffer heads have been deprecated.  Instead, you will take advantage of iomaps, modern 64-bit systems including x86 and arm64, and the use of page-size blocks for EZFS to simplify your implementation.  Your filesystem only has to work on 64-bit systems.
 
 You will learn how to use a loop device to turn a regular file into a block storage device, then format that device into an EZFS filesystem. Then you will use EZFS to access the filesystem. EZFS will be built as a kernel module that you can load into the **stock Ubuntu 25.04** kernel in your VM. You do not need to use the 4118 kernel you built for previous homework assignments and there is no need to build the entire Linux kernel tree for this assignment.
 
@@ -156,7 +156,7 @@ Now format the disk as EZFS. The skeleton code for a formatting utility program 
 # ./format_disk_as_ezfs /dev/loop12 1000
 ```
 
-We have provided you with reference kernel modules that implement EZFS which are designed to work with your stock Ubuntu 25.04 kernel (6.14.0-35-generic & 6.14.0-36-generic). x86 and arm kernel modules are in `ref/ez_x86_6_14_0_35_generic.ko`, `ref/ez_x86_6_14_0_36_generic.ko` and `ref/ez_arm_6_14_0_35_generic.ko`, `ref/ez_arm_6_14_0_36_generic.ko`, respectively. You should familiarize yourself with writing and using Linux kernel modules. You can use the reference kernel module to explore your newly created EZFS by mounting the disk and loading the kernel module:
+We have provided you with reference kernel modules that implement EZFS which are designed to work with your stock Ubuntu 25.04 kernel (7.0.0-35-generic & 7.0.0-36-generic). x86 and arm kernel modules are in `ref/ez_x86_7_0_0_35_generic.ko`, `ref/ez_x86_7_0_0_36_generic.ko` and `ref/ez_arm_7_0_0_35_generic.ko`, `ref/ez_arm_7_0_0_36_generic.ko`, respectively. You should familiarize yourself with writing and using Linux kernel modules. You can use the reference kernel module to explore your newly created EZFS by mounting the disk and loading the kernel module:
 
 ```console
 # mkdir /mnt/ez
@@ -164,7 +164,7 @@ We have provided you with reference kernel modules that implement EZFS which are
 # mount -t ezfs /dev/loop12 /mnt/ez
 ```
 
-where ARCH is either `x86` or `arm` and VERSION is either `6_14_0_35_generic` or `6_14_0_36_generic`. Now you can create some new files, edit hello.txt, etc. If your kernel name is slightly different, you may get a versioning error when you try to load the kernel module. In that case, you can try forcibly inserting the module with `insmod -f`.
+where ARCH is either `x86` or `arm` and VERSION is either `7_0_0_35_generic` or `7_0_0_36_generic`. Now you can create some new files, edit hello.txt, etc. If your kernel name is slightly different, you may get a versioning error when you try to load the kernel module. In that case, you can try forcibly inserting the module with `insmod -f`.
 
 ## Part 3: Changing the formatting program
 
@@ -211,15 +211,15 @@ In some cases, you may find that what you implemented for a given part is correc
 [slides1]: https://w4118.github.io/homework/f25/f25-page-cache-overview.pdf
 [slides2]: https://docs.google.com/presentation/d/1_CKUdVg1mhUtbtH3vOLneLH27kzq_auk/edit?usp=sharing&ouid=109402832591562892559&rtpof=true&sd=true 
 [lki]: https://tldp.org/LDP/lki/lki-3.html
-[documentation]: https://elixir.bootlin.com/linux/v6.14/source/Documentation/filesystems/vfs.rst
+[documentation]: https://elixir.bootlin.com/linux/v7.0/source/Documentation/filesystems/vfs.rst
 [vfs_tutorial]: https://lwn.net/Articles/57369/
 
 Note that the VFS has evolved over the years and some functions exist primarily for backwards compatibility with older filesystem implementations. **In your implementation, you should make sure to use the newer VFS interface functions discussed in class whenever possible.** This includes using filesystem contexts and iomaps, not older deprecated interfaces like buffer heads.  As always, the best source of correct information is the source code, especially other filesystem implementations, some of which were described in class, including [ramfs][ramfs] for a basic filesystem implementation. Other filesystem implementations are also good references to see what functions you have to implement and which ones you do not have to implement, or can implement by leveraging functions already provided by the VFS.  In particular, [bfs][bfs] is useful to see an older filesystem that uses contiguous allocation, [minix][minix] is useful to see a more complete but not too complex older filesystem, and [zonefs][zonefs] is useful to see a more complex filesystem that uses newer VFS interfaces including iomaps.  However, keep in mind that [bfs][bfs] and [minix][minix] use older VFS interfaces such as buffer heads and the mount method ([bfs][bfs]) that you should not use.
 
-[ramfs]: https://elixir.bootlin.com/linux/v6.14/source/fs/ramfs
-[bfs]: https://elixir.bootlin.com/linux/v6.14/source/fs/bfs
-[zonefs]: https://elixir.bootlin.com/linux/v6.14/source/fs/zonefs
-[minix]: https://elixir.bootlin.com/linux/v6.14/source/fs/minix
+[ramfs]: https://elixir.bootlin.com/linux/v7.0/source/fs/ramfs
+[bfs]: https://elixir.bootlin.com/linux/v7.0/source/fs/bfs
+[zonefs]: https://elixir.bootlin.com/linux/v7.0/source/fs/zonefs
+[minix]: https://elixir.bootlin.com/linux/v7.0/source/fs/minix
 
 ### 4.2: Initializing and mounting 
 
@@ -306,7 +306,7 @@ When `getdents64` is called, the VFS framework will call the `iterate_shared` me
 
 Note that iterating through a directory using `dir_emit()` will list each directory entry contained in the directory, but what should be done to cause the `.` and `..` to appear in the listing? Some filesystems accomplish this by actually storing separate entries for `.` and `..` so that they will appear just like any other entry, but other filesystems do not, such as the proc filesystem. Look at how the proc filesystem achieves this [behavior][proc], and use a similar approach for your EZFS.
 
-[proc]: https://elixir.bootlin.com/linux/v6.14/source/fs/proc/generic.c
+[proc]: https://elixir.bootlin.com/linux/v7.0/source/fs/proc/generic.c
 
 Hints:
 * Make sure you implement `iterate_shared`, not `iterate`, as the latter is an older interface.
@@ -465,7 +465,7 @@ If there is not enough space in your filesystem to write what you need to write,
 
 Now that your filesystem is being modified, you should take care to make sure that concurrent file operations are being handled properly. For example, if two files are being modified at the same time, you want to make sure that you do not accidentally assign the same free data block to both files, which would obviously be an error. Make sure that your EZFS operations work properly when multiple processes or threads are performing those operations at any given time. Keep in mind that page cache operations such as read_mapping_page may block if they need to go to disk. While we are not using buffer heads for this assignment, you may find it helpful to review how synchronization is handled in [BFS][BFS].
 
-[BFS]: https://elixir.bootlin.com/linux/v6.14/source/fs/bfs
+[BFS]: https://elixir.bootlin.com/linux/v7.0/source/fs/bfs
 
 Once you can write multi-block files, you should also ensure you can seek to different positions of a file to write data. For example, you should be able to write to the first block of a file, seek 100 blocks ahead and then write to that block of the file. After writing such a file, what should you see when you read the file? Supporting seeking and writing may require additional implementation effort. Note that there is also a `zero_blocks` bit vector in the EZFS superblock in `ezfs.h`; if helpful, you may use that for your implementation.
 

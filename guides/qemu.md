@@ -64,7 +64,7 @@ $ qemu-system-aarch64 \
   -cpu cortex-a57 \
   -m 2G \
   -kernel arch/arm64/boot/Image \
-  -initrd /boot/initrd.img-6.14.0-cs4118 \
+  -initrd /boot/initrd.img-7.0.0-cs4118 \
   -append "console=ttyAMA0 nokaslr" \
   -nographic \
   -s -S
@@ -81,7 +81,7 @@ $ qemu-system-aarch64 \
 $ qemu-system-x86_64 \
   -m 2G \
   -kernel arch/x86_64/boot/bzImage \
-  -initrd /boot/initrd.img-6.14.0-cs4118 \
+  -initrd /boot/initrd.img-7.0.0-cs4118 \
   -append "console=ttyS0 nokaslr" \
   -nographic \
   -s -S
@@ -247,7 +247,7 @@ $ cd ../..
 $ mkdir initrd
 
 # unpacks the version created normally using `make`
-$ zstd -d /boot/initrd.img-6.14.0-cs4118 -o initrd.img.cpio
+$ zstd -d /boot/initrd.img-7.0.0-cs4118 -o initrd.img.cpio
 
 # go into the working dir
 $ cd initrd
@@ -295,7 +295,7 @@ $ cd ../..
 $ mkdir initrd
 
 # unpacks the version created normally using `make`
-$ unmkinitramfs /boot/initrd.img-6.14.0-cs4118 ./initrd
+$ unmkinitramfs /boot/initrd.img-7.0.0-cs4118 ./initrd
 
 # go into the working dir; ls should show three(?) dirs, early, early2 and main.
 $ cd initrd && ls
