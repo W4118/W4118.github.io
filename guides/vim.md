@@ -308,14 +308,14 @@ This is the final step: Efficiently browsing code.
 
 [Cscope](https://cscope.sourceforge.net/) is a code browser that works in your terminal and within Vim. It is far more powerful than a standard grepper (such as the one at elixir). For example, Cscope can answer:
 
-* Where is this variable used?
-* What is the value of this preprocessor symbol?
-* Where is this function in the source files?
-* What functions call this function?
-* What functions are called by this function?
-* Where does the message “out of space” come from?
-* Where is this source file in the directory structure?
-* What files include this header file?
+- Where is this variable used?
+- What is the value of this preprocessor symbol?
+- Where is this function in the source files?
+- What functions call this function?
+- What functions are called by this function?
+- Where does the message “out of space” come from?
+- Where is this source file in the directory structure?
+- What files include this header file?
 
 To install on Ubuntu:
 

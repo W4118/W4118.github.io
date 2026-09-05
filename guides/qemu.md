@@ -103,7 +103,7 @@ Remote debugging using :1234
 0x0000000040000000 in ?? ()
 ```
 
-![](/images/gdb.png)
+![GDB connected to QEMU](../images/gdb.png)
 
 Then you are officially in. At this point, the linux kernel is _paused_, pending
 input from the debugger. To let it continue running, you would input `c` for
@@ -192,7 +192,7 @@ continue, etc. It also has a fancier `gui` command that gives you a terminal
 interface that gives you an interactable source code window, a variable panel,
 and a list of threads.
 
-![](/images/lldb.png)
+![LLDB debugger interface](../images/lldb.png)
 
 You can move from one panel to another using `<tab>`, toggle breakpoints in the
 source code panel using `b`, or run to highlighted line with `<enter>`.
@@ -360,9 +360,13 @@ Now you can run your custom binary from the place you put it:
 (initramfs) ./tmp/test
 ```
 
-Sample GDB: ![](/images/gdb_custom.png)
+Sample GDB:
 
-Sample LLDB: ![](/images/lldb_custom.png)
+![GDB debugging a custom binary](../images/gdb_custom.png)
+
+Sample LLDB:
+
+![LLDB debugging a custom binary](../images/lldb_custom.png)
 
 Your workflow now gets a bit more interesting: you would likely alternate
 between the two terminals: set some breakpoint on the functions you want to see,

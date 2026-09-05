@@ -4,16 +4,16 @@ From now on, all assignments will need to be done in the class VM, and will invo
 
 By the end of this guide, you will be able to:
 
- - Use `ssh` to work directly in your host OS
- - Have semantic auto-complete, file grepping, function GOTOs and more in your vim
- - Impress non-OS friends with your vim wizardry
-
+- Use `ssh` to work directly in your host OS
+- Have semantic auto-complete, file grepping, function GOTOs and more in your vim
+- Impress non-OS friends with your vim wizardry
 
 ## SSH into vm
 
 Most students are more comfortable working in their host machine than in the VM. We can enable this by configuring remote ssh.
 
 First, in your VM execute the following command to get its remote address:
+
 ```
 /sbin/ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | cut -d ':' -f 2
 ```
@@ -55,14 +55,13 @@ To optimize your git workflow, you can add shortcuts to the   `~/.gitconfig` fil
     conflict = diff --name-only --diff-filter=U  # View all files that have merge conflicts
 ```
 
-
-# Vim Setup
+## Vim Setup
 
 __Non-vim users__: If you have a cool emacs/atom/etc setup, feel free to send us a guide and we will share it on the course website.
 
-The remainder of this guide will be dedicated to building out a robust vim developer environment, so if you are not planning to use vim for this class jump straight to [Cscope](https://w4118.github.io/workflow#cscope)
+The remainder of this guide will be dedicated to building out a robust vim developer environment, so if you are not planning to use vim for this class jump straight to [Cscope](#cscope)
 
-## The Philosophy of Vim
+### The Philosophy of Vim
 
 Before diving into setup, I need to assert a critical point about working in vim: __don't use tabs__! Instead, use __buffers__ and __windows__.
 
@@ -74,6 +73,7 @@ Thus, beyond installing plugins, the aim of this guide is to enforce efficient v
 People who are most familiar with IDEs or sublime/atom expect to use tabs with vim because that is how these other editors work: the relationship is 1 tab per 1 file, and opening/closing a file requires opening/closing a tab. Vim however is not meant to be used this way--it was designed to work within a *single* terminal tab by utilizing multiple windows + multiple buffers.
 
 Definitions:
+
 - A __Buffer__ is simply the raw data associated with an open file.
 - A __Window__ is a visual display for a buffer. A tab in Vim must have >= 1 window, and each window displays exactly 1 buffer.
 
@@ -88,7 +88,7 @@ Here's an example of what this should look like. Note that I never open a new ta
 
 ![Demo](../images/philosophy.gif)
 
-## Install Pathogen
+### Install Pathogen
 
 Now let's get to installing plugins.
 
@@ -112,13 +112,14 @@ call plug#end()
 ```
 
 After adding some plugins, run
+
 ```
 :PlugInstall
 ```
 
 Now all plugins will be installed inside `~/.vim/plugged` and they will be automatically added to your vim `runtimepath`.
 
-### Remapping Leader
+#### Remapping Leader
 
 Vim has the concept of a "leader" key, which is used to program personal keyboard shortcuts. By default, it is mapped to `\`, which is a little difficult to reach. I suggest mapping it to either `<space>` or comma `,` (I prefer space). In your `~/.vimrc`, write either
 
@@ -134,7 +135,7 @@ let mapleader = ","
 
 We will be using leader keys through the rest of the guide. When you see something like `nmap <leader>l :bnext<CR>`, it means we are mapping the keyboard shortcut `<leader>` + `l` to the action `:bnext<CR>`.
 
-## Bufferline Display:
+### Bufferline Display:
 
 [Airline](https://github.com/vim-airline/vim-airline) is a package to display status information such as git branch and what buffer you are currently viewing. Add this plugin to your `~/.vimrc`.
 
@@ -150,6 +151,7 @@ call plug#end()
 ```
 
 And in your `~/.vimrc` also add
+
 ```
 " Airline
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
@@ -182,7 +184,7 @@ nmap <leader>bl :ls<CR>
 
 Now to navigate your window left/right between buffers, just press `<leader>` + `h` or `<leader>` + `l`. To close a buffer, press `<leader>` + `q`.
 
-## Window navigation
+### Window navigation
 
 To open a new window, enter:
 
@@ -202,7 +204,7 @@ noremap <silent> <Down> :wincmd j <CR>
 
 To close a window, press `ctrl-w` + `c`
 
-## ctrl-p and Nerdtree
+### ctrl-p and Nerdtree
 
 The Linux kernel is a massive code base, so for easy navigation we'll want to add a filename grepper ([ctrl-p](https://github.com/kien/ctrlp.vim)) and file tree ([Nerdtree](https://github.com/scrooloose/nerdtree))
 
@@ -251,9 +253,11 @@ Now if you want to search for and open a file, press `<leader>` + `p`. This is a
 Nerdtree will show a file tree in the window on the left of your screen. To collapse/expand it, press `ctrl` + `n`. To expose your current working file in the file tree, press `<leader>` + `n`.
 
 Altogether it looks like this:
+
 ![File Navigation](../images/file_nav.gif)
 
-## YCM
+### YCM
+
 Next we are going to add semantic auto-complete through a plugin called [YouCompleteMe](https://valloric.github.io/YouCompleteMe/). This part is a little involved, so here's a demo first so you can decide if it's worth the setup:
 
 ![YCM](../images/ycm.gif)
@@ -261,26 +265,34 @@ Next we are going to add semantic auto-complete through a plugin called [YouComp
 Before installing YCM, we need to rebuild vim from source to get a compatible version.
 
 First install some packages:
+
 ```
 sudo apt-get update && sudo apt-get install libncurses5-dev libgnome2-dev \
     libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
     python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
 ```
+
 Install clang (make take a while) and cmake
+
 ```
 sudo apt-get install clang cmake
 ```
 
 Uninstall your current vim:
+
 ```
 sudo apt-get remove vim vim-runtime gvim
 ```
+
 Install python2:
+
 ```
 sudo apt-get install python python-dev
 ```
+
 And build vim!
+
 ```
 cd ~
 git clone https://github.com/vim/vim.git
@@ -300,6 +312,7 @@ sudo make install
 ```
 
 Now set your updated vim as default editor:
+
 ```
 sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
 sudo update-alternatives --set editor /usr/local/bin/vim
@@ -308,6 +321,7 @@ sudo update-alternatives --set vi /usr/local/bin/vim
 ```
 
 Finally, install YCM
+
 ```
 " Define plugins to install
 call plug#begin('~/.vim/plugged')
@@ -354,8 +368,8 @@ set completeopt-=preview
 
 In the template for your homework assignments, we will include a file `kernel/.ycm_extra_conf.py` that enables YCM. If you want to see how this works, check out [YCM-Generator](https://github.com/rdnetto/YCM-Generator) and the original YCM github page.
 
-
 __Important Note__: for YCM in the kernel to work properly you need to be *inside* the kernel directory when you activate vim. e.g.
+
 ```
 cd <path-to-homework-assignment>/kernel && vim
 ```
@@ -383,6 +397,7 @@ tar xvzf cscope-15.8a.tar.gz
 ```
 
 To install:
+
 ```
 cd ~/cscope-15.8a
 ./configure
@@ -392,7 +407,7 @@ sudo make install
 
 Verify installation succeeded by running `cscope`. This should open up the Cscope browser in your terminal window. To exit, use `ctrl-d`.
 
-In the template code for all your written assignments, we will include the following script: `<PATH-TO-HW-REPO>/gen_cscope_files.sh`. 
+In the template code for all your written assignments, we will include the following script: `<PATH-TO-HW-REPO>/gen_cscope_files.sh`.
 
 ___
 
@@ -414,6 +429,7 @@ All homeworks after HW2 will have the correct version of `gen_cscope_files.sh`.
 ___
 
 Now, To use cscope you will need to first build the cscope db, which can be done via:
+
 ```
 chmod +x gen_cscope_files.sh
 ./gen_cscope_files.sh
@@ -429,7 +445,8 @@ cscope -b -q -k
 
 This builds the cscope db, which is comprised of three files: `cscope.files`, `cscope.in.out`, `cscope.out`.
 Do not touch these! They are automatically gitignored.
- - If you do accidentally delete them, run `cscope -b -q -k` in the kernel directory to regenerate.
+
+- If you do accidentally delete them, run `cscope -b -q -k` in the kernel directory to regenerate.
 
 To use the Cscope browser:
 
@@ -445,9 +462,11 @@ Demo:
 ![Cscope](../images/cscope.gif)
 
 To enable vim support, we need to add a new `cscope_maps.vim` file. First, if it doesn't already exist, run
+
 ```
 mkdir -p ~/.vim/plugged/
 ```
+
 All `.vim` files in this directory will automatically be sourced into your `~/.vimrc`. Then run:
 
 ```

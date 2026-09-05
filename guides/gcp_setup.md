@@ -6,16 +6,16 @@ Follow the [Google Cloud Linux VM tutorial](https://cloud.google.com/compute/doc
 
 Use these settings:
 
-* **Region:** `us-central1` (Iowa)
-* **Zone:** Any
-* **Series:** `N4A` (Google Axion)
-* **Machine type:** `n4a-standard-4` (4 vCPUs, 16 GB memory)
-* **Provisioning model:** `Standard`
-* **Operating system:** Ubuntu
-* **Version:** Ubuntu 26.04 LTS (**not Minimal**)
-* **Disk size:** 100 GB
-* **Provisioned IOPS:** 3000
-* **Provisioned throughput:** 140 MB/s
+- **Region:** `us-central1` (Iowa)
+- **Zone:** Any
+- **Series:** `N4A` (Google Axion)
+- **Machine type:** `n4a-standard-4` (4 vCPUs, 16 GB memory)
+- **Provisioning model:** `Standard`
+- **Operating system:** Ubuntu
+- **Version:** Ubuntu 26.04 LTS (**not Minimal**)
+- **Disk size:** 100 GB
+- **Provisioned IOPS:** 3000
+- **Provisioned throughput:** 140 MB/s
 
 Leave all other settings at their defaults.
 
@@ -28,34 +28,41 @@ If N4A machines are unavailable, try another zone. If no Iowa zones work, use `u
 The VM cannot have an external IP because of the organization policy. It therefore needs Cloud NAT to access Ubuntu repositories and Git.
 
 1. Go to **Network services → Cloud NAT**.
+
 2. Click **Get started** or **Create Cloud NAT gateway**.
+
 3. Configure:
 
-   * Gateway name: `os-vm-nat`
-   * NAT type: `Public`
-   * Network: The VM’s network
-   * Region: The VM’s region
+   - Gateway name: `os-vm-nat`
+   - NAT type: `Public`
+   - Network: The VM’s network
+   - Region: The VM’s region
+
 4. Create a Cloud Router:
 
-   * Name: `os-vm-router`
-   * Leave other settings at their defaults.
+   - Name: `os-vm-router`
+   - Leave other settings at their defaults.
+
 5. Under **Cloud NAT mapping**, configure:
 
-   * Source endpoint type: `VM instances, GKE nodes, Serverless`
-   * Source IP version: `IPv4`
-   * Source subnets: `Custom`
-   * Subnetwork: The VM’s subnet
-   * IP ranges: `Primary IP ranges`
+   - Source endpoint type: `VM instances, GKE nodes, Serverless`
+   - Source IP version: `IPv4`
+   - Source subnets: `Custom`
+   - Subnetwork: The VM’s subnet
+   - IP ranges: `Primary IP ranges`
+
 6. Configure:
 
-   * Cloud NAT IP addresses: `Automatic`
-   * Network Service Tier: `Standard`
+   - Cloud NAT IP addresses: `Automatic`
+   - Network Service Tier: `Standard`
+
 7. Leave all other settings at their defaults and click **Create**.
+
 8. Wait one to three minutes and run:
 
-```bash
-sudo apt update
-```
+   ```bash
+   sudo apt update
+   ```
 
 > **Why Cloud NAT?** It provides outbound internet access for package and source-code downloads without exposing the VM directly to inbound internet traffic. Do not enable **Allow HTTP traffic** or **Allow HTTPS traffic**.
 
@@ -82,4 +89,3 @@ root
 ```
 
 > **Why is this necessary?** The account can have valid GCP administrative permissions while `sudo-rs` still rejects commands with `I'm afraid I can't do that`. The traditional `sudo.ws` correctly reads GCP’s generated sudo configuration.
-

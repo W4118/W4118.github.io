@@ -54,9 +54,9 @@ To git+ssh://xxx
    xxxxxxx..xxxxxxx  main -> main
 ```
 
-If git asks you for a password whenever you try to do a clone/push/pull/fetch then you need to make sure that you set up SSH authentication. See the section on `Pushing from your VM to GitHub` in [this guide](./ssh.md) for more details.
+If git asks you for a password whenever you try to do a clone/push/pull/fetch then you need to make sure that you set up SSH authentication. See the section on [setting up GitHub access from the VM](./gcp-ssh-guide.md#set-up-github-access-from-the-vm) for more details.
 
-**Checking your submissions**
+## Checking your submissions
 
 Once you have submitted your homework, we strongly recommend that you re-clone the submission to your machine to check that what we have received is in fact what you intended to submit.
 
