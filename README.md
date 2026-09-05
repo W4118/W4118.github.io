@@ -4,7 +4,7 @@
 
 ### Getting started with Kernel Development
 
-- [Setting up an Ubuntu Linux VM in GCP](./guides/gcp_setup.md)
+- [Setting up an Ubuntu Linux VM in Google Cloud Platform (GCP)](./guides/gcp_setup.md)
 - [Kernel compilation in Ubuntu Linux](./guides/kernel-compilation.md)
 
 ### Workflow
