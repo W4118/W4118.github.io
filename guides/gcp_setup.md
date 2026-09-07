@@ -12,7 +12,7 @@ Use these settings:
 - **Machine type:** `n4a-standard-4` (4 vCPUs, 16 GB memory)
 - **Provisioning model:** `Standard`
 - **Operating system:** Ubuntu
-- **Version:** Ubuntu 26.04 LTS (**not Minimal**)
+- **Version:** Ubuntu 26.04 LTS (**not Minimal**) for ARM
 - **Disk size:** 100 GB
 - **Provisioned IOPS:** 3000
 - **Provisioned throughput:** 140 MB/s
@@ -21,7 +21,7 @@ Leave all other settings at their defaults.
 
 If N4A machines are unavailable, try another zone. If no Iowa zones work, use `us-west1` (Oregon).
 
-> **Why N4A?** N4A provides four Google Axion Arm cores and enough memory to compile the kernel efficiently.
+> **Why N4A-standard-4?** N4A-standard-4 provides four Google Axion Arm cores and enough memory to compile the kernel efficiently.
 
 ## 2. Configure internet access
 
