@@ -12,7 +12,7 @@ Use these settings:
 * **Machine type:** `n4a-standard-4` (4 vCPUs, 16 GB memory)
 * **Provisioning model:** `Standard`
 * **Operating system:** Ubuntu
-* **Version:** Ubuntu 26.04 LTS (**not Minimal**)
+* **Version:** Ubuntu 26.04 LTS (**not Minimal**) for Arm
 * **Disk size:** 100 GB
 * **Provisioned IOPS:** 3000
 * **Provisioned throughput:** 140 MB/s
@@ -82,4 +82,7 @@ root
 ```
 
 > **Why is this necessary?** The account can have valid GCP administrative permissions while `sudo-rs` still rejects commands with `I'm afraid I can't do that`. The traditional `sudo.ws` correctly reads GCP’s generated sudo configuration.
+
+## IMPORTANT !!!
+** You do not have enough credits to keep your instance running for the whole semester. Be sure to immediately turn off your instance when not in use**
 
