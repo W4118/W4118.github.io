@@ -1,6 +1,6 @@
-# HW2 (W4118 Fall 2025)
+# HW2 (W4118 Fall 2026)
 
-> <span style="color:red">**DUE: Wednesday 10/01/2025 at 11:59pm ET**</span>
+> <span style="color:red">**DUE: Wednesday 09/30/2026 at 11:59pm ET**</span>
 
 ## General instructions
 
@@ -25,7 +25,7 @@ number, e.g. `team0`. You can find your group number
 [here](https://docs.google.com/spreadsheets/d/1V2ytwTpXo2rhVop9pYt46M74Bk4lOsXeB2vSqylVLMg/edit?gid=0#gid=0).
 
 ```
-$ git clone git@github.com:W4118/f25-hmwk2-teamN.git
+$ git clone git@github.com:W4118/f26-hmwk2-teamN.git
 ```
 
 > **IMPORTANT**: You should clone the repository **directly in the terminal of
@@ -232,7 +232,7 @@ you update a header file that is part of the user space API of the kernel.
 - If a value to be set in `tskinfo` is accessible through a pointer which is
   null, set the value in `tskinfo` to 0.
 
-- Your system call should be assigned the number **467** and be implemented in a
+- Your system call should be assigned the number **472** and be implemented in a
   file `ptree.c` in the `kernel/` directory, i.e. `kernel/ptree.c`. Note again
   that this path is relative to the root directory of your kernel source tree.
   You will need to modify the appropriate kernel `Makefile` so that it is aware
@@ -252,7 +252,7 @@ you update a header file that is part of the user space API of the kernel.
   declarations for these functions in `include/linux/ptree.h`.
 
 - Your algorithm shouldn't use recursion since the size of the function stack in
-  the kernel is quite small, typically only **8KB**.
+  the kernel is quite small, only **16KB** on x86-64 and arm64.
 
 - Your code should handle errors that could occur. For example, some error
   numbers your system call should detect and return include:
@@ -354,7 +354,7 @@ you update a header file that is part of the user space API of the kernel.
   your homework, not in stdout/stderr, and not in the kernel logs.
 
 [this-blog-post]: https://chengyihe.wordpress.com/2015/12/29/kernel-thread-and-thread-group/
-[include/linux/sched.h]: https://elixir.bootlin.com/linux/v6.14/source/include/linux/sched.h#L737
+[include/linux/sched.h]: https://elixir.bootlin.com/linux/v7.0/source/include/linux/sched.h#L820
 [this-stackoverflow-answer]: https://stackoverflow.com/questions/9305992/if-threads-share-the-same-pid-how-can-they-be-identified/9306150#9306150
 [this-(optional)-paper-from-2002]: https://www.kernel.org/doc/ols/2002/ols2002-pages-330-337.pdf
 [include/linux/syscalls.h]: https://elixir.bootlin.com/linux/v7.0/source/include/linux/syscalls.h
@@ -438,7 +438,7 @@ you use in your `references.txt` file.
    x86-64. Note: use v7.0.
 
 For reference, the URLs you answer with should be in the following format:
-`https://elixir.bootlin.com/linux/v6.14/source/kernel/sched/core.c#L6607`
+`https://elixir.bootlin.com/linux/v7.0/source/kernel/sched/core.c#L6726`
 
 [elixir.bootlin.com]: https://elixir.bootlin.com/linux/v7.0/source
 
