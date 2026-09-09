@@ -23,10 +23,7 @@ kernel's responses.
 ## One-time Setup
 
 ```sh
-# for arm
 $ sudo apt install qemu-system-aarch64 gdb
-# for x86
-$ sudo apt install qemu-system-x86 gdb
 ```
 
 ## Per-run Setup
@@ -68,24 +65,6 @@ $ qemu-system-aarch64 \
   -append "console=ttyAMA0 nokaslr" \
   -nographic \
   -s -S
-
-# for x86 (untested)
-# ====================
-# 2G of RAM for a minimal OS;
-# kernel image that you made;
-# initramfs;
-# direct output to serial port; stabilize memory layout to ensure
-# debugging doesn't jump to random source locations;
-# disable GUI since we don't have any;
-# open serial port on :1234; start paused
-$ qemu-system-x86_64 \
-  -m 2G \
-  -kernel arch/x86_64/boot/bzImage \
-  -initrd /boot/initrd.img-7.0.0-cs4118 \
-  -append "console=ttyS0 nokaslr" \
-  -nographic \
-  -s -S
-```
 
 This might not seem to do anything, which is expected; `-S` will pause the
 execution so that you can connect and resume at your leisure.
@@ -284,60 +263,9 @@ $ qemu-system-aarch64 \
   -s -S
 ```
 
-### X86 instructions
-
-```sh
-# if you are currently in the linux directory inside your team homework repo:
-$ cd ../..
-
-# create a working dir for the temporary RAM-based filesystem that QEMU uses
-# for booting. Make it ouside your repo so we don't interfere unnecessarily.
-$ mkdir initrd
-
-# unpacks the version created normally using `make`
-$ unmkinitramfs /boot/initrd.img-7.0.0-cs4118 ./initrd
-
-# go into the working dir; ls should show three(?) dirs, early, early2 and main.
-$ cd initrd && ls
-$ cd main
-
-# `main` here is the, well... the *main* stage of x86's multi-stage booting, and
-# the only one that we really need to worry about. In here you should be able to
-# find all the linux root stuff like `bin` and `lib` and most importantly,
-# `init`.
-
-# create tmp dir and move desired binary here
-$ mkdir tmp
-# the next time you want to update the binaries or add more content, you can
-# start from this step here assuming you change working dir properly.
-$ cp ${BINARY_PATH} tmp/
-
-# (optional) make sure you are still in `main`
-$ pwd
-
-# bundle custom image file and place two level up -- one level is inside initrd.
-# this step might take a little while.
-$ find . | cpio -o -H newc | gzip -c > ../../custom.img
-
-# go to linux dir
-$ cd ../../
-$ cd f25-hmwkN-teamM  # sub with your appropriate local version
-$ cd linux
-
-# run QEMU with revised command using the custom init image.
-# Note the change in the `-initrd` argument!
-$ qemu-system-x86_64 \
-  -m 2G \
-  -kernel arch/x86_64/boot/bzImage \
-  -initrd ../../custom.img \
-  -append "console=ttyS0 nokaslr" \
-  -nographic \
-  -s -S
-```
-
 ### Repacking
 
-Similar for both arch, once you have done the above once, for all subsequent
+Once you have done the above once, for all subsequent
 changes you want to make to the init ram file system, you can just do the file
 change and the repacking step as long as you don't clean up the unpacked initrd
 directory. You can also simplify some of the steps with symlinks, which we won't
