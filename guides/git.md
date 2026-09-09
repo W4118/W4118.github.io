@@ -16,17 +16,17 @@ It might be helpful to configure the Git settings on the machine you're using fo
         default = matching
 ```
 
-While there are a number of different Git-based systems, you will be using Github Classroom for this course. Make sure you have a Github account. If you are new to Github, please check out the [getting started guide](https://help.github.com/articles/set-up-git/).
+You will be using GitHub for this course. Make sure you have a GitHub account. If you are new to Github, please check out the [getting started guide](https://help.github.com/articles/set-up-git/).
 
 **Please fill in [this Google Form](https://forms.gle/XJL5jQg5hh7Gus4MA)** to let us know your Github username and your UNI. This must be done by the last day of the Change of Program period.
 
-For each homework assignment, your team's source code will be stored at `github.com/W4118/f25-hmwkN-UserName` as a private repository. Only you or your group members will be allowed to push/pull from the repository. A repository containing skeleton code for that assignment will also be available at `github.com/W4118/f25-template-hmwkN`. The initial state of your repository will be set to match the skeleton code. Instructions will be provided with each assignment on how to access your repository for the respective assignment. You may visit [our GitHub organization](https://github.com/w4118) to see all the repositories available to you.
+For each homework assignment, the instructional staff will create a private repository for you (or your team) in the W4118 organization, named `github.com/W4118/f26-hmwkN-UserName` for individual assignments and `github.com/W4118/f26-hmwkN-teamM` for team assignments, and invite you to it on GitHub. Accept the invitation (GitHub emails it to you, and it is listed at [github.com/notifications](https://github.com/notifications)). Only you or your group members will be allowed to push/pull from the repository. A repository containing skeleton code for that assignment will also be available at `github.com/W4118/f26-hmwkN-template`. The initial state of your repository will be set to match the skeleton code. Instructions will be provided with each assignment on how to access your repository for the respective assignment. You may visit [our GitHub organization](https://github.com/w4118) to see all the repositories available to you.
 
 Once you have access to your assignment repository, you will need to clone your homework repository locally to start working on it:
 
 ```
-$ git clone git@github.com:W4118/f25-hmwkN-UserName.git
-Initialized empty Git repository in f25-hmwkN-UserName/.git/
+$ git clone git@github.com:W4118/f26-hmwkN-UserName.git
+Initialized empty Git repository in f26-hmwkN-UserName/.git/
 Receiving objects: 100% (x/x), done.
 remote: Counting objects: x, done.
 remote: Total x (delta 0), reused 0 (delta 0)
@@ -66,12 +66,12 @@ The procedure for doing so would be the following:
 
 ```
 $ pushd /tmp
-$ git clone git@github.com:W4118/f25-hmwkN-UserName.git
-$ cd f25-hmwkN-UserName
+$ git clone git@github.com:W4118/f26-hmwkN-UserName.git
+$ cd f26-hmwkN-UserName
 
 # Check contents of the directory and test aginst your test cases
 
 $ cd ..
-$ rm -rf f25-hmwkN-UserName
+$ rm -rf f26-hmwkN-UserName
 $ popd
 ```

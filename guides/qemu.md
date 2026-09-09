@@ -187,7 +187,6 @@ You can find out more at
 
 ```sh
 $ killall qemu-system-aarch64
-# or qemu-system-x86_64
 ```
 
 Will stop the running QEMU process. `lldb` will turn off QEMU for you when you
@@ -247,7 +246,7 @@ $ find . | cpio -o -H newc | gzip -c > ../custom.img
 
 # go to linux dir
 $ cd ../
-$ cd f25-hmwkN-teamM  # sub with your appropriate local version
+$ cd f26-hmwkN-teamM  # sub with your appropriate local version
 $ cd linux
 
 # run QEMU with revised command using the custom init image.

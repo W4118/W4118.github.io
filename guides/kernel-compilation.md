@@ -54,7 +54,7 @@ To create your kernel `.config`, use the following steps:
    sure that you're running the stock Ubuntu kernel before you do this step. You
    don't want to copy a bad config! You can verify this by running `uname -r`.
 
-   You should get something like `7.0.0-1010-gcp`.
+   You should get something like `7.0.0-1011-gcp`.
 
    The config file that was used to build your current kernel is located in the
    `/boot/` directory. The following command copies over that file, and updates
@@ -211,7 +211,16 @@ vmlinuz-7.0.0-cs4118
 
 > **IMPORTANT**: You should **ALWAYS** take a snapshot of your VM before
 > booting a newly modified kernel. A snapshot provides a recovery point if the
-> kernel or boot configuration makes the VM inaccessible.
+> kernel or boot configuration makes the VM inaccessible. On GCP, go to
+> **Compute Engine > Snapshots > Create snapshot** and pick your VM's boot
+> disk (it has the same name as the VM), or run from your own computer:
+>
+> ```
+> gcloud compute disks snapshot VM_NAME --zone=ZONE --snapshot-names=SNAPSHOT_NAME
+> ```
+>
+> To restore, create a new disk from the snapshot and swap it in as the VM's
+> boot disk, or create a new VM from it.
 
 GCP does not provide the VMware graphical console. You will use GCP's
 interactive serial console to access GRUB and select a kernel.

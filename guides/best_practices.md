@@ -92,7 +92,7 @@ of wrong and takes more time to verify.
 
 Unfortunately, a few students get caught every semester for un-cited LLM usage.
 This is never fun to deal with and typically gets escalated to
-[CSSI](https://cssi.columbia.edu/content/learn-about-policies), which never ends
+[CSSI](https://www.cs.columbia.edu/academic/academic-honesty), which never ends
 well. Even worse, when this happens, the whole team typically gets a 0 for that
 assignment, even if they didn't know about the plagiarism. You should be
 encouraging your teammates to properly cite everything.

@@ -89,3 +89,14 @@ root
 ```
 
 > **Why is this necessary?** The account can have valid GCP administrative permissions while `sudo-rs` still rejects commands with `I'm afraid I can't do that`. The traditional `sudo.ws` correctly reads GCP’s generated sudo configuration.
+
+## 4. Install development tools
+
+The image ships without a compiler or `make`. Install the basics you need
+for the homework assignments:
+
+```bash
+sudo apt update && sudo apt install -y build-essential git
+```
+
+Each assignment lists any additional packages it needs.
