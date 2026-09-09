@@ -401,3 +401,6 @@ special debug mode for debugging-specific keybinds.
 ## Further Reading
 
 [Qemu's gdb guide](https://qemu-project.gitlab.io/qemu/system/gdb.html)
+
+## Acknowledgement
+> This guide was made by TA Ting Zhou in Fall 2025
