@@ -47,7 +47,7 @@ If someone else shows up in the same office hours you do, then they
 
 ...probably.
 
-Homework 2 onwards will be done in teams of 3, so you should start scouting
+Homework 2 onwards will be done in teams of 2, so you should start scouting
 early for potential teammates. A good team can easily make or break your
 submission, so be sure to be on the lookout. And if you don't feel the
 chemistry, feel free to switch teams between homeworks.
