@@ -221,6 +221,11 @@ vmlinuz-7.0.0-cs4118
 >
 > To restore, create a new disk from the snapshot and swap it in as the VM's
 > boot disk, or create a new VM from it.
+>
+> Snapshots are billed for the storage they use, so keeping many of them
+> adds up. Keep one or two recent known-good snapshots and delete older
+> ones you no longer need (**Compute Engine > Snapshots**, or
+> `gcloud compute snapshots delete SNAPSHOT_NAME`).
 
 GCP does not provide the VMware graphical console. You will use GCP's
 interactive serial console to access GRUB and select a kernel.
