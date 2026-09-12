@@ -57,25 +57,13 @@ checked.)
 The kernel programming for this assignment will be run using your Linux VM. As
 part of this assignment, you will be experimenting with Linux platforms and
 gaining familiarity with the development environment. Linux platforms can run on
-many different architectures, but the specific platforms we will be targeting
-are the X86_64 or Arm64 CPU families. All of your kernel builds will be done in
-the same Linux VM from homework 1. You will be developing with the Linux 7.0
-kernel.
+many different architectures, but the specific platform we will be targeting is
+the Arm64 CPU family, matching the GCP Arm VM you set up in homework 1. All of
+your kernel builds will be done in the same VM from homework 1. You will be
+developing with the Linux 7.0 kernel.
 
 **For this assignment, you will write a system call to dump the process tree and
 a user space program to use the system call.**
-
-For students on Arm computers (e.g. macs with M1/M2/M3 CPU): if you want your
-submission to be built/tested for Arm, you must create and submit a file called
-`.armpls` in the top-level directory of your repo; feel free to use the
-following one-liner:
-
-```
-$ cd "$(git rev-parse --show-toplevel)" && touch .armpls && git add .armpls && git commit -m "Arm pls"
-```
-
-You should do this first so that this file is present in any code you submit for
-grading.
 
 For all programming problems, you should submit your source code as well as a
 single README file documenting your files and code for each part. Please do NOT
@@ -240,19 +228,15 @@ you update a header file that is part of the user space API of the kernel.
   file with the rest of the kernel code.
 
 - Retrieving some of the information for your `struct tskinfo` will be
-  architecture-specific (i.e. it will be implemented differently depending on
-  whether your platform is x86-64 or ARM64). You should call generic functions
-  from your main `kernel/ptree.c` file for retrieving these values, but
-  implement them in `arch/[x86 or arm64]/kernel/ptree.c` (and make sure you
-  modify the `Makefile` in the same folder appropriately). This ensures that
-  only the correct retrieval function is included when your kernel is compiled.
-  Although you are only required to complete solutions for one architecture,
-  defining these functions in both `arch/x86` and `arch/arm64` will allow you to
-  develop alongside students with a different platform. Note that you can put
+  architecture-specific. You should call generic functions from your main
+  `kernel/ptree.c` file for retrieving these values, but implement them in
+  `arch/arm64/kernel/ptree.c` (and make sure you modify the `Makefile` in the
+  same folder appropriately). This ensures that only the correct retrieval
+  function is included when your kernel is compiled. Note that you can put
   declarations for these functions in `include/linux/ptree.h`.
 
 - Your algorithm shouldn't use recursion since the size of the function stack in
-  the kernel is quite small, only **16KB** on x86-64 and arm64.
+  the kernel is quite small, only **16KB** on arm64.
 
 - Your code should handle errors that could occur. For example, some error
   numbers your system call should detect and return include:
@@ -426,16 +410,14 @@ you use in your `references.txt` file.
 
 3. Give the exact URL on https://elixir.bootlin.com/linux/v7.0/source pointing
    to the file and line number at which the function that executes instructions
-   to context-switch from one task to another is defined. Please provide an
-   answer for both arm64 and x86-64. The function you identify, which may be in
-   assembly code, should be the one that contains the actual instruction that
-   switches the CPU's program counter register to the task so it can run. Note:
-   use v7.0.
+   to context-switch from one task to another is defined. The function you
+   identify, which may be in assembly code, should be the one that contains the
+   actual instruction that switches the CPU's program counter register to the
+   task so it can run. Note: use v7.0.
 
 4. Give the exact URL on https://elixir.bootlin.com/linux/v7.0/source pointing
    to the file and line number at which the process with PID 1 starts running as
-   the currently running process. Please provide an answer for both arm64 and
-   x86-64. Note: use v7.0.
+   the currently running process. Note: use v7.0.
 
 For reference, the URLs you answer with should be in the following format:
 `https://elixir.bootlin.com/linux/v7.0/source/kernel/sched/core.c#L6726`
@@ -516,7 +498,6 @@ You do not need to handle `ctrl-c` for foo.
 Include the following in your `main` branch. Only include source code (ie
 `*.c`,`*.h`) and text files, do **not** include compiled objects.
 
-- `.armpls` file for teams with M1~M4 CPUs
 - `README` file
 - `references.txt` file
 - Implementation of `ptree` system call added to `linux/kernel/`, as well as
