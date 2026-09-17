@@ -545,7 +545,7 @@ come out of that serial port.
 ### Tips
 
 1.  For this assignment, your primary reference will be [Programming in
-    C](http://users.cs.cf.ac.uk/dave/C/). You might also find the [Glibc
+    C](https://www.worldcolleges.info/sites/default/files/tutorialc.pdf). You might also find the [Glibc
     Manual](http://www.gnu.org/software/libc/manual/) useful.
 2.  Many questions about functions and system behaviour can be found in
     the system manual pages; type in `man` *function* to get more
